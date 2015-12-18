@@ -7,13 +7,29 @@
 //
 
 #import "SignInViewController.h"
+#import "CMTParseManager.h"
 
 @interface SignInViewController ()
+
+@property (nonatomic, assign) BOOL isUserData;
 
 @property (nonatomic, strong) NSArray *users;
 @end
 
 @implementation SignInViewController
+
+#pragma mark - setter
+- (void)setIsUserData:(BOOL)b {
+    
+    if (b) {
+        self.mainTableView.hidden = NO;
+        self.noDataLabel.hidden = YES;
+    }else {
+        self.mainTableView.hidden = YES;
+        self.noDataLabel.hidden = NO;
+    }
+    _isUserData = b;
+}
 
 #pragma mark - Life cycle
 - (void)viewDidLoad {
@@ -21,6 +37,10 @@
     // Do any additional setup after loading the view.
     
     [self initControls];
+    
+    CMTParseManager *manager = [CMTParseManager sharedInstance];
+    NSLog(@"%s, loginUser[%@]", __FUNCTION__, manager.loginUser);
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -56,6 +76,8 @@
                                                                      action:@selector(signUpButtonTouched:)];
     
     self.toolbarItems = @[signup_button];
+    
+    self.isUserData = YES;
 }
 
 #pragma mark - private methods
@@ -67,6 +89,17 @@
 #pragma mark - Action
 - (void)signUpButtonTouched:(id)sender {
     NSLog(@"%s", __FUNCTION__);
+    
+    CMTParseManager *manager = [CMTParseManager sharedInstance];
+    //login状態をチェック
+    if (manager.loginUser != nil) {
+        //logout処理
+        
+    }
+    
+    //SignUp遷移
+    [StoryboardUtil openSignUpViewController:self completion:nil];
+    
     
 }
 

@@ -70,8 +70,6 @@ NSString * const kCMTRoleNamePublicUserReadOnly = @"PublicUserReadOnly";
 #pragma mark - getter Property
 
 - (User *)loginUser {
-    
-    //
     return [User currentUser];
 }
 

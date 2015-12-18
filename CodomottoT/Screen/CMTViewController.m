@@ -8,9 +8,17 @@
 
 #import "CMTViewController.h"
 
-const float kCellHeight = 60.f;
+const float kCellDefaultHeight = 60.f;
 
 @implementation CMTTableCell
+
+@end
+
+@implementation CMTInputTextCell
+
+@end
+
+@implementation CMTButtonCell
 
 @end
 
@@ -51,7 +59,7 @@ const float kCellHeight = 60.f;
 
 #pragma mark - TableView delegate metodhs
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return kCellHeight;
+    return kCellDefaultHeight;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

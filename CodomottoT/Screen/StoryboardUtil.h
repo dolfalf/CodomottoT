@@ -10,7 +10,7 @@
 
 @interface StoryboardUtil : NSObject
 
-+ (void)openISWViewController:(id)owner completion:(void(^)(id))completion;
++ (void)openSignUpViewController:(id)owner completion:(void(^)(id))completion;
 
 
 @end
