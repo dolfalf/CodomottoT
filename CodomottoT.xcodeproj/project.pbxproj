@@ -50,8 +50,6 @@
 		BB0D70301C23C30300E6AE82 /* Group.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0D70111C23C30300E6AE82 /* Group.m */; };
 		BB0D70311C23C30300E6AE82 /* Notice.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0D70131C23C30300E6AE82 /* Notice.m */; };
 		BB0D70321C23C30300E6AE82 /* Role.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0D70151C23C30300E6AE82 /* Role.m */; };
-		BB0D70331C23C30300E6AE82 /* SampleDetailModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0D70181C23C30300E6AE82 /* SampleDetailModel.m */; };
-		BB0D70341C23C30300E6AE82 /* SampleModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0D701A1C23C30300E6AE82 /* SampleModel.m */; };
 		BB0D70351C23C30300E6AE82 /* Schedule.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0D701C1C23C30300E6AE82 /* Schedule.m */; };
 		BB0D70361C23C30300E6AE82 /* School.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0D701E1C23C30300E6AE82 /* School.m */; };
 		BB0D70371C23C30300E6AE82 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0D70201C23C30300E6AE82 /* User.m */; };
@@ -156,10 +154,6 @@
 		BB0D70131C23C30300E6AE82 /* Notice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Notice.m; sourceTree = "<group>"; };
 		BB0D70141C23C30300E6AE82 /* Role.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Role.h; sourceTree = "<group>"; };
 		BB0D70151C23C30300E6AE82 /* Role.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Role.m; sourceTree = "<group>"; };
-		BB0D70171C23C30300E6AE82 /* SampleDetailModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleDetailModel.h; sourceTree = "<group>"; };
-		BB0D70181C23C30300E6AE82 /* SampleDetailModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleDetailModel.m; sourceTree = "<group>"; };
-		BB0D70191C23C30300E6AE82 /* SampleModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleModel.h; sourceTree = "<group>"; };
-		BB0D701A1C23C30300E6AE82 /* SampleModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleModel.m; sourceTree = "<group>"; };
 		BB0D701B1C23C30300E6AE82 /* Schedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Schedule.h; sourceTree = "<group>"; };
 		BB0D701C1C23C30300E6AE82 /* Schedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Schedule.m; sourceTree = "<group>"; };
 		BB0D701D1C23C30300E6AE82 /* School.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = School.h; sourceTree = "<group>"; };
@@ -390,7 +384,8 @@
 		BB0D70071C23C30300E6AE82 /* table */ = {
 			isa = PBXGroup;
 			children = (
-				BB0D70161C23C30300E6AE82 /* sample */,
+				BB0D701D1C23C30300E6AE82 /* School.h */,
+				BB0D701E1C23C30300E6AE82 /* School.m */,
 				BB0D70081C23C30300E6AE82 /* Contact.h */,
 				BB0D70091C23C30300E6AE82 /* Contact.m */,
 				BB0D700A1C23C30300E6AE82 /* ContactComment.h */,
@@ -407,23 +402,10 @@
 				BB0D70151C23C30300E6AE82 /* Role.m */,
 				BB0D701B1C23C30300E6AE82 /* Schedule.h */,
 				BB0D701C1C23C30300E6AE82 /* Schedule.m */,
-				BB0D701D1C23C30300E6AE82 /* School.h */,
-				BB0D701E1C23C30300E6AE82 /* School.m */,
 				BB0D701F1C23C30300E6AE82 /* User.h */,
 				BB0D70201C23C30300E6AE82 /* User.m */,
 			);
 			path = table;
-			sourceTree = "<group>";
-		};
-		BB0D70161C23C30300E6AE82 /* sample */ = {
-			isa = PBXGroup;
-			children = (
-				BB0D70171C23C30300E6AE82 /* SampleDetailModel.h */,
-				BB0D70181C23C30300E6AE82 /* SampleDetailModel.m */,
-				BB0D70191C23C30300E6AE82 /* SampleModel.h */,
-				BB0D701A1C23C30300E6AE82 /* SampleModel.m */,
-			);
-			path = sample;
 			sourceTree = "<group>";
 		};
 		BB0D70211C23C30300E6AE82 /* Util */ = {
@@ -609,7 +591,6 @@
 				BB0D702C1C23C30300E6AE82 /* Contact.m in Sources */,
 				BB0D702B1C23C30300E6AE82 /* SchoolModel.m in Sources */,
 				BB0D70271C23C30300E6AE82 /* ContactModel.m in Sources */,
-				BB0D70341C23C30300E6AE82 /* SampleModel.m in Sources */,
 				BB0D702D1C23C30300E6AE82 /* ContactComment.m in Sources */,
 				BB0D6FF41C23BF2500E6AE82 /* ContactViewController.m in Sources */,
 				BB0D70311C23C30300E6AE82 /* Notice.m in Sources */,
@@ -624,7 +605,6 @@
 				BB0D70361C23C30300E6AE82 /* School.m in Sources */,
 				BB0D70261C23C30300E6AE82 /* CMTParseManager.m in Sources */,
 				BB89B0C01C27C75C00065975 /* SIAlertView.m in Sources */,
-				BB0D70331C23C30300E6AE82 /* SampleDetailModel.m in Sources */,
 				BB0D702E1C23C30300E6AE82 /* ContactPhoto.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

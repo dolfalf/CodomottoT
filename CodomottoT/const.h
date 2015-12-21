@@ -26,4 +26,8 @@
 #define CGRectSetWidth(r, w)                CGRectMake(r.origin.x, r.origin.y, w, r.size.height)
 #define CGRectSetHeight(r, h)               CGRectMake(r.origin.x, r.origin.y, r.size.width, h)
 
+//Set param model 
+#define SET_MODEL_PARAM(model, dictionary, property)   if(dictionary[@"property"]!= nil){model.property = dictionary[@"property"];}
+#define SET_DICT_PARAM(dictionary, value)    if(value!= nil){dictionary[@"value"] = value;}
+
 #endif

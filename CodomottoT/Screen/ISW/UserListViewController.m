@@ -11,14 +11,14 @@
 
 @interface UserListViewController ()
 
-@property (nonatomic, assign) BOOL isUserData;
+@property (nonatomic, assign) BOOL hasUserData;
 @property (nonatomic, strong) NSArray *users;
 @end
 
 @implementation UserListViewController
 
 #pragma mark - setter
-- (void)setIsUserData:(BOOL)b {
+- (void)setHasUserData:(BOOL)b {
     
     if (b) {
         self.mainTableView.hidden = NO;
@@ -27,7 +27,7 @@
         self.mainTableView.hidden = YES;
         self.noDataLabel.hidden = NO;
     }
-    _isUserData = b;
+    _hasUserData = b;
 }
 
 #pragma mark - Life cycle
@@ -75,7 +75,7 @@
     
     self.navigationItem.leftBarButtonItems = @[cancel_button];
     
-    self.isUserData = YES;
+    self.hasUserData = YES;
 }
 
 - (void)loadUserData {
@@ -88,9 +88,9 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 
                 if (_users != nil && _users.count > 0) {
-                    self.isUserData = YES;
+                    self.hasUserData = YES;
                 }else {
-                    self.isUserData = NO;
+                    self.hasUserData = NO;
                 }
                 
                 [self.mainTableView reloadData];

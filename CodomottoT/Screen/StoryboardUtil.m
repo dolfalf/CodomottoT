@@ -35,4 +35,15 @@
     
 }
 
++ (void)openRegistSchoolViewController:(id)owner completion:(void(^)(id))completion {
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    
+    UINavigationController *navi_con = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:@"RegistSchoolNavigationViewController"];
+    if (completion) {
+        completion(navi_con);
+    }
+    [((UIViewController *)owner) presentViewController:navi_con animated:YES completion:nil];
+}
+
 @end

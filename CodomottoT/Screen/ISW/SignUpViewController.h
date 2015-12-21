@@ -6,7 +6,6 @@
 //  Copyright © 2015年 kjcode. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import "CMTViewController.h"
 
 @interface SignUpViewController : CMTViewController

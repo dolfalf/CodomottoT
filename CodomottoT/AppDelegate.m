@@ -67,11 +67,10 @@
 - (void)loadParseModel {
     
     //add PFObject.
-    [SampleModel registerSubclass];
-    [SampleDetailModel registerSubclass];
-    
     [User registerSubclass];
     [Role registerSubclass];
+    
+    [School registerSubclass];
     
     [Contact registerSubclass];
     [ContactPhoto registerSubclass];

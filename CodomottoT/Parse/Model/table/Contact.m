@@ -19,6 +19,7 @@
 @dynamic postUser;
 @dynamic photos;
 @dynamic contactRead;
+@dynamic comments;
 @dynamic noticeFlag;
 @dynamic deleteFlag;
 @dynamic ACL;

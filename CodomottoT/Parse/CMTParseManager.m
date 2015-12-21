@@ -13,6 +13,7 @@
 @implementation CMTParseManager
 
 @dynamic isLogin;
+@dynamic userType;
 @dynamic loginUser;
 
 static CMTParseManager *_sharedInstance;
@@ -72,6 +73,15 @@ NSString * const kCMTRoleNamePublicUserReadOnly = @"PublicUserReadOnly";
 - (BOOL)isLogin {
     
     return ([User currentUser]==nil)?NO:YES;
+}
+
+- (UserType)userType {
+    
+    if ([User currentUser] == nil) {
+        return UserTypeNone;
+    }
+    
+    return (UserType)[[User currentUser].cmtUserType integerValue];
 }
 
 - (User *)loginUser {

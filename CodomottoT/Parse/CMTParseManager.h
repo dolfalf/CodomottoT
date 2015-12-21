@@ -13,7 +13,9 @@
 
 @interface CMTParseManager : NSObject
 
-@property (nonatomic, assign) BOOL isLogin;
+@property (nonatomic, assign, readonly) BOOL isLogin;
+@property (nonatomic, assign, readonly) UserType userType;
+
 @property (nonatomic, strong, readonly) User *loginUser;
 @property (nonatomic, strong) School *currentSchool;
 //프로퍼티들 취득 전에 로그인 중인지 아닌지를 확인하는 외부 엑세스 플래그 필요

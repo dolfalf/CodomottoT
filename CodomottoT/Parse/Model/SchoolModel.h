@@ -10,4 +10,6 @@
 
 @interface SchoolModel : NSObject
 
+- (void)fetchAll:(void(^)(NSArray* schools, NSError* resultError))completion;
+- (void)registSchool:(NSDictionary *)info completion:(void(^)(BOOL succeeded, NSError* resultError))completion;
 @end
