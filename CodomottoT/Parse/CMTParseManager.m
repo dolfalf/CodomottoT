@@ -12,6 +12,7 @@
 
 @implementation CMTParseManager
 
+@dynamic isLogin;
 @dynamic loginUser;
 
 static CMTParseManager *_sharedInstance;
@@ -67,6 +68,11 @@ NSString * const kCMTRoleNamePublicUserReadOnly = @"PublicUserReadOnly";
 }
 
 #pragma mark - getter Property
+
+- (BOOL)isLogin {
+    
+    return ([User currentUser]==nil)?NO:YES;
+}
 
 - (User *)loginUser {
     return [User currentUser];
@@ -216,12 +222,18 @@ NSString * const kCMTRoleNamePublicUserReadOnly = @"PublicUserReadOnly";
             NSLog(@"logout Succeeded");
             error = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNone
                                            localizedDescription:@"logout success."];
-            completion(YES, error);
+            if (completion) {
+                completion(YES, error);
+            }
+
         }else{
             NSLog(@"logout error %@", error);
             error = [NSError errorWithCodomottoErrorCode:CMTErrorCodeLogoutFailed
                                            localizedDescription:@"logout failed."];
-            completion(NO, error);
+            
+            if (completion) {
+                completion(NO, error);
+            }
         }
     }];
 }

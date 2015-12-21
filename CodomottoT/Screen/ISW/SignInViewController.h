@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CMTViewController.h"
 
-@interface SignInViewController : CMTViewController
+@interface SignInViewController : UIViewController
 
 @end

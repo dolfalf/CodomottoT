@@ -11,5 +11,5 @@
 @interface StoryboardUtil : NSObject
 
 + (void)openSignUpViewController:(id)owner completion:(void(^)(id))completion;
-
++ (void)openUserListViewController:(id)owner completion:(void(^)(id))completion;
 @end

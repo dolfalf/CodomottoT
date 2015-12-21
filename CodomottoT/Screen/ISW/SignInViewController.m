@@ -8,30 +8,19 @@
 
 #import "SignInViewController.h"
 #import "CMTParseManager.h"
+#import "SIAlertView.h"
+#import "StoryboardUtil.h"
 
 @interface SignInViewController () <UITextFieldDelegate>
 
+@property (nonatomic, weak) IBOutlet UILabel *statusLabel;
 @property (nonatomic, weak) IBOutlet UITextField *inputLoginId;
 @property (nonatomic, weak) IBOutlet UITextField *inputPassword;
 
-@property (nonatomic, assign) BOOL isUserData;
-@property (nonatomic, strong) NSArray *users;
+
 @end
 
 @implementation SignInViewController
-
-#pragma mark - setter
-- (void)setIsUserData:(BOOL)b {
-    
-    if (b) {
-        self.mainTableView.hidden = NO;
-        self.noDataLabel.hidden = YES;
-    }else {
-        self.mainTableView.hidden = YES;
-        self.noDataLabel.hidden = NO;
-    }
-    _isUserData = b;
-}
 
 #pragma mark - Life cycle
 - (void)viewDidLoad {
@@ -39,9 +28,6 @@
     // Do any additional setup after loading the view.
     
     [self initControls];
-    
-    CMTParseManager *manager = [CMTParseManager sharedInstance];
-    NSLog(@"%s, loginUser[%@]", __FUNCTION__, manager.loginUser);
     
 }
 
@@ -53,7 +39,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    [self loadUserData];
+    [self updateStatusLabel];
 }
 
 /*
@@ -72,6 +58,11 @@
     //title
     self.title = @"Sign In";
     
+    // スペーサを生成する
+    UIBarButtonItem *spacer = [[UIBarButtonItem alloc]
+                               initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                               target:nil action:nil];
+    
     //toolbar.
     UIBarButtonItem *signup_button = [[UIBarButtonItem alloc] initWithTitle:@"SignUp"
                                                                       style:UIBarButtonItemStyleDone target:self
@@ -81,25 +72,66 @@
                                                                       style:UIBarButtonItemStyleDone target:self
                                                                      action:@selector(logoutButtonTouched:)];
     
-    self.toolbarItems = @[signup_button, logout_button];
+    UIBarButtonItem *userlist_button = [[UIBarButtonItem alloc] initWithTitle:@"UserList"
+                                                                      style:UIBarButtonItemStyleDone target:self
+                                                                     action:@selector(userlistButtonTouched:)];
     
-    self.isUserData = YES;
+    self.toolbarItems = @[signup_button, logout_button,spacer, userlist_button];
+    
 }
 
 #pragma mark - private methods
-- (void)loadUserData {
+
+- (void)updateStatusLabel {
     
-    [[CMTParseManager sharedInstance] fetchUsers:UserTypeNone withCompletion:^(NSArray *users, NSError *resultError) {
-        if (resultError == nil) {
-            //success
-            self.users = users;
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self.mainTableView reloadData];
-            });
-        }
-    }];
+    CMTParseManager *manager = [CMTParseManager sharedInstance];
+    NSLog(@"%s, loginUser[%@]", __FUNCTION__, manager.loginUser);
     
+    if (manager.isLogin) {
+        _statusLabel.text = [NSString stringWithFormat:@"login User[%@]", manager.loginUser.username];
+    }else {
+        _statusLabel.text = @"Not logined.";
+    }
+    
+}
+
+- (void)showAlertMessage:(NSString *)message {
+    
+    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"" andMessage:message];
+    
+    [alertView addButtonWithTitle:@"OK"
+                             type:SIAlertViewButtonTypeDefault
+                          handler:^(SIAlertView *alert) {
+                              NSLog(@"Button1 Clicked");
+                          }];
+/*
+    [alertView addButtonWithTitle:@"Button2"
+                             type:SIAlertViewButtonTypeDestructive
+                          handler:^(SIAlertView *alert) {
+                              NSLog(@"Button2 Clicked");
+                          }];
+    [alertView addButtonWithTitle:@"Button3"
+                             type:SIAlertViewButtonTypeCancel
+                          handler:^(SIAlertView *alert) {
+                              NSLog(@"Button3 Clicked");
+                          }];
+*/
+    alertView.willShowHandler = ^(SIAlertView *alertView) {
+        NSLog(@"%@, willShowHandler", alertView);
+    };
+    alertView.didShowHandler = ^(SIAlertView *alertView) {
+        NSLog(@"%@, didShowHandler", alertView);
+    };
+    alertView.willDismissHandler = ^(SIAlertView *alertView) {
+        NSLog(@"%@, willDismissHandler", alertView);
+    };
+    alertView.didDismissHandler = ^(SIAlertView *alertView) {
+        NSLog(@"%@, didDismissHandler", alertView);
+    };
+    
+    alertView.transitionStyle = SIAlertViewTransitionStyleFade;
+    
+    [alertView show];
 }
 
 #pragma mark - Action
@@ -125,12 +157,14 @@
     [[CMTParseManager sharedInstance] logoutCurrentUserWithCompletion:^(BOOL isSucceeded, NSError *resultError) {
         if (isSucceeded) {
             NSLog(@"logout success");
+            [self showAlertMessage:@"logout success"];
         }else {
             NSLog(@"logout failed.");
+            [self showAlertMessage:@"logout failed"];
         }
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            [self.mainTableView reloadData];
+            [self updateStatusLabel];
         });
         
     }];
@@ -154,44 +188,18 @@
                                                          
                                                      }else {
                                                          NSLog(@"login failed.");
+                                                         [self showAlertMessage:@"login failed."];
+
                                                      }
                                                      
                                                    }];
     
 }
 
-#pragma mark - TableView delegate metodhs
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+- (void)userlistButtonTouched:(id)sender {
+    NSLog(@"%s", __FUNCTION__);
     
-    User *current_user = [CMTParseManager sharedInstance].loginUser;
-    
-    if (current_user == nil) {
-        return @"Not logined.";
-    }
-
-    return [NSString stringWithFormat:@"current user [%@]", current_user.username];
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
-    return _users.count;
-    
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    CMTTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CMTTableCell" forIndexPath:indexPath];
-    
-    User *user = _users[indexPath.row];
-    
-    cell.contentLabel.text = [NSString stringWithFormat:@"%@ - %d", user.username, [user.cmtUserType intValue]];
-    return cell;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    
+    [StoryboardUtil openUserListViewController:self completion:nil];
 }
 
 @end

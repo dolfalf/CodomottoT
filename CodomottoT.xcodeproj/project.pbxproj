@@ -59,6 +59,12 @@
 		BB0D70391C23C30300E6AE82 /* UIFont+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0D70251C23C30300E6AE82 /* UIFont+Helper.m */; };
 		BB0D703C1C23C30E00E6AE82 /* StoryboardUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0D703B1C23C30E00E6AE82 /* StoryboardUtil.m */; };
 		BB0D703F1C23C3A000E6AE82 /* NSError+Parse.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0D703E1C23C3A000E6AE82 /* NSError+Parse.m */; };
+		BB89B0BD1C27C75C00065975 /* LICENSE.md in Sources */ = {isa = PBXBuildFile; fileRef = BB89B0B61C27C75C00065975 /* LICENSE.md */; };
+		BB89B0BE1C27C75C00065975 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = BB89B0B71C27C75C00065975 /* README.md */; };
+		BB89B0BF1C27C75C00065975 /* SIAlertView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BB89B0B81C27C75C00065975 /* SIAlertView.bundle */; };
+		BB89B0C01C27C75C00065975 /* SIAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB89B0BA1C27C75C00065975 /* SIAlertView.m */; };
+		BB89B0C11C27C75C00065975 /* UIWindow+SIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BB89B0BC1C27C75C00065975 /* UIWindow+SIUtils.m */; };
+		BB89B0C41C27CA1100065975 /* UserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB89B0C31C27CA1100065975 /* UserListViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -168,6 +174,15 @@
 		BB0D703B1C23C30E00E6AE82 /* StoryboardUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoryboardUtil.m; sourceTree = "<group>"; };
 		BB0D703D1C23C3A000E6AE82 /* NSError+Parse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+Parse.h"; sourceTree = "<group>"; };
 		BB0D703E1C23C3A000E6AE82 /* NSError+Parse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+Parse.m"; sourceTree = "<group>"; };
+		BB89B0B61C27C75C00065975 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
+		BB89B0B71C27C75C00065975 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		BB89B0B81C27C75C00065975 /* SIAlertView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SIAlertView.bundle; sourceTree = "<group>"; };
+		BB89B0B91C27C75C00065975 /* SIAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIAlertView.h; sourceTree = "<group>"; };
+		BB89B0BA1C27C75C00065975 /* SIAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIAlertView.m; sourceTree = "<group>"; };
+		BB89B0BB1C27C75C00065975 /* UIWindow+SIUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+SIUtils.h"; sourceTree = "<group>"; };
+		BB89B0BC1C27C75C00065975 /* UIWindow+SIUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+SIUtils.m"; sourceTree = "<group>"; };
+		BB89B0C21C27CA1100065975 /* UserListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserListViewController.h; sourceTree = "<group>"; };
+		BB89B0C31C27CA1100065975 /* UserListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserListViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -240,6 +255,7 @@
 				BB0D6FA31C23A18D00E6AE82 /* Screen */,
 				BB0D6FF81C23C30300E6AE82 /* Parse */,
 				BB0D70211C23C30300E6AE82 /* Util */,
+				BB89B0B41C27C75C00065975 /* Lib */,
 				BB0D6F7C1C23A12500E6AE82 /* Assets.xcassets */,
 				BB0D6F7E1C23A12500E6AE82 /* LaunchScreen.storyboard */,
 				BB0D6F811C23A12500E6AE82 /* Info.plist */,
@@ -328,6 +344,8 @@
 				BB0D6FE11C23BF1B00E6AE82 /* Main.storyboard */,
 				BB0D6FE61C23BF1B00E6AE82 /* SignInViewController.h */,
 				BB0D6FE71C23BF1B00E6AE82 /* SignInViewController.m */,
+				BB89B0C21C27CA1100065975 /* UserListViewController.h */,
+				BB89B0C31C27CA1100065975 /* UserListViewController.m */,
 				BB0D6FE81C23BF1B00E6AE82 /* SignUpViewController.h */,
 				BB0D6FE91C23BF1B00E6AE82 /* SignUpViewController.m */,
 				BB0D6FE41C23BF1B00E6AE82 /* SchoolListViewController.h */,
@@ -417,6 +435,28 @@
 				BB0D70251C23C30300E6AE82 /* UIFont+Helper.m */,
 			);
 			path = Util;
+			sourceTree = "<group>";
+		};
+		BB89B0B41C27C75C00065975 /* Lib */ = {
+			isa = PBXGroup;
+			children = (
+				BB89B0B51C27C75C00065975 /* SIAlertView */,
+			);
+			path = Lib;
+			sourceTree = "<group>";
+		};
+		BB89B0B51C27C75C00065975 /* SIAlertView */ = {
+			isa = PBXGroup;
+			children = (
+				BB89B0B61C27C75C00065975 /* LICENSE.md */,
+				BB89B0B71C27C75C00065975 /* README.md */,
+				BB89B0B81C27C75C00065975 /* SIAlertView.bundle */,
+				BB89B0B91C27C75C00065975 /* SIAlertView.h */,
+				BB89B0BA1C27C75C00065975 /* SIAlertView.m */,
+				BB89B0BB1C27C75C00065975 /* UIWindow+SIUtils.h */,
+				BB89B0BC1C27C75C00065975 /* UIWindow+SIUtils.m */,
+			);
+			path = SIAlertView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -523,6 +563,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB0D6FEC1C23BF1B00E6AE82 /* Main.storyboard in Resources */,
+				BB89B0BF1C27C75C00065975 /* SIAlertView.bundle in Resources */,
 				BB0D6FF61C23BF3400E6AE82 /* Contact.storyboard in Resources */,
 				BB0D6F801C23A12500E6AE82 /* LaunchScreen.storyboard in Resources */,
 				BB0D6F7D1C23A12500E6AE82 /* Assets.xcassets in Resources */,
@@ -554,7 +595,9 @@
 				BB0D6FED1C23BF1B00E6AE82 /* RegistSchoolViewController.m in Sources */,
 				BB0D703C1C23C30E00E6AE82 /* StoryboardUtil.m in Sources */,
 				BB0D70381C23C30300E6AE82 /* UIColor+Helper.m in Sources */,
+				BB89B0BD1C27C75C00065975 /* LICENSE.md in Sources */,
 				BB0D6F751C23A12500E6AE82 /* AppDelegate.m in Sources */,
+				BB89B0C41C27CA1100065975 /* UserListViewController.m in Sources */,
 				BB0D70301C23C30300E6AE82 /* Group.m in Sources */,
 				BB0D6F721C23A12500E6AE82 /* main.m in Sources */,
 				BB0D702A1C23C30300E6AE82 /* ScheduleModel.m in Sources */,
@@ -562,6 +605,7 @@
 				BB0D6FE01C23BF1100E6AE82 /* CMTViewController.m in Sources */,
 				BB0D70281C23C30300E6AE82 /* GroupModel.m in Sources */,
 				BB0D70391C23C30300E6AE82 /* UIFont+Helper.m in Sources */,
+				BB89B0C11C27C75C00065975 /* UIWindow+SIUtils.m in Sources */,
 				BB0D702C1C23C30300E6AE82 /* Contact.m in Sources */,
 				BB0D702B1C23C30300E6AE82 /* SchoolModel.m in Sources */,
 				BB0D70271C23C30300E6AE82 /* ContactModel.m in Sources */,
@@ -571,6 +615,7 @@
 				BB0D70311C23C30300E6AE82 /* Notice.m in Sources */,
 				BB0D702F1C23C30300E6AE82 /* ContactRead.m in Sources */,
 				BB0D6FEF1C23BF1B00E6AE82 /* SignInViewController.m in Sources */,
+				BB89B0BE1C27C75C00065975 /* README.md in Sources */,
 				BB0D703F1C23C3A000E6AE82 /* NSError+Parse.m in Sources */,
 				BB0D6FF01C23BF1B00E6AE82 /* SignUpViewController.m in Sources */,
 				BB0D70351C23C30300E6AE82 /* Schedule.m in Sources */,
@@ -578,6 +623,7 @@
 				BB0D6FEE1C23BF1B00E6AE82 /* SchoolListViewController.m in Sources */,
 				BB0D70361C23C30300E6AE82 /* School.m in Sources */,
 				BB0D70261C23C30300E6AE82 /* CMTParseManager.m in Sources */,
+				BB89B0C01C27C75C00065975 /* SIAlertView.m in Sources */,
 				BB0D70331C23C30300E6AE82 /* SampleDetailModel.m in Sources */,
 				BB0D702E1C23C30300E6AE82 /* ContactPhoto.m in Sources */,
 			);
@@ -803,6 +849,7 @@
 				BB0D6F9C1C23A12600E6AE82 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BB0D6F9D1C23A12600E6AE82 /* Build configuration list for PBXNativeTarget "CodomottoTTests" */ = {
 			isa = XCConfigurationList;
@@ -811,6 +858,7 @@
 				BB0D6F9F1C23A12600E6AE82 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BB0D6FA01C23A12600E6AE82 /* Build configuration list for PBXNativeTarget "CodomottoTUITests" */ = {
 			isa = XCConfigurationList;
@@ -819,6 +867,7 @@
 				BB0D6FA21C23A12600E6AE82 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
