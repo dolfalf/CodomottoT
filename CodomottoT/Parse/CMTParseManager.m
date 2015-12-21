@@ -24,7 +24,6 @@ NSString * const kCMTRoleNamePublicUserReadOnly = @"PublicUserReadOnly";
 //#define RoleNameSelectUserReadOnly(s)      규칙있는 동적 문자열로 롤을 생성하고 싶은데...
 //#define RoleNameSchool                      이것도 마찬가지
 
-
 #pragma mark - singleton
 + (CMTParseManager *)sharedInstance
 {
@@ -85,21 +84,39 @@ NSString * const kCMTRoleNamePublicUserReadOnly = @"PublicUserReadOnly";
 //}
 
 #pragma mark - Account
-/*!
- 
- @abstract 어카운트 생성 기능
- 
- */
-+(void)signInUserWithUserEmailAddress:(NSString *)email
+- (void)fetchUsers:(UserType)userType withCompletion:(void(^)(NSArray* users, NSError* resultError))completion {
+    
+    NSLog(@"%s", __FUNCTION__);
+    
+    PFQuery *query = [PFUser query];
+    if (userType != UserTypeNone) {
+        [query whereKey:@"cmtUserType" equalTo:@(userType)];
+    }
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSError *error = nil;
+        NSArray *users = [query findObjects:&error];
+        
+        if (completion) {
+            completion(users, error);
+        }
+        
+    });
+    
+}
+
+- (void)signInUserWithUserEmailAddress:(NSString *)email
                          withPassword:(NSString *)userpassword
-                       withCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion{
+                         withUserType:(UserType)userType
+                       withCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion {
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         User *signInUser = [User user];
-        //username = email 이기에!
+        //username = email と同じ!
         signInUser.username = email;
         signInUser.password = userpassword;
         signInUser.email = email;
+        signInUser.cmtUserType = @(userType);
         
         NSError *resultError;
         BOOL isSucceeded = [signInUser signUp:&resultError];
@@ -107,37 +124,11 @@ NSString * const kCMTRoleNamePublicUserReadOnly = @"PublicUserReadOnly";
         if (isSucceeded == YES) {
             NSLog(@"signIn Succeeded");
             resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNone
-                                    localizedDescription:@"어카운트 생성 완료"];
+                                    localizedDescription:@"Create account success."];
         }else{
             NSLog(@"signIn Failed - %@", resultError);
             resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeSignInFailed
-                                    localizedDescription:@"어카운트 생성 실패"];
-        }
-        completion(isSucceeded, resultError);
-    });
-    
-}
-
-/*!
- 
- @abstract 로그인 기능
- 
- */
-+(void)loginWithUserEmailAddress:(NSString *)email
-                    withPassword:(NSString *)userpassword
-                  withCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion{
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSError* resultError;
-        BOOL isSucceeded = [User logInWithUsername:email password:userpassword error:&resultError];
-        if (isSucceeded == YES) {
-            NSLog(@"login Succeeded");
-            resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNone
-                                    localizedDescription:@"로그인 완료"];
-        }else{
-            NSLog(@"can't that- %@", resultError);
-            resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeLoginFailed
-                                    localizedDescription:@"로그인 실패"];
+                                    localizedDescription:@"Create account failed."];
         }
         completion(isSucceeded, resultError);
     });
@@ -148,16 +139,21 @@ NSString * const kCMTRoleNamePublicUserReadOnly = @"PublicUserReadOnly";
  @abstract 유저 상세 데이터 입력기능 - 이 기능은 유저가 로그인 한 상태(currentUser)를 전제로 한다.
  
  */
-+(void)setDetailUserInfoWithUserType:(NSNumber *)cmtUserType
-                      withWorkSchool:(School *)cmtWorkSchool
-                        withUserName:(NSString *)cmtUserName
-                withFuriganaUserName:(NSString *)cmtFuriganaUserName
-                          withGender:(NSNumber *)cmtGender
-                      withPostalCode:(NSString *)cmtPostalCode
-                withCellPhoneAddress:(NSString *)cmtCellPhoneAddress
-                        withPicImage:(NSData *)cmtPicImage
-                   withCheckApproval:(NSNumber *)cmtCheckApproval
-                      withCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion{
+- (void)setDetailUserInfoWithUserType:(NSNumber *)cmtUserType
+                       withWorkSchool:(School *)cmtWorkSchool
+                         withUserName:(NSString *)cmtUserName
+                 withFuriganaUserName:(NSString *)cmtFuriganaUserName
+                           withGender:(NSNumber *)cmtGender
+                       withPostalCode:(NSString *)cmtPostalCode
+                 withCellPhoneAddress:(NSString *)cmtCellPhoneAddress
+                         withPicImage:(NSData *)cmtPicImage
+                    withCheckApproval:(NSNumber *)cmtCheckApproval
+                       withCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion{
+    
+    if ([PFUser currentUser] == nil) {
+        //logoutの場合
+        return;
+    }
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
@@ -179,11 +175,11 @@ NSString * const kCMTRoleNamePublicUserReadOnly = @"PublicUserReadOnly";
         if (isSucceeded == YES) {
             NSLog(@"User detail Info Edit Succeeded - %@", resultError);
             resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNone
-                                    localizedDescription:@"상세 정보 수정 완료"];
+                                          localizedDescription:@"상세 정보 수정 완료"];
         }else{
             NSLog(@"can't that- %@", resultError);
             resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeSetDetailInfoFailed
-                                    localizedDescription:@"상세 정보 수정 실패"];
+                                          localizedDescription:@"상세 정보 수정 실패"];
         }
         completion(isSucceeded, resultError);
     });
@@ -191,20 +187,40 @@ NSString * const kCMTRoleNamePublicUserReadOnly = @"PublicUserReadOnly";
 
 /*!
  
- @abstract 로그아웃 기능
+ @abstract ログイン
  
  */
-+(void)logoutCurrentUserWithCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion{
-    [User logOutInBackgroundWithBlock:^(NSError *error){
+- (void)loginWithUserEmailAddress:(NSString *)email
+                     withPassword:(NSString *)userpassword
+                   withCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion{
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSError* resultError;
+        BOOL isSucceeded = [User logInWithUsername:email password:userpassword error:&resultError];
+        if (isSucceeded == YES) {
+            NSLog(@"login Succeeded");
+            resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNone
+                                    localizedDescription:@"login success."];
+        }else{
+            NSLog(@"can't that- %@", resultError);
+            resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeLoginFailed
+                                    localizedDescription:@"login failed."];
+        }
+        completion(isSucceeded, resultError);
+    });
+}
+
+- (void)logoutCurrentUserWithCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion{
+        [User logOutInBackgroundWithBlock:^(NSError *error){
         if (!error) {
             NSLog(@"logout Succeeded");
             error = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNone
-                                           localizedDescription:@"로그아웃 성공"];
+                                           localizedDescription:@"logout success."];
             completion(YES, error);
         }else{
             NSLog(@"logout error %@", error);
             error = [NSError errorWithCodomottoErrorCode:CMTErrorCodeLogoutFailed
-                                           localizedDescription:@"로그아웃 실패"];
+                                           localizedDescription:@"logout failed."];
             completion(NO, error);
         }
     }];
@@ -215,8 +231,8 @@ NSString * const kCMTRoleNamePublicUserReadOnly = @"PublicUserReadOnly";
  @abstract 비밀번호 리셋 기능
  
  */
-+(void)currentUserPasswordResetWithUserEmailAddress:(NSString *)email
-                                     withCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion{
+- (void)currentUserPasswordResetWithUserEmailAddress:(NSString *)email
+                                      withCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         NSError *resultError;
         BOOL isSucceeded = [User requestPasswordResetForEmail:email error:&resultError];
@@ -923,109 +939,6 @@ NSString * const kCMTRoleNamePublicUserReadOnly = @"PublicUserReadOnly";
 }
 
 #pragma mark - Test API'S
-
-/*!
- 
- @abstract 테스트용 api - 원장유저 생성
- 
- */
-+(void)createMasterTeacher{
-    [self signInUserWithUserEmailAddress:@"masterTeacher@codomotto.com" withPassword:@"motto1234" withCompletion:^(BOOL isSucceeded, NSError* resultError){
-        if (isSucceeded == YES) {
-            NSLog(@" %s error - none", __PRETTY_FUNCTION__);
-        }else{
-            NSLog(@" %s error - %@", __PRETTY_FUNCTION__, resultError);
-        }
-    }];
-}
-
-/*!
- 
- @abstract 테스트용 api - 선생유저 생성
- 
- */
-+(void)createTeacher{
-    [self signInUserWithUserEmailAddress:@"teacher@codomotto.com" withPassword:@"motto1234" withCompletion:^(BOOL isSucceeded, NSError* resultError){
-        if (isSucceeded == YES) {
-            NSLog(@" %s error - none", __PRETTY_FUNCTION__);
-        }else{
-            NSLog(@" %s error - %@", __PRETTY_FUNCTION__, resultError);
-        }
-    }];
-}
-
-/*!
- 
- @abstract 테스트용 api - 부모유저 생성
- 
- */
-+(void)createParents{
-    [self signInUserWithUserEmailAddress:@"parents@codomotto.com" withPassword:@"motto1234" withCompletion:^(BOOL isSucceeded, NSError* resultError){
-        if (isSucceeded == YES) {
-            NSLog(@" %s error - none", __PRETTY_FUNCTION__);
-        }else{
-            NSLog(@" %s error - %@", __PRETTY_FUNCTION__, resultError);
-        }
-    }];
-}
-
-/*!
- 
- @abstract 테스트용 api - 원장유저 로그인
- 
- */
-+(void)loginMasterTeacherWithCompletion:(void(^)(BOOL isSucceeded, NSError *resultError))completion{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self loginWithUserEmailAddress:@"masterTeacher@codomotto.com" withPassword:@"motto1234" withCompletion:^(BOOL isSucceeded, NSError* resultError){
-            if (isSucceeded == YES) {
-                completion(YES, resultError);
-                NSLog(@" %s error - none", __PRETTY_FUNCTION__);
-            }else{
-                completion(NO, resultError);
-                NSLog(@" %s error - %@", __PRETTY_FUNCTION__, resultError);
-            }
-        }];
-    });
-}
-
-/*!
- 
- @abstract 테스트용 api - 선생유저 로그인
- 
- */
-+(void)loginTeacherWithCompletion:(void(^)(BOOL isSucceeded, NSError *resultError))completion{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self loginWithUserEmailAddress:@"teacher@codomotto.com" withPassword:@"motto1234" withCompletion:^(BOOL isSucceeded, NSError* resultError){
-            if (isSucceeded == YES) {
-                completion(YES, resultError);
-                NSLog(@" %s error - none", __PRETTY_FUNCTION__);
-            }else{
-                completion(NO, resultError);
-                NSLog(@" %s error - %@", __PRETTY_FUNCTION__, resultError);
-            }
-        }];
-    });
-}
-
-/*!
- 
- @abstract 테스트용 api - 부모유저 로그인
- 
- */
-+(void)loginParentsWithCompletion:(void(^)(BOOL isSucceeded, NSError *resultError))completion{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self loginWithUserEmailAddress:@"parents@codomotto.com" withPassword:@"motto1234" withCompletion:^(BOOL isSucceeded, NSError* resultError){
-            if (isSucceeded == YES) {
-                completion(YES, resultError);
-                NSLog(@" %s error - none", __PRETTY_FUNCTION__);
-            }else{
-                completion(NO, resultError);
-                NSLog(@" %s error - %@", __PRETTY_FUNCTION__, resultError);
-            }
-        }];
-    });
-}
-
 /*!
  
  @abstract 테스트용 api - 유저네임으로 유저 오브젝트 검색기능

@@ -26,6 +26,11 @@
 @property (nonatomic, weak) IBOutlet UILabel *buttonLabel;
 @end
 
+@interface CMTSegmentCell : UITableViewCell
+
+@property (nonatomic, weak) IBOutlet UISegmentedControl *segmentControl;
+@end
+
 @interface CMTViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, weak) IBOutlet UITableView *mainTableView;

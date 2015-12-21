@@ -22,6 +22,10 @@ const float kCellDefaultHeight = 60.f;
 
 @end
 
+@implementation CMTSegmentCell
+
+@end
+
 #pragma mark - CMTViewController
 @interface CMTViewController ()
 

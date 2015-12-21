@@ -12,5 +12,4 @@
 
 + (void)openSignUpViewController:(id)owner completion:(void(^)(id))completion;
 
-
 @end

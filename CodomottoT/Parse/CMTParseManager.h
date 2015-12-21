@@ -19,8 +19,8 @@
 
 + (CMTParseManager *)sharedInstance;
 
-//Account
 #pragma mark - Account
+- (void)fetchUsers:(UserType)userType withCompletion:(void(^)(NSArray* users, NSError* resultError))completion;
 /*
  근무시간 설정 (cmtStartDate, cmtEndDate)은 별개의 시간설정 메소드를 준비한다.
  (현재 미구현)
@@ -28,52 +28,55 @@
 
 /*!
  
- @abstract 어카운트 생성 기능
+ @abstract アカウント生成
  
  */
-+(void)signInUserWithUserEmailAddress:(NSString *)email
-                         withPassword:(NSString *)userpassword
-                       withCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion;
+- (void)signInUserWithUserEmailAddress:(NSString *)email
+                          withPassword:(NSString *)userpassword
+                          withUserType:(UserType)userType
+                        withCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion;
 
-/*!
- 
- @abstract 로그인 기능
- 
- */
-+(void)loginWithUserEmailAddress:(NSString *)email
-                    withPassword:(NSString *)userpassword
-                  withCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion;
+
 
 /*!
  
  @abstract 유저 상세 데이터 입력기능 - 이 기능은 유저가 로그인 한 상태(currentUser)를 전제로 한다.
  
  */
-+(void)setDetailUserInfoWithUserType:(NSNumber *)cmtUserType
-                      withWorkSchool:(School *)cmtWorkSchool
-                        withUserName:(NSString *)cmtUserName
-                withFuriganaUserName:(NSString *)cmtFuriganaUserName
-                          withGender:(NSNumber *)cmtGender
-                      withPostalCode:(NSString *)cmtPostalCode
-                withCellPhoneAddress:(NSString *)cmtCellPhoneAddress
-                        withPicImage:(NSData *)cmtPicImage
-                   withCheckApproval:(NSNumber *)cmtCheckApproval
-                      withCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion;
+- (void)setDetailUserInfoWithUserType:(NSNumber *)cmtUserType
+                       withWorkSchool:(School *)cmtWorkSchool
+                         withUserName:(NSString *)cmtUserName
+                 withFuriganaUserName:(NSString *)cmtFuriganaUserName
+                           withGender:(NSNumber *)cmtGender
+                       withPostalCode:(NSString *)cmtPostalCode
+                 withCellPhoneAddress:(NSString *)cmtCellPhoneAddress
+                         withPicImage:(NSData *)cmtPicImage
+                    withCheckApproval:(NSNumber *)cmtCheckApproval
+                       withCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion;
 
 /*!
  
- @abstract 로그아웃 기능
+ @abstract ログイン
  
  */
-+(void)logoutCurrentUserWithCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion;
+- (void)loginWithUserEmailAddress:(NSString *)email
+                     withPassword:(NSString *)userpassword
+                   withCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion;
+
+/*!
+ 
+ @abstract ログアウト
+ 
+ */
+- (void)logoutCurrentUserWithCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion;
 
 /*!
  
  @abstract 비밀번호 리셋 기능
  
  */
-+(void)currentUserPasswordResetWithUserEmailAddress:(NSString *)email
-                                     withCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion;
+- (void)currentUserPasswordResetWithUserEmailAddress:(NSString *)email
+                                      withCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion;
 
 //Role
 #pragma mark - Create Role
@@ -146,75 +149,6 @@
  */
 +(void)removeRoleWithRoleName:(NSString *)roleName
                withCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion;
-
-
-#pragma mark - Test API'S
-
-/*!
- 
- @abstract 테스트용 api - 원장유저 생성
- 
- */
-+(void)createMasterTeacher;
-
-/*!
- 
- @abstract 테스트용 api - 선생유저 생성
- 
- */
-+(void)createTeacher;
-
-/*!
- 
- @abstract 테스트용 api - 부모유저 생성
- 
- */
-+(void)createParents;
-
-/*!
- 
- @abstract 테스트용 api - 원장유저 로그인
- 
- */
-+(void)loginMasterTeacherWithCompletion:(void(^)(BOOL isSucceeded, NSError *resultError))completion;
-
-/*!
- 
- @abstract 테스트용 api - 선생유저 로그인
- 
- */
-+(void)loginTeacherWithCompletion:(void(^)(BOOL isSucceeded, NSError *resultError))completion;
-
-/*!
- 
- @abstract 테스트용 api - 부모유저 로그인
- 
- */
-+(void)loginParentsWithCompletion:(void(^)(BOOL isSucceeded, NSError *resultError))completion;
-
-/*!
- 
- @abstract 테스트용 api - 유저네임으로 유저 오브젝트 검색기능
- 
- */
-+(User*)getUserObjectWithUserName:(NSString*)userName;
-/*!
-
- @abstract Deletes a collection of objects all at once *asynchronously* and executes the block when done.
- 
- @param objects The array of objects to delete.
- @param block The block to execute.
- It should have the following argument signature: `^(BOOL succeeded, NSError *error)`.
- */
-//+ (void)deleteAllInBackground:(PF_NULLABLE NSArray *)objects
-//                        block:(PF_NULLABLE PFBooleanResultBlock)block;
-
-/*!
- @abstract Unsets a key on the object.
- 
- @param key The key.
- */
-//- (void)removeObjectForKey:(NSString *)key;
 
 
 @end

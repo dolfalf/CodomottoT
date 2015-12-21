@@ -9,10 +9,12 @@
 #import "SignInViewController.h"
 #import "CMTParseManager.h"
 
-@interface SignInViewController ()
+@interface SignInViewController () <UITextFieldDelegate>
+
+@property (nonatomic, weak) IBOutlet UITextField *inputLoginId;
+@property (nonatomic, weak) IBOutlet UITextField *inputPassword;
 
 @property (nonatomic, assign) BOOL isUserData;
-
 @property (nonatomic, strong) NSArray *users;
 @end
 
@@ -51,7 +53,7 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    [self.mainTableView reloadData];
+    [self loadUserData];
 }
 
 /*
@@ -75,7 +77,11 @@
                                                                       style:UIBarButtonItemStyleDone target:self
                                                                      action:@selector(signUpButtonTouched:)];
     
-    self.toolbarItems = @[signup_button];
+    UIBarButtonItem *logout_button = [[UIBarButtonItem alloc] initWithTitle:@"Logout"
+                                                                      style:UIBarButtonItemStyleDone target:self
+                                                                     action:@selector(logoutButtonTouched:)];
+    
+    self.toolbarItems = @[signup_button, logout_button];
     
     self.isUserData = YES;
 }
@@ -83,7 +89,17 @@
 #pragma mark - private methods
 - (void)loadUserData {
     
-    self.users = nil;
+    [[CMTParseManager sharedInstance] fetchUsers:UserTypeNone withCompletion:^(NSArray *users, NSError *resultError) {
+        if (resultError == nil) {
+            //success
+            self.users = users;
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.mainTableView reloadData];
+            });
+        }
+    }];
+    
 }
 
 #pragma mark - Action
@@ -103,7 +119,59 @@
     
 }
 
+- (void)logoutButtonTouched:(id)sender {
+    NSLog(@"%s", __FUNCTION__);
+    
+    [[CMTParseManager sharedInstance] logoutCurrentUserWithCompletion:^(BOOL isSucceeded, NSError *resultError) {
+        if (isSucceeded) {
+            NSLog(@"logout success");
+        }else {
+            NSLog(@"logout failed.");
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.mainTableView reloadData];
+        });
+        
+    }];
+    
+}
+
+- (IBAction)loginButtonTouched:(id)sender {
+    NSLog(@"%s", __FUNCTION__);
+    
+    [[CMTParseManager sharedInstance] loginWithUserEmailAddress:_inputLoginId.text
+                                                   withPassword:_inputPassword.text
+                                                 withCompletion:^(BOOL isSucceeded, NSError *resultError) {
+                                                     
+                                                     if (isSucceeded) {
+                                                         NSLog(@"login success");
+                                                         //画面遷移
+                                                         dispatch_async(dispatch_get_main_queue(), ^{
+                                                             [self performSegueWithIdentifier:@"SchoolListSegue" sender:self];
+                                                         });
+                                                         
+                                                         
+                                                     }else {
+                                                         NSLog(@"login failed.");
+                                                     }
+                                                     
+                                                   }];
+    
+}
+
 #pragma mark - TableView delegate metodhs
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    
+    User *current_user = [CMTParseManager sharedInstance].loginUser;
+    
+    if (current_user == nil) {
+        return @"Not logined.";
+    }
+
+    return [NSString stringWithFormat:@"current user [%@]", current_user.username];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     return _users.count;
@@ -113,12 +181,16 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CMTTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CMTTableCell" forIndexPath:indexPath];
-    cell.contentLabel.text = @"Samle Cell.";
+    
+    User *user = _users[indexPath.row];
+    
+    cell.contentLabel.text = [NSString stringWithFormat:@"%@ - %d", user.username, [user.cmtUserType intValue]];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     
 }
 
