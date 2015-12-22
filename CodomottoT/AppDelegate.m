@@ -71,6 +71,7 @@
     [Role registerSubclass];
     
     [School registerSubclass];
+    [RequestUser registerSubclass];
     
     [Contact registerSubclass];
     [ContactPhoto registerSubclass];

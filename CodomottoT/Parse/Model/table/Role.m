@@ -11,13 +11,7 @@
 
 @implementation Role
 
-//  objectId (auto)
-@dynamic name;
-@dynamic roles;
-@dynamic users;
-@dynamic ACL;
-//  createAt (auto)
-//  updateAt (auto)
+@dynamic cmtSchool;
 
 + (void)load {
     [self registerSubclass];

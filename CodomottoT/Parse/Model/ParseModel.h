@@ -15,6 +15,7 @@
 #import "Role.h"
 
 #import "School.h"
+#import "RequestUser.h"
 
 #import "Contact.h"
 #import "ContactComment.h"

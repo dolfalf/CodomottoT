@@ -7,65 +7,68 @@
 //
 
 #import "SchoolModel.h"
-#import "School.h"
-#import "const.h"
+#import "CMTParseManager.h"
 
 @implementation SchoolModel
 
-- (void)fetchAll:(void(^)(NSArray* schools, NSError* resultError))completion {
+- (void)registSchool:(School *)school completion:(void(^)(BOOL succeeded, NSError* resultError))completion {
     
-    PFQuery *query = [PFQuery queryWithClassName:[School parseClassName]];
-#if 0
-    [query whereKey:@"" equalTo:@""];
-#endif
+    CMTParseManager *mgr = [CMTParseManager sharedInstance];
     
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (!error) {
-
-            NSLog(@"Successfully retrieved %ld school.", (long)objects.count);
-#if 1
-            for (School *school in objects) {
-                NSLog(@"%@", school.name);
-            }
-#endif
-        
-            if (completion) {
-                completion(objects, nil);
-            }
-            
-        } else {
-            // Log details of the failure
-            NSLog(@"Error: %@ %@", error, [error userInfo]);
-            
-            if (completion) {
-                completion(nil, error);
-            }
+    if (mgr.userType != UserTypeHeadTeacher) {
+        if (completion) {
+            completion(NO, [NSError errorWithCodomottoErrorCode:CMTErrorCodeNoAuth localizedDescription:@"No Auth."]);
         }
-    }];
+        return;
+    }
     
-}
-
-- (void)registSchool:(NSDictionary *)info completion:(void(^)(BOOL succeeded, NSError* resultError))completion {
+    //自分のみアクセスできる
+    PFACL *school_ACL = [PFACL ACL];
+    [school_ACL setWriteAccess:YES forUser:[User currentUser]];
+    [school_ACL setReadAccess:YES forUser:[User currentUser]];
+    school.ACL = school_ACL;   //default
     
-    School *school = [School createModel];
-    
-//    SET_MODEL_PARAM(school, info, name);
-//    SET_MODEL_PARAM(school, info, description);
-    
-    school.name = info[@"name"];
-    school.description = info[@"description"];
-
-    [school saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-        
+    [self save:school completion:^(BOOL succeeded, NSError *resultError) {
         if (succeeded) {
-            if (completion) {
-                completion(succeeded, error);
-            }
+            //Schoolが作成できたらロールを作成する。
+            [mgr createSchoolRole:school completion:^(BOOL succeeded, NSError *resultError) {
+                
+                if (completion) {
+                    completion(succeeded, resultError);
+                }
+            }];
         }else {
             if (completion) {
-                completion(NO, error);
+                completion(succeeded, resultError);
             }
         }
+        
+        //여기가 잘 안됨!!
+        PFQuery *query = [Role query];
+        [query whereKey:@"cmtSchool" equalTo:school];
+        NSError *is_exist_error = nil;
+        NSArray *objects = [query findObjects:&is_exist_error];
+        
+        //왜 롤이 검색이 안되지????
+        NSLog(@"role object[%ld]", (long)objects.count);
+        
+        PFACL *work_acl = [PFACL ACL];
+        
+        for (Role *role in objects) {
+            if ([role.name hasPrefix:kCMTRoleNameMember]) {
+                //Read権限
+                [work_acl setReadAccess:YES forRole:role];
+                continue;
+            }
+            if ([role.name hasPrefix:kCMTRoleNameTeacher]) {
+                //Write権限
+                [work_acl setWriteAccess:YES forRole:role];
+                continue;
+            }
+            
+        }
+        school.ACL = work_acl;
+        [school save];
         
     }];
 }

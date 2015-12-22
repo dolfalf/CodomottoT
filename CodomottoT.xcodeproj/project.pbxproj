@@ -63,6 +63,9 @@
 		BB89B0C01C27C75C00065975 /* SIAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB89B0BA1C27C75C00065975 /* SIAlertView.m */; };
 		BB89B0C11C27C75C00065975 /* UIWindow+SIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BB89B0BC1C27C75C00065975 /* UIWindow+SIUtils.m */; };
 		BB89B0C41C27CA1100065975 /* UserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB89B0C31C27CA1100065975 /* UserListViewController.m */; };
+		BBDDE1431C2803190071C4FD /* RequestUser.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDDE1421C2803190071C4FD /* RequestUser.m */; };
+		BBDDE1461C2809DE0071C4FD /* RequestUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDDE1451C2809DE0071C4FD /* RequestUserModel.m */; };
+		BBDDE14A1C2811F40071C4FD /* Model.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDDE1491C2811F40071C4FD /* Model.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -177,6 +180,12 @@
 		BB89B0BC1C27C75C00065975 /* UIWindow+SIUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+SIUtils.m"; sourceTree = "<group>"; };
 		BB89B0C21C27CA1100065975 /* UserListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserListViewController.h; sourceTree = "<group>"; };
 		BB89B0C31C27CA1100065975 /* UserListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserListViewController.m; sourceTree = "<group>"; };
+		BBDDE1411C2803190071C4FD /* RequestUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestUser.h; sourceTree = "<group>"; };
+		BBDDE1421C2803190071C4FD /* RequestUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestUser.m; sourceTree = "<group>"; };
+		BBDDE1441C2809DE0071C4FD /* RequestUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestUserModel.h; sourceTree = "<group>"; };
+		BBDDE1451C2809DE0071C4FD /* RequestUserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestUserModel.m; sourceTree = "<group>"; };
+		BBDDE1481C2811F40071C4FD /* Model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
+		BBDDE1491C2811F40071C4FD /* Model.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Model.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -366,6 +375,12 @@
 			isa = PBXGroup;
 			children = (
 				BB0D70021C23C30300E6AE82 /* ParseModel.h */,
+				BBDDE1481C2811F40071C4FD /* Model.h */,
+				BBDDE1491C2811F40071C4FD /* Model.m */,
+				BB0D70051C23C30300E6AE82 /* SchoolModel.h */,
+				BB0D70061C23C30300E6AE82 /* SchoolModel.m */,
+				BBDDE1441C2809DE0071C4FD /* RequestUserModel.h */,
+				BBDDE1451C2809DE0071C4FD /* RequestUserModel.m */,
 				BB0D6FFC1C23C30300E6AE82 /* ContactModel.h */,
 				BB0D6FFD1C23C30300E6AE82 /* ContactModel.m */,
 				BB0D6FFE1C23C30300E6AE82 /* GroupModel.h */,
@@ -374,8 +389,6 @@
 				BB0D70011C23C30300E6AE82 /* NoticeModel.m */,
 				BB0D70031C23C30300E6AE82 /* ScheduleModel.h */,
 				BB0D70041C23C30300E6AE82 /* ScheduleModel.m */,
-				BB0D70051C23C30300E6AE82 /* SchoolModel.h */,
-				BB0D70061C23C30300E6AE82 /* SchoolModel.m */,
 				BB0D70071C23C30300E6AE82 /* table */,
 			);
 			path = Model;
@@ -384,8 +397,14 @@
 		BB0D70071C23C30300E6AE82 /* table */ = {
 			isa = PBXGroup;
 			children = (
+				BB0D701F1C23C30300E6AE82 /* User.h */,
+				BB0D70201C23C30300E6AE82 /* User.m */,
+				BB0D70141C23C30300E6AE82 /* Role.h */,
+				BB0D70151C23C30300E6AE82 /* Role.m */,
 				BB0D701D1C23C30300E6AE82 /* School.h */,
 				BB0D701E1C23C30300E6AE82 /* School.m */,
+				BBDDE1411C2803190071C4FD /* RequestUser.h */,
+				BBDDE1421C2803190071C4FD /* RequestUser.m */,
 				BB0D70081C23C30300E6AE82 /* Contact.h */,
 				BB0D70091C23C30300E6AE82 /* Contact.m */,
 				BB0D700A1C23C30300E6AE82 /* ContactComment.h */,
@@ -398,12 +417,8 @@
 				BB0D70111C23C30300E6AE82 /* Group.m */,
 				BB0D70121C23C30300E6AE82 /* Notice.h */,
 				BB0D70131C23C30300E6AE82 /* Notice.m */,
-				BB0D70141C23C30300E6AE82 /* Role.h */,
-				BB0D70151C23C30300E6AE82 /* Role.m */,
 				BB0D701B1C23C30300E6AE82 /* Schedule.h */,
 				BB0D701C1C23C30300E6AE82 /* Schedule.m */,
-				BB0D701F1C23C30300E6AE82 /* User.h */,
-				BB0D70201C23C30300E6AE82 /* User.m */,
 			);
 			path = table;
 			sourceTree = "<group>";
@@ -576,12 +591,14 @@
 				BB0D70371C23C30300E6AE82 /* User.m in Sources */,
 				BB0D6FED1C23BF1B00E6AE82 /* RegistSchoolViewController.m in Sources */,
 				BB0D703C1C23C30E00E6AE82 /* StoryboardUtil.m in Sources */,
+				BBDDE14A1C2811F40071C4FD /* Model.m in Sources */,
 				BB0D70381C23C30300E6AE82 /* UIColor+Helper.m in Sources */,
 				BB89B0BD1C27C75C00065975 /* LICENSE.md in Sources */,
 				BB0D6F751C23A12500E6AE82 /* AppDelegate.m in Sources */,
 				BB89B0C41C27CA1100065975 /* UserListViewController.m in Sources */,
 				BB0D70301C23C30300E6AE82 /* Group.m in Sources */,
 				BB0D6F721C23A12500E6AE82 /* main.m in Sources */,
+				BBDDE1461C2809DE0071C4FD /* RequestUserModel.m in Sources */,
 				BB0D702A1C23C30300E6AE82 /* ScheduleModel.m in Sources */,
 				BB0D70291C23C30300E6AE82 /* NoticeModel.m in Sources */,
 				BB0D6FE01C23BF1100E6AE82 /* CMTViewController.m in Sources */,
@@ -589,6 +606,7 @@
 				BB0D70391C23C30300E6AE82 /* UIFont+Helper.m in Sources */,
 				BB89B0C11C27C75C00065975 /* UIWindow+SIUtils.m in Sources */,
 				BB0D702C1C23C30300E6AE82 /* Contact.m in Sources */,
+				BBDDE1431C2803190071C4FD /* RequestUser.m in Sources */,
 				BB0D702B1C23C30300E6AE82 /* SchoolModel.m in Sources */,
 				BB0D70271C23C30300E6AE82 /* ContactModel.m in Sources */,
 				BB0D702D1C23C30300E6AE82 /* ContactComment.m in Sources */,

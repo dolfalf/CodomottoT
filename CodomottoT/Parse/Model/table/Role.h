@@ -8,15 +8,9 @@
 
 #import <Parse/Parse.h>
 
-@class User;
-@interface Role : PFRole
+@class School;
 
-//  objectId (auto)
-@property (nonatomic, copy) NSString *name;
-@property (nonatomic, strong, readonly) PFRelation *users;
-@property (nonatomic, strong, readonly) PFRelation *roles;
-@property (nonatomic, strong) PFACL *ACL;
-//  createAt (auto)
-//  updateAt (auto)
+@interface Role : PFRole <PFSubclassing>
 
+@property (nonatomic, strong) School *cmtSchool;
 @end

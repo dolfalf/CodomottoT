@@ -10,6 +10,11 @@
 #import "Role.h"
 #import "User.h"
 
+NSString * const kCMTRoleNameHeadTeacher    = @"HeadTeacher";
+NSString * const kCMTRoleNameTeacher        = @"Teacher";
+NSString * const kCMTRoleNameParents        = @"Parents";
+NSString * const kCMTRoleNameMember         = @"Member";
+
 @implementation CMTParseManager
 
 @dynamic isLogin;
@@ -17,14 +22,6 @@
 @dynamic loginUser;
 
 static CMTParseManager *_sharedInstance;
-
-NSString * const kCMTRoleNameDefaultUserReadOnly = @"DefaultUserReadOnly";
-NSString * const kCMTRoleNameTeacherReadOnly = @"TeacherReadOnly";
-NSString * const kCMTRoleNameTeacher = @"Teacher";
-NSString * const kCMTRoleNameMasterTeacher = @"MasterTeacher";
-NSString * const kCMTRoleNamePublicUserReadOnly = @"PublicUserReadOnly";
-//#define RoleNameSelectUserReadOnly(s)      규칙있는 동적 문자열로 롤을 생성하고 싶은데...
-//#define RoleNameSchool                      이것도 마찬가지
 
 #pragma mark - singleton
 + (CMTParseManager *)sharedInstance
@@ -89,17 +86,78 @@ NSString * const kCMTRoleNamePublicUserReadOnly = @"PublicUserReadOnly";
 }
 
 - (School *)currentSchool {
-    //get currentschool
-    return nil;
+    return [User currentUser].cmtWorkSchool;
 }
 
-//- (void)setCurrentSchool:(School *)currentSchool {
-//    
-//    //
-//    _currentSchool = currentSchool;
-//}
+#pragma mark ACL
 
-#pragma mark - Account
++(PFACL*)getPublicReadOnlyACL{
+    PFACL *acl = [PFACL ACL];
+    User *masterTeacher = [User currentUser];
+    [acl setWriteAccess:YES forUser:masterTeacher];
+    [acl setReadAccess:YES forUser:masterTeacher];
+    [acl setPublicReadAccess:YES];
+    [acl setPublicWriteAccess:NO];
+    
+    return acl;
+}
+
++(PFACL*)getPublicReadWriteACL{
+    PFACL *acl = [PFACL ACL];
+    User *masterTeacher = [User currentUser];
+    [acl setWriteAccess:YES forUser:masterTeacher];
+    [acl setReadAccess:YES forUser:masterTeacher];
+    [acl setPublicReadAccess:YES];
+    [acl setPublicWriteAccess:YES];
+    
+    return acl;
+}
+
++(PFACL*)getReadOnlyACLWithRoleName:(NSString *)roleName{
+    PFACL *acl = [PFACL ACL];
+    User *masterTeacher = [User currentUser];
+    [acl setWriteAccess:YES forUser:masterTeacher];
+    [acl setReadAccess:YES forUser:masterTeacher];
+    [acl setReadAccess:YES forRoleWithName:roleName];
+    [acl setWriteAccess:NO forRoleWithName:roleName];
+    [acl setPublicReadAccess:YES];
+    
+    return acl;
+}
+
++(PFACL*)getReadWriteACLWithRoleName:(NSString *)roleName{
+    PFACL *acl = [PFACL ACL];
+    User *masterTeacher = [User currentUser];
+    [acl setWriteAccess:YES forUser:masterTeacher];
+    [acl setReadAccess:YES forUser:masterTeacher];
+    [acl setReadAccess:YES forRoleWithName:roleName];
+    [acl setWriteAccess:YES forRoleWithName:roleName];
+    [acl setPublicReadAccess:YES];
+    
+    return acl;
+}
+
++(PFACL*)getReadOnlyACLWithUser:(User *)userObject{
+    PFACL *acl = [PFACL ACL];
+    [acl setReadAccess:YES forUser:userObject];
+    [acl setWriteAccess:NO forUser:userObject];
+    
+    return acl;
+}
+
++(PFACL*)getReadWriteACLWithUser:(User *)userObject{
+    PFACL *acl = [PFACL ACL];
+    [acl setReadAccess:YES forUser:userObject];
+    [acl setWriteAccess:YES forUser:userObject];
+    
+    return acl;
+}
+
+@end
+
+#pragma mark - Account Category
+@implementation CMTParseManager (Account)
+
 - (void)fetchUsers:(UserType)userType withCompletion:(void(^)(NSArray* users, NSError* resultError))completion {
     
     NSLog(@"%s", __FUNCTION__);
@@ -278,69 +336,7 @@ NSString * const kCMTRoleNamePublicUserReadOnly = @"PublicUserReadOnly";
  */
 //+(void)setTeacherStartDate:(NSDate *)cmtStartDate withEndDate:(NSDate *)cmtEndDate{}
 
-#pragma mark - ACL
-
-+(PFACL*)getPublicReadOnlyACL{
-    PFACL *acl = [PFACL ACL];
-    User *masterTeacher = [User currentUser];
-    [acl setWriteAccess:YES forUser:masterTeacher];
-    [acl setReadAccess:YES forUser:masterTeacher];
-    [acl setPublicReadAccess:YES];
-    [acl setPublicWriteAccess:NO];
-    
-    return acl;
-}
-
-+(PFACL*)getPublicReadWriteACL{
-    PFACL *acl = [PFACL ACL];
-    User *masterTeacher = [User currentUser];
-    [acl setWriteAccess:YES forUser:masterTeacher];
-    [acl setReadAccess:YES forUser:masterTeacher];
-    [acl setPublicReadAccess:YES];
-    [acl setPublicWriteAccess:YES];
-    
-    return acl;
-}
-
-+(PFACL*)getReadOnlyACLWithRoleName:(NSString *)roleName{
-    PFACL *acl = [PFACL ACL];
-    User *masterTeacher = [User currentUser];
-    [acl setWriteAccess:YES forUser:masterTeacher];
-    [acl setReadAccess:YES forUser:masterTeacher];
-    [acl setReadAccess:YES forRoleWithName:roleName];
-    [acl setWriteAccess:NO forRoleWithName:roleName];
-    [acl setPublicReadAccess:YES];
-    
-    return acl;
-}
-
-+(PFACL*)getReadWriteACLWithRoleName:(NSString *)roleName{
-    PFACL *acl = [PFACL ACL];
-    User *masterTeacher = [User currentUser];
-    [acl setWriteAccess:YES forUser:masterTeacher];
-    [acl setReadAccess:YES forUser:masterTeacher];
-    [acl setReadAccess:YES forRoleWithName:roleName];
-    [acl setWriteAccess:YES forRoleWithName:roleName];
-    [acl setPublicReadAccess:YES];
-    
-    return acl;
-}
-
-+(PFACL*)getReadOnlyACLWithUser:(User *)userObject{
-    PFACL *acl = [PFACL ACL];
-    [acl setReadAccess:YES forUser:userObject];
-    [acl setWriteAccess:NO forUser:userObject];
-    
-    return acl;
-}
-
-+(PFACL*)getReadWriteACLWithUser:(User *)userObject{
-    PFACL *acl = [PFACL ACL];
-    [acl setReadAccess:YES forUser:userObject];
-    [acl setWriteAccess:YES forUser:userObject];
-    
-    return acl;
-}
+@end
 
 /*
  롤 추가시 유의점(내부적으로)
@@ -355,8 +351,170 @@ NSString * const kCMTRoleNamePublicUserReadOnly = @"PublicUserReadOnly";
  특정유저만 읽을 수 있게 된다.
  */
 
-#pragma mark - Role
-#pragma mark - Create Role
+#pragma mark - Role Category
+@implementation CMTParseManager (Role)
+
+- (NSString *)schoolRoleName:(School *)school prefix:(NSString *)prefix {
+    
+    return [NSString stringWithFormat:@"%@_%@",prefix, school.objectId];
+}
+
+/*!
+ * 학원과 같이 롤을 생성한다.
+ * 원장 Role.
+ * 선생님 Role.(선생님은 원장유저를 상속받는다)
+ * 학부모 Role.
+ * 멤버 전체 Role.(학부모, 선생님유저를 상속받는다)
+ * 설명:
+ * 본인이 작성한 글에 대해서는 Role과 관계없이 ACL에 의해 읽기, 쓰기가 가능하다. 그러므로,
+ * 원장은 읽기,쓰기 권한을, 그리고 선생님과 학부모는 읽기권한만 주기로 하자.
+ *
+ * 단, 비공개 글쓰기는 위에 권한구분과 별도로 그때마다 권한을 생성하기로 한다.(아니면.. 이건 권한이아닌 코드로 제어하는게 나을지도....)
+ *
+ */
+- (void)createSchoolRole:(School *)school completion:(void(^)(BOOL succeeded, NSError* resultError))completion {
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        //Role重複チェック
+        PFQuery *query = [Role query];
+        [query whereKey:@"cmtSchool" equalTo:school];
+        NSError *is_exist_error = nil;
+        NSArray *objects = [query findObjects:&is_exist_error];
+        if (objects != nil && objects.count > 1) {
+            //すでに作成されている。
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (completion) {
+                    completion(NO,[NSError errorWithCodomottoErrorCode:CMTErrorCodeAlreadyData
+                                                  localizedDescription:@"이미 롤이 존재합니다"]);
+                }
+                return;
+            });
+            
+        }
+        
+        //ロール生成
+        BOOL role_succeeded = NO;
+        NSError *role_error = nil;
+        
+        //園長ロール生成
+        Role *head_teacher_role = [Role roleWithName:[self schoolRoleName:school prefix:kCMTRoleNameHeadTeacher]
+                                                  acl:[CMTParseManager getReadWriteACLWithUser:[User currentUser]]];
+        
+        //Add extra data
+        head_teacher_role.cmtSchool = school;
+        [head_teacher_role.users addObject:[User currentUser]];
+        
+        role_succeeded = [head_teacher_role save:&role_error];
+        
+        if(role_succeeded == NO) {
+            NSLog(@"%s - create head teatcher role failed.", __PRETTY_FUNCTION__ );
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (completion) {
+                completion(role_succeeded,
+                           [NSError errorWithCodomottoErrorCode:CMTErrorOther localizedDescription:@"Create role failed."]);
+                }
+                return;
+            });
+            
+        }
+        
+        //先生ロール生成
+        Role *teacher_role = [Role roleWithName:[self schoolRoleName:school prefix:kCMTRoleNameTeacher]
+                                             acl:[CMTParseManager getReadWriteACLWithUser:[User currentUser]]];
+        
+        //Add extra data
+        teacher_role.cmtSchool = school;
+        [teacher_role.roles addObject:head_teacher_role];
+        
+        role_succeeded = [teacher_role save:&role_error];
+        
+        if(role_succeeded == NO) {
+            NSLog(@"%s - create teacher role failed.", __PRETTY_FUNCTION__ );
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (completion) {
+                    completion(role_succeeded,
+                               [NSError errorWithCodomottoErrorCode:CMTErrorOther localizedDescription:@"Create role failed."]);
+                }
+                return;
+            });
+            
+        }
+        
+        //保護者ロール生成
+        Role *parents_role = [Role roleWithName:[self schoolRoleName:school prefix:kCMTRoleNameParents]
+                                            acl:[CMTParseManager getReadWriteACLWithUser:[User currentUser]]];
+        
+        //Add extra data
+        parents_role.cmtSchool = school;
+        
+        role_succeeded = [parents_role save:&role_error];
+        
+        if(role_succeeded == NO) {
+            NSLog(@"%s - create parents role failed.", __PRETTY_FUNCTION__ );
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (completion) {
+                    completion(role_succeeded,
+                               [NSError errorWithCodomottoErrorCode:CMTErrorOther localizedDescription:@"Create role failed."]);
+                }
+                return;
+            });
+            
+        }
+        
+        //全てのメンバーロール
+        Role *member_role = [Role roleWithName:[self schoolRoleName:school prefix:kCMTRoleNameMember]
+                                           acl:[CMTParseManager getReadWriteACLWithUser:[User currentUser]]];
+        
+        [member_role.roles addObject:parents_role];
+        [member_role.roles addObject:teacher_role];
+        
+        //Add extra data
+        member_role.cmtSchool = school;
+        
+        role_succeeded = [member_role save:&role_error];
+        
+        if(role_succeeded == NO) {
+            NSLog(@"%s - create member role failed.", __PRETTY_FUNCTION__ );
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (completion) {
+                    completion(role_succeeded,
+                               [NSError errorWithCodomottoErrorCode:CMTErrorOther localizedDescription:@"Create role failed."]);
+                }
+                return;
+            });
+        }
+        
+        //全て作成できたら完了
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (completion) {
+                completion(YES, nil);
+            }
+        });
+        
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#if 0
 +(void)createDefaultUserReadOnlyRoleWithCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion{
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -685,6 +843,8 @@ NSString * const kCMTRoleNamePublicUserReadOnly = @"PublicUserReadOnly";
 //    }];
 //}
 
+
+
 #pragma mark - Add User
 /*!
  
@@ -975,5 +1135,5 @@ NSString * const kCMTRoleNamePublicUserReadOnly = @"PublicUserReadOnly";
     
     return resultUser;
 }
-
+#endif
 @end

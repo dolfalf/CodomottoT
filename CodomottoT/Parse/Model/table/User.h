@@ -23,13 +23,7 @@ typedef NS_ENUM(NSInteger, UserType) {
 };
 
 @class School;
-@interface User : PFUser
-
-//  objectId (auto)
-@property (nonatomic, strong) NSString *username;
-@property (nonatomic, strong) NSString *password;
-//  authData (unknown...authData는 어디에서?)
-@property (nonatomic, strong) NSString *email;
+@interface User : PFUser <PFSubclassing>
 
 //메일 인증기능 ON시 사용하는 값이므로 필요없음
 //@property (nonatomic, assign) BOOL cmtEmailVerified;
@@ -49,7 +43,5 @@ typedef NS_ENUM(NSInteger, UserType) {
 
 //기본적으로 유저 자기자신의 ACL은 읽기/쓰기가 설정되어있음(자동)
 //@property (nonatomic, strong) PFACL *ACL;
-//  createAt (auto)
-//  updateAt (auto)
 
 @end

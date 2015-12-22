@@ -6,10 +6,15 @@
 //  Copyright (c) 2015年 Codomotto. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "Model.h"
+#import "School.h"
 
-@interface SchoolModel : NSObject
+@interface SchoolModel : Model
 
-- (void)fetchAll:(void(^)(NSArray* schools, NSError* resultError))completion;
-- (void)registSchool:(NSDictionary *)info completion:(void(^)(BOOL succeeded, NSError* resultError))completion;
+/*!
+ * 園長が新しくSchoolを登録するときに使う。
+ * Schoolを作成した後、園にアクセスできるようにRoleも作成する。
+ *
+ */
+- (void)registSchool:(School *)school completion:(void(^)(BOOL succeeded, NSError* resultError))completion;
 @end

@@ -78,19 +78,19 @@ const float kRegistSchoolCellHeight = 50.f;
     
     //TODO: いろいろ設定する項目はあるが、とりあえず最小限の情報のみセット
     SchoolModel *school_model = [SchoolModel new];
-    NSMutableDictionary *info = [NSMutableDictionary new];
+    School *school = [School createModel];
     
-    info[@"name"] = _nameCell.inputTextField.text;
-    info[@"description"] = _descriptionCell.inputTextField.text;
+    school.name = _nameCell.inputTextField.text;
+    school.description = _descriptionCell.inputTextField.text;
     
-    [school_model registSchool:info completion:^(BOOL succeeded, NSError *resultError) {
+    [school_model registSchool:school completion:^(BOOL succeeded, NSError *resultError) {
+        
         if (succeeded) {
             [self showAlertMessage:@"School resgited."];
         }else {
             [self showAlertMessage:resultError.description];
         }
     }];
-    
 }
 
 - (void)showAlertMessage:(NSString *)message {

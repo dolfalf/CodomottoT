@@ -1,21 +1,17 @@
 //
-//  School.m
-//  Codomotto
+//  RequestUser.m
+//  CodomottoT
 //
-//  Created by kjcode on 2015/07/08.
-//  Copyright (c) 2015年 Codomotto. All rights reserved.
+//  Created by lee jaeeun on 2015/12/21.
+//  Copyright © 2015年 kjcode. All rights reserved.
 //
 
-#import "School.h"
+#import "RequestUser.h"
 
-@implementation School
+@implementation RequestUser
 
-@dynamic name;
-@dynamic address1;
-@dynamic address2;
-@dynamic zipCode;
-@dynamic location;
-@dynamic description;
+@dynamic requestUser;
+@dynamic registSchool;
 @dynamic deleteFlag;
 @dynamic ACL;
 
@@ -24,12 +20,12 @@
 }
 
 + (NSString *)parseClassName {
-    return NSStringFromClass([self class]);
+    return @"RequestUser";
 }
 
 + (instancetype)createModel {
     
-    School *model = [[self alloc] init];
+    RequestUser *model = [[self alloc] init];
     
     model.deleteFlag = NO;
     //model.ACL = [PFACL ACLWithUser:[PFUser currentUser]];
@@ -48,6 +44,4 @@
     
     return self;
 }
-
-
 @end

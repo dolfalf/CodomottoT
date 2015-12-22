@@ -34,6 +34,7 @@ typedef NS_ENUM(NSInteger, CMTErrorCode) {
     CMTErrorCodeSetDetailInfoFailed = 7,
     CMTErrorCodeLogoutFailed = 8,
     CMTErrorCodePasswordResetFailed = 9,
+    CMTErrorCodeNoAuth = 10,
     CMTErrorOther = 100,
 };
 
