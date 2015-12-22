@@ -11,6 +11,8 @@
 
 @interface Model : NSObject
 
+- (NSString *)parseObjectName;
+
 - (void)fetchAll:(void(^)(NSArray* objects, NSError* resultError))completion;
 - (void)save:(PFObject *)object completion:(void(^)(BOOL succeeded, NSError* resultError))completion;
 - (void)remove:(PFObject *)object completion:(void(^)(BOOL succeeded, NSError* resultError))completion;

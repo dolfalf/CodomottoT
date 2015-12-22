@@ -22,26 +22,34 @@
         return;
     }
     
-    //自分のみアクセスできる
-    PFACL *school_ACL = [PFACL ACL];
-    [school_ACL setWriteAccess:YES forUser:[User currentUser]];
-    [school_ACL setReadAccess:YES forUser:[User currentUser]];
-    school.ACL = school_ACL;   //default
-    
-    [self save:school completion:^(BOOL succeeded, NSError *resultError) {
-        if (succeeded) {
-            //Schoolが作成できたらロールを作成する。
-            [mgr createSchoolRole:school completion:^(BOOL succeeded, NSError *resultError) {
-                
-                if (completion) {
-                    completion(succeeded, resultError);
-                }
-            }];
-        }else {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        //自分のみアクセスできる
+        PFACL *school_ACL = [PFACL ACL];
+        [school_ACL setWriteAccess:YES forUser:[User currentUser]];
+        [school_ACL setReadAccess:YES forUser:[User currentUser]];
+        school.ACL = school_ACL;   //default
+        
+        NSError *school_error = nil;
+        BOOL school_successed = NO;
+        school_successed = [school save:&school_error];
+        
+        if (school_successed == NO) {
             if (completion) {
-                completion(succeeded, resultError);
+                completion(school_successed, school_error);
             }
         }
+        
+        //ロール生成
+        NSError *role_error = nil;
+        BOOL role_successed = [mgr createRoleForSchool:school error:&role_error];
+        
+        if (role_successed == NO) {
+            if (completion) {
+                completion(role_successed, school_error);
+            }
+        }
+        
         
         //여기가 잘 안됨!!
         PFQuery *query = [Role query];
@@ -54,12 +62,18 @@
         
         PFACL *work_acl = [PFACL ACL];
         
+        //初めてログインしたUserは一覧で見ることができないため
+        [work_acl setPublicReadAccess:YES];
+        
         for (Role *role in objects) {
+            
+#if 0
             if ([role.name hasPrefix:kCMTRoleNameMember]) {
                 //Read権限
                 [work_acl setReadAccess:YES forRole:role];
                 continue;
             }
+#endif
             if ([role.name hasPrefix:kCMTRoleNameTeacher]) {
                 //Write権限
                 [work_acl setWriteAccess:YES forRole:role];
@@ -69,8 +83,8 @@
         }
         school.ACL = work_acl;
         [school save];
-        
-    }];
+    
+    });
 }
 
 @end

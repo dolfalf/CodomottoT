@@ -85,11 +85,14 @@ const float kRegistSchoolCellHeight = 50.f;
     
     [school_model registSchool:school completion:^(BOOL succeeded, NSError *resultError) {
         
-        if (succeeded) {
-            [self showAlertMessage:@"School resgited."];
-        }else {
-            [self showAlertMessage:resultError.description];
-        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (succeeded) {
+                [self showAlertMessage:@"School resgited."];
+            }else {
+                [self showAlertMessage:resultError.description];
+            }
+        });
+        
     }];
 }
 

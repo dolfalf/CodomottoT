@@ -20,7 +20,7 @@ extern NSString * const kCMTRoleNameMember;
 
 @property (nonatomic, assign, readonly) BOOL isLogin;
 @property (nonatomic, assign, readonly) UserType userType;
-@property (nonatomic, strong, readonly) School *currentSchool;
+@property (nonatomic, strong) School *currentSchool;
 @property (nonatomic, strong, readonly) User *loginUser;
 
 
@@ -97,9 +97,8 @@ extern NSString * const kCMTRoleNameMember;
 
 /*!
  * ロールは園長のみ作成できる。
- * readwrite, readOnlyのロールを作成する。
  */
-- (void)createSchoolRole:(School *)school completion:(void(^)(BOOL succeeded, NSError* resultError))completion;
+- (BOOL)createRoleForSchool:(School *)school error:(NSError **)error;
 
 //+(void)createDefaultUserReadOnlyRoleWithCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion;
 //

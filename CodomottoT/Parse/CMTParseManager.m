@@ -89,6 +89,13 @@ static CMTParseManager *_sharedInstance;
     return [User currentUser].cmtWorkSchool;
 }
 
+#pragma mark - setter Property
+- (void)setCurrentSchool:(School *)currentSchool {
+    
+    [User currentUser].cmtWorkSchool = currentSchool;
+    [[User currentUser] saveInBackground];
+}
+
 #pragma mark ACL
 
 +(PFACL*)getPublicReadOnlyACL{
@@ -372,127 +379,91 @@ static CMTParseManager *_sharedInstance;
  * 단, 비공개 글쓰기는 위에 권한구분과 별도로 그때마다 권한을 생성하기로 한다.(아니면.. 이건 권한이아닌 코드로 제어하는게 나을지도....)
  *
  */
-- (void)createSchoolRole:(School *)school completion:(void(^)(BOOL succeeded, NSError* resultError))completion {
+- (BOOL)createRoleForSchool:(School *)school error:(NSError **)error {
     
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    //Role重複チェック
+    PFQuery *query = [Role query];
+    [query whereKey:@"cmtSchool" equalTo:school];
+    NSError *is_exist_error = nil;
+    NSArray *objects = [query findObjects:&is_exist_error];
+    if (objects != nil && objects.count > 1) {
+        //すでに作成されている。
+        *error = [NSError errorWithCodomottoErrorCode:CMTErrorCodeAlreadyData
+                                 localizedDescription:@"Already role."];
+        return NO;
         
-        //Role重複チェック
-        PFQuery *query = [Role query];
-        [query whereKey:@"cmtSchool" equalTo:school];
-        NSError *is_exist_error = nil;
-        NSArray *objects = [query findObjects:&is_exist_error];
-        if (objects != nil && objects.count > 1) {
-            //すでに作成されている。
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (completion) {
-                    completion(NO,[NSError errorWithCodomottoErrorCode:CMTErrorCodeAlreadyData
-                                                  localizedDescription:@"이미 롤이 존재합니다"]);
-                }
-                return;
-            });
-            
-        }
-        
-        //ロール生成
-        BOOL role_succeeded = NO;
-        NSError *role_error = nil;
-        
-        //園長ロール生成
-        Role *head_teacher_role = [Role roleWithName:[self schoolRoleName:school prefix:kCMTRoleNameHeadTeacher]
-                                                  acl:[CMTParseManager getReadWriteACLWithUser:[User currentUser]]];
-        
-        //Add extra data
-        head_teacher_role.cmtSchool = school;
-        [head_teacher_role.users addObject:[User currentUser]];
-        
-        role_succeeded = [head_teacher_role save:&role_error];
-        
-        if(role_succeeded == NO) {
-            NSLog(@"%s - create head teatcher role failed.", __PRETTY_FUNCTION__ );
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (completion) {
-                completion(role_succeeded,
-                           [NSError errorWithCodomottoErrorCode:CMTErrorOther localizedDescription:@"Create role failed."]);
-                }
-                return;
-            });
-            
-        }
-        
-        //先生ロール生成
-        Role *teacher_role = [Role roleWithName:[self schoolRoleName:school prefix:kCMTRoleNameTeacher]
-                                             acl:[CMTParseManager getReadWriteACLWithUser:[User currentUser]]];
-        
-        //Add extra data
-        teacher_role.cmtSchool = school;
-        [teacher_role.roles addObject:head_teacher_role];
-        
-        role_succeeded = [teacher_role save:&role_error];
-        
-        if(role_succeeded == NO) {
-            NSLog(@"%s - create teacher role failed.", __PRETTY_FUNCTION__ );
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (completion) {
-                    completion(role_succeeded,
-                               [NSError errorWithCodomottoErrorCode:CMTErrorOther localizedDescription:@"Create role failed."]);
-                }
-                return;
-            });
-            
-        }
-        
-        //保護者ロール生成
-        Role *parents_role = [Role roleWithName:[self schoolRoleName:school prefix:kCMTRoleNameParents]
-                                            acl:[CMTParseManager getReadWriteACLWithUser:[User currentUser]]];
-        
-        //Add extra data
-        parents_role.cmtSchool = school;
-        
-        role_succeeded = [parents_role save:&role_error];
-        
-        if(role_succeeded == NO) {
-            NSLog(@"%s - create parents role failed.", __PRETTY_FUNCTION__ );
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (completion) {
-                    completion(role_succeeded,
-                               [NSError errorWithCodomottoErrorCode:CMTErrorOther localizedDescription:@"Create role failed."]);
-                }
-                return;
-            });
-            
-        }
-        
-        //全てのメンバーロール
-        Role *member_role = [Role roleWithName:[self schoolRoleName:school prefix:kCMTRoleNameMember]
-                                           acl:[CMTParseManager getReadWriteACLWithUser:[User currentUser]]];
-        
-        [member_role.roles addObject:parents_role];
-        [member_role.roles addObject:teacher_role];
-        
-        //Add extra data
-        member_role.cmtSchool = school;
-        
-        role_succeeded = [member_role save:&role_error];
-        
-        if(role_succeeded == NO) {
-            NSLog(@"%s - create member role failed.", __PRETTY_FUNCTION__ );
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (completion) {
-                    completion(role_succeeded,
-                               [NSError errorWithCodomottoErrorCode:CMTErrorOther localizedDescription:@"Create role failed."]);
-                }
-                return;
-            });
-        }
-        
-        //全て作成できたら完了
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (completion) {
-                completion(YES, nil);
-            }
-        });
-        
-    });
+    }
+    
+    //ロール生成
+    BOOL role_succeeded = NO;
+    NSError *role_error = nil;
+    
+    //園長ロール生成
+    Role *head_teacher_role = [Role roleWithName:[self schoolRoleName:school prefix:kCMTRoleNameHeadTeacher]
+                                              acl:[CMTParseManager getReadWriteACLWithUser:[User currentUser]]];
+    
+    //Add extra data
+    head_teacher_role.cmtSchool = school;
+    [head_teacher_role.users addObject:[User currentUser]];
+    
+    role_succeeded = [head_teacher_role save:&role_error];
+    
+    if(role_succeeded == NO) {
+        NSLog(@"%s - create head teatcher role failed.", __PRETTY_FUNCTION__ );
+        *error = [NSError errorWithCodomottoErrorCode:CMTErrorOther localizedDescription:@"Create role failed."];
+        return NO;
+    }
+    
+    //先生ロール生成
+    Role *teacher_role = [Role roleWithName:[self schoolRoleName:school prefix:kCMTRoleNameTeacher]
+                                         acl:[CMTParseManager getReadWriteACLWithUser:[User currentUser]]];
+    
+    //Add extra data
+    teacher_role.cmtSchool = school;
+    [teacher_role.roles addObject:head_teacher_role];
+    
+    role_succeeded = [teacher_role save:&role_error];
+    
+    if(role_succeeded == NO) {
+        NSLog(@"%s - create teacher role failed.", __PRETTY_FUNCTION__ );
+        *error = [NSError errorWithCodomottoErrorCode:CMTErrorOther localizedDescription:@"Create role failed."];
+        return NO;
+    }
+    
+    //保護者ロール生成
+    Role *parents_role = [Role roleWithName:[self schoolRoleName:school prefix:kCMTRoleNameParents]
+                                        acl:[CMTParseManager getReadWriteACLWithUser:[User currentUser]]];
+    
+    //Add extra data
+    parents_role.cmtSchool = school;
+    
+    role_succeeded = [parents_role save:&role_error];
+    
+    if(role_succeeded == NO) {
+        NSLog(@"%s - create parents role failed.", __PRETTY_FUNCTION__ );
+        *error = [NSError errorWithCodomottoErrorCode:CMTErrorOther localizedDescription:@"Create role failed."];
+        return NO;
+    }
+    
+    //全てのメンバーロール
+    Role *member_role = [Role roleWithName:[self schoolRoleName:school prefix:kCMTRoleNameMember]
+                                       acl:[CMTParseManager getReadWriteACLWithUser:[User currentUser]]];
+    
+    [member_role.roles addObject:parents_role];
+    [member_role.roles addObject:teacher_role];
+    
+    //Add extra data
+    member_role.cmtSchool = school;
+    
+    role_succeeded = [member_role save:&role_error];
+    
+    if(role_succeeded == NO) {
+        NSLog(@"%s - create member role failed.", __PRETTY_FUNCTION__ );
+        *error = [NSError errorWithCodomottoErrorCode:CMTErrorOther localizedDescription:@"Create role failed."];
+        return NO;
+    }
+    
+    return YES;
 }
 
 

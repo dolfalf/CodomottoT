@@ -9,6 +9,7 @@
 #import "SchoolListViewController.h"
 #import "CMTParseManager.h"
 #import "SchoolModel.h"
+#import "RequestUserModel.h"
 
 @interface SchoolListViewController ()
 
@@ -122,6 +123,34 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    CMTParseManager *mgr = [CMTParseManager sharedInstance];
+    School *school = _schools[indexPath.row];
+    
+    if (mgr.loginUser.cmtUserType == UserTypeHeadTeacher) {
+        //園長の場合
+        [CMTParseManager sharedInstance].currentSchool = school;
+        
+        //遷移
+        [self performSegueWithIdentifier:@"RequestUserListSegue" sender:self];
+        
+    }else {
+        //Request Userへ登録しておく
+        RequestUserModel *model = [RequestUserModel new];
+        RequestUser *user = [RequestUser createModel];
+        user.requestUser = mgr.loginUser;
+        user.registSchool = school;
+        
+        [model save:user completion:^(BOOL succeeded, NSError *resultError) {
+            //
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //遷移
+                [self performSegueWithIdentifier:@"RequestUserListSegue" sender:self];
+            });
+        }];
+    }
+    
+    
     
     
 }

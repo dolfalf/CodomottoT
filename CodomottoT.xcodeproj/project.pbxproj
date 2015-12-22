@@ -57,6 +57,7 @@
 		BB0D70391C23C30300E6AE82 /* UIFont+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0D70251C23C30300E6AE82 /* UIFont+Helper.m */; };
 		BB0D703C1C23C30E00E6AE82 /* StoryboardUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0D703B1C23C30E00E6AE82 /* StoryboardUtil.m */; };
 		BB0D703F1C23C3A000E6AE82 /* NSError+Parse.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0D703E1C23C3A000E6AE82 /* NSError+Parse.m */; };
+		BB1570DF1C29385100B75CFF /* RequestUserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB1570DE1C29385100B75CFF /* RequestUserListViewController.m */; };
 		BB89B0BD1C27C75C00065975 /* LICENSE.md in Sources */ = {isa = PBXBuildFile; fileRef = BB89B0B61C27C75C00065975 /* LICENSE.md */; };
 		BB89B0BE1C27C75C00065975 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = BB89B0B71C27C75C00065975 /* README.md */; };
 		BB89B0BF1C27C75C00065975 /* SIAlertView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BB89B0B81C27C75C00065975 /* SIAlertView.bundle */; };
@@ -171,6 +172,8 @@
 		BB0D703B1C23C30E00E6AE82 /* StoryboardUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoryboardUtil.m; sourceTree = "<group>"; };
 		BB0D703D1C23C3A000E6AE82 /* NSError+Parse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+Parse.h"; sourceTree = "<group>"; };
 		BB0D703E1C23C3A000E6AE82 /* NSError+Parse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+Parse.m"; sourceTree = "<group>"; };
+		BB1570DD1C29385100B75CFF /* RequestUserListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestUserListViewController.h; sourceTree = "<group>"; };
+		BB1570DE1C29385100B75CFF /* RequestUserListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestUserListViewController.m; sourceTree = "<group>"; };
 		BB89B0B61C27C75C00065975 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 		BB89B0B71C27C75C00065975 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		BB89B0B81C27C75C00065975 /* SIAlertView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SIAlertView.bundle; sourceTree = "<group>"; };
@@ -355,6 +358,8 @@
 				BB0D6FE51C23BF1B00E6AE82 /* SchoolListViewController.m */,
 				BB0D6FE21C23BF1B00E6AE82 /* RegistSchoolViewController.h */,
 				BB0D6FE31C23BF1B00E6AE82 /* RegistSchoolViewController.m */,
+				BB1570DD1C29385100B75CFF /* RequestUserListViewController.h */,
+				BB1570DE1C29385100B75CFF /* RequestUserListViewController.m */,
 			);
 			path = ISW;
 			sourceTree = "<group>";
@@ -595,6 +600,7 @@
 				BB0D70381C23C30300E6AE82 /* UIColor+Helper.m in Sources */,
 				BB89B0BD1C27C75C00065975 /* LICENSE.md in Sources */,
 				BB0D6F751C23A12500E6AE82 /* AppDelegate.m in Sources */,
+				BB1570DF1C29385100B75CFF /* RequestUserListViewController.m in Sources */,
 				BB89B0C41C27CA1100065975 /* UserListViewController.m in Sources */,
 				BB0D70301C23C30300E6AE82 /* Group.m in Sources */,
 				BB0D6F721C23A12500E6AE82 /* main.m in Sources */,
