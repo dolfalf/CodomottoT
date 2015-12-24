@@ -11,6 +11,9 @@
 #import "SIAlertView.h"
 #import "StoryboardUtil.h"
 
+NSString* const kSignInViewControllerNotificationSignInSuccess  = @"signInViewControllerNotificationSignInSuccess";
+NSString* const kSignInViewControllerNotificationSignInFail     = @"signInViewControllerNotificationSignInFail";
+
 @interface SignInViewController () <UITextFieldDelegate>
 
 @property (nonatomic, weak) IBOutlet UILabel *statusLabel;
@@ -56,27 +59,28 @@
 - (void)initControls {
     
     //title
-    self.title = @"Sign In";
+    self.title = @"サインイン";
     
-    // スペーサを生成する
+    //navibar.
+    UIBarButtonItem *signup_button = [[UIBarButtonItem alloc] initWithTitle:@"新規登録"
+                                                                      style:UIBarButtonItemStyleDone target:self
+                                                                     action:@selector(signUpButtonTouched:)];
+    self.navigationItem.rightBarButtonItems = @[signup_button];
+    
+    //toolbar.
     UIBarButtonItem *spacer = [[UIBarButtonItem alloc]
                                initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
                                target:nil action:nil];
     
-    //toolbar.
-    UIBarButtonItem *signup_button = [[UIBarButtonItem alloc] initWithTitle:@"SignUp"
-                                                                      style:UIBarButtonItemStyleDone target:self
-                                                                     action:@selector(signUpButtonTouched:)];
-    
-    UIBarButtonItem *logout_button = [[UIBarButtonItem alloc] initWithTitle:@"Logout"
+    UIBarButtonItem *logout_button = [[UIBarButtonItem alloc] initWithTitle:@"ログアウト"
                                                                       style:UIBarButtonItemStyleDone target:self
                                                                      action:@selector(logoutButtonTouched:)];
     
-    UIBarButtonItem *userlist_button = [[UIBarButtonItem alloc] initWithTitle:@"UserList"
+    UIBarButtonItem *userlist_button = [[UIBarButtonItem alloc] initWithTitle:@"ユーザー一覧(debug)"
                                                                       style:UIBarButtonItemStyleDone target:self
                                                                      action:@selector(userlistButtonTouched:)];
     
-    self.toolbarItems = @[signup_button, logout_button,spacer, userlist_button];
+    self.toolbarItems = @[logout_button,spacer, userlist_button];
     
 }
 
@@ -141,13 +145,13 @@
     CMTParseManager *manager = [CMTParseManager sharedInstance];
     //login状態をチェック
     if (manager.loginUser != nil) {
-        //logout処理
+        //logoutしてから利用可能
+        return;
         
     }
     
-    //SignUp遷移
-    [StoryboardUtil openSignUpViewController:self completion:nil];
-    
+    //SignUp
+    [StoryboardUtil pushSignUpViewController:self animated:YES completion:nil];
     
 }
 
@@ -182,7 +186,8 @@
                                                          NSLog(@"login success");
                                                          //画面遷移
                                                          dispatch_async(dispatch_get_main_queue(), ^{
-                                                             [self performSegueWithIdentifier:@"SchoolListSegue" sender:self];
+                                                             
+                                                             [[NSNotificationCenter defaultCenter] postNotificationName:kSignInViewControllerNotificationSignInSuccess object:nil];
                                                          });
                                                          
                                                          
@@ -190,6 +195,11 @@
                                                          NSLog(@"login failed.");
                                                          [self showAlertMessage:@"login failed."];
 
+                                                         dispatch_async(dispatch_get_main_queue(), ^{
+                                                             
+                                                             [[NSNotificationCenter defaultCenter] postNotificationName:kSignInViewControllerNotificationSignInFail object:nil];
+                                                         });
+                                                         
                                                      }
                                                      
                                                    }];

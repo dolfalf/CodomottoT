@@ -12,7 +12,7 @@
 
 @dynamic requestUser;
 @dynamic registSchool;
-@dynamic ApprovedFlag;
+@dynamic approvedFlag;
 @dynamic deleteFlag;
 @dynamic ACL;
 
@@ -29,7 +29,7 @@
     RequestUser *model = [[self alloc] init];
     
     //default
-    model.ApprovedFlag = NO;
+    model.approvedFlag = NO;
     model.deleteFlag = NO;
     model.ACL = [PFACL ACLWithUser:[PFUser currentUser]];
     

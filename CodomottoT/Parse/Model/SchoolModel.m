@@ -24,12 +24,6 @@
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-        //自分のみアクセスできる
-        PFACL *school_ACL = [PFACL ACL];
-        [school_ACL setWriteAccess:YES forUser:[User currentUser]];
-        [school_ACL setReadAccess:YES forUser:[User currentUser]];
-        school.ACL = school_ACL;   //default
-        
         NSError *school_error = nil;
         BOOL school_successed = NO;
         school_successed = [school save:&school_error];
@@ -50,40 +44,42 @@
             }
         }
         
-        
-        //여기가 잘 안됨!!
         PFQuery *query = [Role query];
         [query whereKey:@"cmtSchool" equalTo:school];
         NSError *is_exist_error = nil;
         NSArray *objects = [query findObjects:&is_exist_error];
         
-        //왜 롤이 검색이 안되지????
         NSLog(@"role object[%ld]", (long)objects.count);
         
-        PFACL *work_acl = [PFACL ACL];
-        
-        //初めてログインしたUserは一覧で見ることができないため
-        [work_acl setPublicReadAccess:YES];
+        PFACL *school_acl = [PFACL ACL];
+        [school_acl setPublicReadAccess:YES];
         
         for (Role *role in objects) {
             
 #if 0
             if ([role.name hasPrefix:kCMTRoleNameMember]) {
                 //Read権限
-                [work_acl setReadAccess:YES forRole:role];
+                [school_acl setReadAccess:YES forRole:role];
                 continue;
             }
 #endif
             if ([role.name hasPrefix:kCMTRoleNameTeacher]) {
                 //Write権限
-                [work_acl setWriteAccess:YES forRole:role];
+                [school_acl setWriteAccess:YES forRole:role];
                 continue;
             }
             
         }
-        school.ACL = work_acl;
+        
+        school.ACL = school_acl;
         [school save];
     
+        //ユーザーに登録
+        [mgr registUserSchool:school];
+        
+        if (completion) {
+            completion(YES, nil);
+        }
     });
 }
 

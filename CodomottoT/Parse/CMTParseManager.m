@@ -89,13 +89,6 @@ static CMTParseManager *_sharedInstance;
     return [User currentUser].cmtWorkSchool;
 }
 
-#pragma mark - setter Property
-- (void)setCurrentSchool:(School *)currentSchool {
-    
-    [User currentUser].cmtWorkSchool = currentSchool;
-    [[User currentUser] saveInBackground];
-}
-
 #pragma mark ACL
 
 +(PFACL*)getPublicReadOnlyACL{
@@ -164,6 +157,13 @@ static CMTParseManager *_sharedInstance;
 
 #pragma mark - Account Category
 @implementation CMTParseManager (Account)
+
+- (void)registUserSchool:(School *)school {
+    
+    [User currentUser].cmtWorkSchool = school;
+    [[User currentUser] saveInBackground];
+}
+
 
 - (void)fetchUsers:(UserType)userType withCompletion:(void(^)(NSArray* users, NSError* resultError))completion {
     
@@ -370,7 +370,7 @@ static CMTParseManager *_sharedInstance;
     
     NSLog(@"%s", __FUNCTION__);
     
-    if (self.currentSchool) {
+    if (self.currentSchool == nil) {
         return NO;
     }
     
@@ -495,7 +495,39 @@ static CMTParseManager *_sharedInstance;
     return YES;
 }
 
-
+- (BOOL)addUserSchoolRole:(RequestUser *)requestUser error:(NSError **)error {
+    
+    //Role検索
+    PFQuery *query = [Role query];
+    [query whereKey:@"cmtSchool" equalTo:requestUser.registSchool];
+    
+    NSError *is_exist_error = nil;
+    NSArray *objects = [query findObjects:&is_exist_error];
+    if (objects == nil || objects.count == 0) {
+        *error = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNoData localizedDescription:@"no roles"];
+        return NO;
+    }
+    
+    UserType request_user_type = (UserType)[requestUser.requestUser.cmtUserType integerValue];
+    NSString *user_type_key =
+    request_user_type == UserTypeHeadTeacher?kCMTRoleNameHeadTeacher:
+    request_user_type == UserTypeTeacher?kCMTRoleNameTeacher:
+    request_user_type == UserTypeParents?kCMTRoleNameParents:nil;
+    
+    
+    for (Role *s_role in objects) {
+        if ([s_role.name hasPrefix:user_type_key]) {
+            [s_role.users addObject:requestUser.requestUser];
+            continue;
+        }
+        if ([s_role.name hasPrefix:kCMTRoleNameMember]) {
+            [s_role.users addObject:requestUser.requestUser];
+            continue;
+        }
+    }
+    
+    return YES;
+}
 
 
 

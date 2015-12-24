@@ -10,9 +10,33 @@
 
 @interface StoryboardUtil : NSObject
 
-+ (void)openSignUpViewController:(id)owner completion:(void(^)(id))completion;
-+ (void)openUserListViewController:(id)owner completion:(void(^)(id))completion;
-+ (void)openRegistSchoolViewController:(id)owner completion:(void(^)(id))completion;
+@end
+
+@interface StoryboardUtil (Sign)
++ (void)openSignInViewController:(id)owner animated:(BOOL)animated completion:(void(^)(id))completion;
+
+@end
+
+@interface StoryboardUtil (ISW)
+
++ (void)pushSignUpViewController:(id)owner animated:(BOOL)animated completion:(void(^)(id))completion;
++ (void)pushRegistSchoolViewController:(id)owner animated:(BOOL)animated completion:(void(^)(id))completion;
++ (void)pushSchoolListViewController:(id)owner animated:(BOOL)animated completion:(void(^)(id))completion;
++ (void)pushAllowWaitViewController:(id)owner animated:(BOOL)animated completion:(void(^)(id))completion;
++ (void)pushStartContactViewController:(id)owner animated:(BOOL)animated completion:(void(^)(id))completion;
+@end
+
+@interface StoryboardUtil (Setting)
+
++ (void)openRequestUserViewController:(id)owner completion:(void(^)(id))completion;
+@end
+
+@interface StoryboardUtil (Contact)
 
 + (void)openContactViewController:(id)owner completion:(void(^)(id))completion;
+@end
+
+@interface StoryboardUtil (Debug)
+
++ (void)openUserListViewController:(id)owner completion:(void(^)(id))completion;
 @end

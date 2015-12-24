@@ -66,15 +66,15 @@
 - (void)initControls {
     
     //title
-    self.title = @"Member List";
+    self.title = @"承認待ちユーザーリスト";
     
     //toolbar.
-    UIBarButtonItem *requst_user_button = [[UIBarButtonItem alloc] initWithTitle:@"Next"
-                                                                           style:UIBarButtonItemStyleDone
-                                                                          target:self
-                                                                          action:@selector(nextButtonTouched:)];
+    UIBarButtonItem *close_button = [[UIBarButtonItem alloc] initWithTitle:@"閉じる"
+                                                                     style:UIBarButtonItemStyleDone
+                                                                    target:self
+                                                                    action:@selector(closeButtonTouched:)];
     
-    self.navigationItem.rightBarButtonItems = @[requst_user_button];
+    self.navigationItem.leftBarButtonItems = @[close_button];
     
     self.hasMemberData = YES;
 }
@@ -102,9 +102,9 @@
 }
 
 #pragma mark - Action
-- (void)nextButtonTouched:(id)sender {
-    
+- (void)closeButtonTouched:(id)sender {
     //Contact画面へ遷移
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - TableView delegate metodhs
@@ -127,6 +127,8 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+    RequestUser *request_user = _members[indexPath.row];
+    
     //園長ではないときは許可できない。
     CMTParseManager *mgr = [CMTParseManager sharedInstance];
     
@@ -135,11 +137,14 @@
         return;
     }
     
-    //園長の場合はロールを更新する
+    //ロールリストにユーザー追加
+    NSError *role_error = nil;
+    [mgr addUserSchoolRole:request_user error:&role_error];
     
     
-    //RequestUSerにフラグを立てる
-        
+    //リクエストユーザーにフラグを立てる
+    RequestUserModel *model = [RequestUserModel new];
+    [model approvedInBackground:request_user];
     
     
     [self.mainTableView reloadData];

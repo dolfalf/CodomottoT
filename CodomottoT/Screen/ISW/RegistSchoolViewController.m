@@ -54,15 +54,9 @@ const float kRegistSchoolCellHeight = 50.f;
 #pragma mark - private methods
 - (void)initControls {
     
-    self.title = @"Regist School";
+    self.title = @"園登録";
     
-    UIBarButtonItem *cancel_button = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
-                                                                      style:UIBarButtonItemStylePlain
-                                                                     target:self
-                                                                     action:@selector(cancelButtonTouched:)];
-    
-    self.navigationItem.leftBarButtonItems = @[cancel_button];
-    
+    [self.navigationItem setHidesBackButton:YES animated:NO];
 }
 
 - (void)registSchool {
@@ -104,9 +98,11 @@ const float kRegistSchoolCellHeight = 50.f;
                              type:SIAlertViewButtonTypeDefault
                           handler:^(SIAlertView *alert) {
                               NSLog(@"Button1 Clicked");
-                              [self dismissViewControllerAnimated:YES completion:nil];
+                              
+                              [StoryboardUtil pushStartContactViewController:self animated:YES completion:nil];
                           }];
  
+    
     alertView.willShowHandler = ^(SIAlertView *alertView) {
         NSLog(@"%@, willShowHandler", alertView);
     };
@@ -127,16 +123,6 @@ const float kRegistSchoolCellHeight = 50.f;
 
 
 #pragma mark - Action
-- (void)cancelButtonTouched:(id)sender {
-    NSLog(@"%s", __FUNCTION__);
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
-}
-
-- (void)userTypeValueChanged:(id)sender {
-    NSLog(@"%s", __FUNCTION__);
-}
 
 #pragma mark - TableView delegate metodhs
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {

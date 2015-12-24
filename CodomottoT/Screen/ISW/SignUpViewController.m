@@ -9,6 +9,9 @@
 #import "SignUpViewController.h"
 #import "CMTParseManager.h"
 
+NSString* const kSignUpViewControllerNotificationSignUpSuccess = @"signUpViewControllerNotificationSignUpSuccess";
+NSString* const kSignUpViewControllerNotificationSignUpFail = @"signUpViewControllerNotificationSignUpFail";
+
 typedef NS_ENUM(NSInteger, SignupCellType) {
     SignupCellTypeUserType = 0,
     SignupCellTypeUserId,
@@ -54,9 +57,9 @@ const float kSignupCellHeight = 50.f;
 #pragma mark - private methods
 - (void)initControls {
     
-    self.title = @"Sign Up";
+    self.title = @"新規登録";
     
-    UIBarButtonItem *cancel_button = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+    UIBarButtonItem *cancel_button = [[UIBarButtonItem alloc] initWithTitle:@"キャンセル"
                                                                       style:UIBarButtonItemStylePlain
                                                                      target:self
                                                                      action:@selector(cancelButtonTouched:)];
@@ -80,8 +83,19 @@ const float kSignupCellHeight = 50.f;
                                                           NSLog(@"isSucceeded[%@]", isSucceeded?@"YES":@"NO");
                                                           
                                                           if (isSucceeded) {
+                                                              
+                                                              dispatch_async(dispatch_get_main_queue(), ^{
+                                                                  
+                                                                  [[NSNotificationCenter defaultCenter] postNotificationName:kSignUpViewControllerNotificationSignUpSuccess object:nil];
+                                                              });
+                                                              
                                                               //遷移処理
                                                               [self dismissViewControllerAnimated:YES completion:nil];
+                                                          }else {
+                                                              dispatch_async(dispatch_get_main_queue(), ^{
+                                                                  
+                                                                  [[NSNotificationCenter defaultCenter] postNotificationName:kSignUpViewControllerNotificationSignUpFail object:nil];
+                                                              });
                                                           }
                                                           
                                                       }];
@@ -93,8 +107,7 @@ const float kSignupCellHeight = 50.f;
 - (void)cancelButtonTouched:(id)sender {
     NSLog(@"%s", __FUNCTION__);
     
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)userTypeValueChanged:(id)sender {
@@ -118,10 +131,10 @@ const float kSignupCellHeight = 50.f;
         {
             if (_userTypeCell == nil) {
                 self.userTypeCell = [tableView dequeueReusableCellWithIdentifier:@"CMTSegmentCell" forIndexPath:indexPath];
-                [_userTypeCell.segmentControl setTitle:@"Parents" forSegmentAtIndex:0];
-                [_userTypeCell.segmentControl setTitle:@"Head Teacher" forSegmentAtIndex:1];
-                [_userTypeCell.segmentControl setTitle:@"Teacher" forSegmentAtIndex:2];
-                _userTypeCell.segmentControl.selectedSegmentIndex = 0;
+                [_userTypeCell.segmentControl setTitle:@"Parents" forSegmentAtIndex:UserTypeParents];
+                [_userTypeCell.segmentControl setTitle:@"Head Teacher" forSegmentAtIndex:UserTypeHeadTeacher];
+                [_userTypeCell.segmentControl setTitle:@"Teacher" forSegmentAtIndex:UserTypeTeacher];
+                _userTypeCell.segmentControl.selectedSegmentIndex = UserTypeParents;
                 
                 [_userTypeCell.segmentControl addTarget:self
                                                  action:@selector(userTypeValueChanged:)

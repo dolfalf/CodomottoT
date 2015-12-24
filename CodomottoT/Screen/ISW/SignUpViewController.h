@@ -8,6 +8,9 @@
 
 #import "CMTViewController.h"
 
+extern NSString* const kSignUpViewControllerNotificationSignUpSuccess;
+extern NSString* const kSignUpViewControllerNotificationSignUpFail;
+
 @interface SignUpViewController : CMTViewController
 
 @end

@@ -66,14 +66,10 @@
 - (void)initControls {
     
     //title
-    self.title = @"School List";
+    self.title = @"園リスト";
     
-    //toolbar.
-    UIBarButtonItem *regist_button = [[UIBarButtonItem alloc] initWithTitle:@"Regist"
-                                                                      style:UIBarButtonItemStyleDone target:self
-                                                                     action:@selector(registButtonTouched:)];
-    
-    self.toolbarItems = @[regist_button];
+    //navibar.
+    [self.navigationItem setHidesBackButton:YES animated:NO];
     
     self.hasSchoolData = YES;
 }
@@ -99,10 +95,6 @@
 }
 
 #pragma mark - Action
-- (void)registButtonTouched:(id)sender {
-    
-    [StoryboardUtil openRegistSchoolViewController:self completion:nil];
-}
 
 #pragma mark - TableView delegate metodhs
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -128,27 +120,26 @@
     School *school = _schools[indexPath.row];
     
     if (mgr.loginUser.cmtUserType == UserTypeHeadTeacher) {
-        //園長の場合
-        [CMTParseManager sharedInstance].currentSchool = school;
-        
-        //遷移
-        [self performSegueWithIdentifier:@"RequestUserListSegue" sender:self];
-        
-    }else {
-        //Request Userへ登録しておく
-        RequestUserModel *model = [RequestUserModel new];
-        RequestUser *user = [RequestUser createModel];
-        user.requestUser = mgr.loginUser;
-        user.registSchool = school;
-        
-        [model save:user completion:^(BOOL succeeded, NSError *resultError) {
-            //
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //許可待ち画面へ遷移
-                [self performSegueWithIdentifier:@"AllowWaitSegue" sender:self];
-            });
-        }];
+        //園長は園選択画面は使わない
+        return;
     }
+    
+    //Request Userへ登録しておく
+    RequestUserModel *model = [RequestUserModel new];
+    RequestUser *user = [RequestUser createModel];
+    user.requestUser = mgr.loginUser;
+    user.registSchool = school;
+    
+    //園選択情報保存
+    [mgr registUserSchool:school];
+    
+    [model save:user completion:^(BOOL succeeded, NSError *resultError) {
+        //
+        dispatch_async(dispatch_get_main_queue(), ^{
+            //許可待ち画面へ遷移
+            [StoryboardUtil pushAllowWaitViewController:self animated:YES completion:nil];
+        });
+    }];
 }
 
 @end

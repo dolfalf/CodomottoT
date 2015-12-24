@@ -24,6 +24,13 @@
     }];
 }
 
+- (void)approvedInBackground:(RequestUser *)object {
+    
+    object.approvedFlag = YES;
+    [object saveInBackground];
+}
+
+#pragma mark - override methods
 - (void)save:(PFObject *)object completion:(void (^)(BOOL, NSError *))completion {
 
     CMTParseManager *mgr = [CMTParseManager sharedInstance];

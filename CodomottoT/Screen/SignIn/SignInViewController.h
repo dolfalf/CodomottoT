@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+extern NSString* const kSignInViewControllerNotificationSignInSuccess;
+extern NSString* const kSignInViewControllerNotificationSignInFail;
+
 @interface SignInViewController : UIViewController
 
 @end

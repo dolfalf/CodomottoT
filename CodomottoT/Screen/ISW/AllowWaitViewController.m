@@ -63,8 +63,9 @@
 #pragma mark - private methods
 - (void)initControls {
     
-    self.title = @"Allow Wait";
+    self.title = @"承認待ち";
     
+    [self.navigationItem setHidesBackButton:YES animated:NO];
     
     _gotoButton.enabled = NO;
     
