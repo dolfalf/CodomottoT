@@ -366,6 +366,21 @@ static CMTParseManager *_sharedInstance;
     return [NSString stringWithFormat:@"%@_%@",prefix, school.objectId];
 }
 
+- (void)hasAccessRoleToSchoolInBackground:(void(^)(BOOL))completion {
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        BOOL hasAccess = [self hasAccessRoleToSchool];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (completion) {
+                completion(hasAccess);
+            }
+        });
+        
+    });
+}
+
 - (BOOL)hasAccessRoleToSchool {
     
     NSLog(@"%s", __FUNCTION__);
@@ -393,6 +408,21 @@ static CMTParseManager *_sharedInstance;
     }
     
     return NO;
+}
+
+- (void)createRoleForSchoolInBackground:school block:(void(^)(BOOL, NSError*))completion {
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        NSError *error = nil;
+        BOOL success = [self createRoleForSchool:school error:&error];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (completion) {
+                completion(success, error);
+            }
+        });
+    });
 }
 
 /*!
@@ -495,6 +525,21 @@ static CMTParseManager *_sharedInstance;
     return YES;
 }
 
+- (void)addUserSchoolRoleInBackground:(RequestUser *)requestUser block:(void(^)(BOOL, NSError*))completion {
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        NSError *error = nil;
+        BOOL success = [self addUserSchoolRole:requestUser error:&error];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (completion) {
+                completion(success, error);
+            }
+        });
+    });
+}
+
 - (BOOL)addUserSchoolRole:(RequestUser *)requestUser error:(NSError **)error {
     
     //Role検索
@@ -518,10 +563,12 @@ static CMTParseManager *_sharedInstance;
     for (Role *s_role in objects) {
         if ([s_role.name hasPrefix:user_type_key]) {
             [s_role.users addObject:requestUser.requestUser];
+            [s_role save];
             continue;
         }
         if ([s_role.name hasPrefix:kCMTRoleNameMember]) {
             [s_role.users addObject:requestUser.requestUser];
+            [s_role save];
             continue;
         }
     }

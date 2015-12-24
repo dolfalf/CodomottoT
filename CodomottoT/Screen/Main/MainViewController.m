@@ -145,20 +145,24 @@
                 //先生、保護者は園選択画面へ遷移する
                 [StoryboardUtil pushSchoolListViewController:self animated:NO completion:nil];
             }
-        }else if (selected_school == YES && [mgr hasAccessRoleToSchool] == NO) {
-            //園は選択しているがまだ未承認
-            if (login_user_type == UserTypeHeadTeacher) {
-                //園長は生成と同時に登録するためここには配当なし。
-            }else {
-                //先生、保護者は承認待ち画面へ遷移する
-                [StoryboardUtil pushAllowWaitViewController:self animated:NO completion:nil];
-            }
-        }else if (selected_school == YES && [mgr hasAccessRoleToSchool] == YES) {
-            //園を選択しているかつ承認ももらっていたら
-            [StoryboardUtil pushStartContactViewController:self animated:NO completion:nil];
-            
         }else {
-            //ステータスが不明
+            
+            [mgr hasAccessRoleToSchoolInBackground:^(BOOL hasAccessRole) {
+                
+                if (hasAccessRole) {
+                    //園は選択しているがまだ未承認
+                    if (login_user_type == UserTypeHeadTeacher) {
+                        //園長は生成と同時に登録するためここには配当なし。??
+                        [StoryboardUtil pushStartContactViewController:self animated:NO completion:nil];
+                    }else {
+                        //先生、保護者は承認待ち画面へ遷移する
+                        [StoryboardUtil pushAllowWaitViewController:self animated:NO completion:nil];
+                    }
+                }else {
+                    //園を選択しているかつ承認ももらっていたら
+                    [StoryboardUtil pushStartContactViewController:self animated:NO completion:nil];
+                }
+            }];
         }
         
     }

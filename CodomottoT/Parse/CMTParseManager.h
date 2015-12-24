@@ -97,15 +97,20 @@ extern NSString * const kCMTRoleNameMember;
 /*!
  * 現在園のアクセス権限があるかどうか。
  */
+- (void)hasAccessRoleToSchoolInBackground:(void(^)(BOOL))completion;
 - (BOOL)hasAccessRoleToSchool;
-
 /*!
  * ロールは園長のみ作成できる。
  */
+- (void)createRoleForSchoolInBackground:school block:(void(^)(BOOL, NSError*))completion;
+
 - (BOOL)createRoleForSchool:(School *)school error:(NSError **)error;
 
+/*!
+ * ロールにユーザーを追加する。
+ */
+- (void)addUserSchoolRoleInBackground:(RequestUser *)requestUser block:(void(^)(BOOL, NSError*))completion;
 - (BOOL)addUserSchoolRole:(RequestUser *)requestUser error:(NSError **)error;
-
 /*!
  
  @abstract 로그인 유저에 쓰기권한을 가진경우 롤 삭제기능

@@ -138,9 +138,7 @@
     }
     
     //ロールリストにユーザー追加
-    NSError *role_error = nil;
-    [mgr addUserSchoolRole:request_user error:&role_error];
-    
+    [mgr addUserSchoolRoleInBackground:request_user block:nil];
     
     //リクエストユーザーにフラグを立てる
     RequestUserModel *model = [RequestUserModel new];
