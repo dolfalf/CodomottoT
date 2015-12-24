@@ -27,7 +27,7 @@
     
 }
 
-- (void)save:(PFObject *)object completion:(void(^)(BOOL succeeded, NSError* resultError))completion {
+- (void)save:(id)object completion:(void(^)(BOOL succeeded, NSError* resultError))completion {
     
     [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         

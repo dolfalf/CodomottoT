@@ -27,8 +27,8 @@ extern NSString * const kCMTRoleNameMember;
 
 @end
 
-#pragma mark - Account Category
-@interface CMTParseManager (Account)
+#pragma mark - User Category
+@interface CMTParseManager (User)
 
 /*!
  
@@ -103,7 +103,6 @@ extern NSString * const kCMTRoleNameMember;
  * ロールは園長のみ作成できる。
  */
 - (void)createRoleForSchoolInBackground:school block:(void(^)(BOOL, NSError*))completion;
-
 - (BOOL)createRoleForSchool:(School *)school error:(NSError **)error;
 
 /*!
@@ -111,6 +110,7 @@ extern NSString * const kCMTRoleNameMember;
  */
 - (void)addUserSchoolRoleInBackground:(RequestUser *)requestUser block:(void(^)(BOOL, NSError*))completion;
 - (BOOL)addUserSchoolRole:(RequestUser *)requestUser error:(NSError **)error;
+
 /*!
  
  @abstract 로그인 유저에 쓰기권한을 가진경우 롤 삭제기능

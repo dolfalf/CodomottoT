@@ -119,8 +119,10 @@
     CMTTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CMTTableCell" forIndexPath:indexPath];
     
     RequestUser *requesst_user = _members[indexPath.row];
+    User *usr = (User *)requesst_user.requestUser;
     
-    cell.contentLabel.text = [NSString stringWithFormat:@"%@, %@", requesst_user.requestUser.username,requesst_user.requestUser.cmtUserType];
+//    cell.contentLabel.text = [NSString stringWithFormat:@"%@, %@", usr.objectId, usr.cmtUserType];
+        cell.contentLabel.text = [NSString stringWithFormat:@"%@", usr.objectId];
     return cell;
 }
 
@@ -132,7 +134,7 @@
     //園長ではないときは許可できない。
     CMTParseManager *mgr = [CMTParseManager sharedInstance];
     
-    if (mgr.loginUser.cmtUserType != UserTypeHeadTeacher) {
+    if ([mgr.loginUser.cmtUserType integerValue] != UserTypeHeadTeacher) {
         NSLog(@"No Auth role.");
         return;
     }

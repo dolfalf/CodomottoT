@@ -15,7 +15,7 @@
 - (void)fetchBySchool:(School *)school completion:(void(^)(NSArray* requestUsers, NSError* resultError))completion {
     
     PFQuery *query = [PFQuery queryWithClassName:[self parseObjectName]];
-    [query whereKey:@"cmtSchool" equalTo:school];
+    [query whereKey:@"registSchool" equalTo:school];
     
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
         if (completion) {
@@ -31,7 +31,7 @@
 }
 
 #pragma mark - override methods
-- (void)save:(PFObject *)object completion:(void (^)(BOOL, NSError *))completion {
+- (void)save:(RequestUser *)object completion:(void (^)(BOOL, NSError *))completion {
 
     CMTParseManager *mgr = [CMTParseManager sharedInstance];
     if (mgr.currentSchool == nil) {

@@ -135,10 +135,13 @@
     
     [model save:user completion:^(BOOL succeeded, NSError *resultError) {
         //
-        dispatch_async(dispatch_get_main_queue(), ^{
-            //許可待ち画面へ遷移
-            [StoryboardUtil pushAllowWaitViewController:self animated:YES completion:nil];
-        });
+        if (succeeded) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                //許可待ち画面へ遷移
+                [StoryboardUtil pushAllowWaitViewController:self animated:YES completion:nil];
+            });
+        }
+        
     }];
 }
 

@@ -14,8 +14,8 @@
 - (NSString *)parseObjectName;
 
 - (void)fetchAll:(void(^)(NSArray* objects, NSError* resultError))completion;
-- (void)save:(PFObject *)object completion:(void(^)(BOOL succeeded, NSError* resultError))completion;
-- (void)remove:(PFObject *)object completion:(void(^)(BOOL succeeded, NSError* resultError))completion;
+- (void)save:(id)object completion:(void(^)(BOOL succeeded, NSError* resultError))completion;
+- (void)remove:(id)object completion:(void(^)(BOOL succeeded, NSError* resultError))completion;
 - (void)removeAll:(void(^)(BOOL succeeded,NSError* resultError))completion;
 
 @end

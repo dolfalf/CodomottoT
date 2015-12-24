@@ -155,8 +155,8 @@ static CMTParseManager *_sharedInstance;
 
 @end
 
-#pragma mark - Account Category
-@implementation CMTParseManager (Account)
+#pragma mark - User Category
+@implementation CMTParseManager (User)
 
 - (void)registUserSchool:(School *)school {
     
@@ -461,6 +461,12 @@ static CMTParseManager *_sharedInstance;
     Role *head_teacher_role = [Role roleWithName:[self schoolRoleName:school prefix:kCMTRoleNameHeadTeacher]
                                               acl:[CMTParseManager getReadWriteACLWithUser:[User currentUser]]];
     
+    //acl
+    PFACL *head_teacher_acl = [PFACL ACL];
+    [head_teacher_acl setPublicReadAccess:YES];
+    [head_teacher_acl setWriteAccess:YES forUser:self.loginUser];
+    head_teacher_role.ACL = head_teacher_acl;
+    
     //Add extra data
     head_teacher_role.cmtSchool = school;
     [head_teacher_role.users addObject:[User currentUser]];
@@ -477,6 +483,12 @@ static CMTParseManager *_sharedInstance;
     Role *teacher_role = [Role roleWithName:[self schoolRoleName:school prefix:kCMTRoleNameTeacher]
                                          acl:[CMTParseManager getReadWriteACLWithUser:[User currentUser]]];
     
+    //acl
+    PFACL *teacher_acl = [PFACL ACL];
+    [teacher_acl setPublicReadAccess:YES];
+    [teacher_acl setWriteAccess:YES forUser:self.loginUser];
+    teacher_role.ACL = teacher_acl;
+    
     //Add extra data
     teacher_role.cmtSchool = school;
     [teacher_role.roles addObject:head_teacher_role];
@@ -492,6 +504,13 @@ static CMTParseManager *_sharedInstance;
     //保護者ロール生成
     Role *parents_role = [Role roleWithName:[self schoolRoleName:school prefix:kCMTRoleNameParents]
                                         acl:[CMTParseManager getReadWriteACLWithUser:[User currentUser]]];
+    
+    
+    //acl
+    PFACL *parents_acl = [PFACL ACL];
+    [parents_acl setPublicReadAccess:YES];
+    [parents_acl setWriteAccess:YES forUser:self.loginUser];
+    parents_role.ACL = parents_acl;
     
     //Add extra data
     parents_role.cmtSchool = school;
@@ -510,6 +529,13 @@ static CMTParseManager *_sharedInstance;
     
     [member_role.roles addObject:parents_role];
     [member_role.roles addObject:teacher_role];
+    
+    
+    //acl
+    PFACL *member_acl = [PFACL ACL];
+    [member_acl setPublicReadAccess:YES];
+    [member_acl setWriteAccess:YES forUser:self.loginUser];
+    member_role.ACL = member_acl;
     
     //Add extra data
     member_role.cmtSchool = school;
