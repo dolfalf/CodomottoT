@@ -16,7 +16,7 @@
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
-    UINavigationController *navi_con = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:@"SignUpNavigationViewController"];
+    UINavigationController *navi_con = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:@"SignUpNavigationController"];
     if (completion) {
         completion(navi_con);
     }
@@ -27,7 +27,7 @@
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
-    UINavigationController *navi_con = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:@"UserListNavigationViewController"];
+    UINavigationController *navi_con = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:@"UserListNavigationController"];
     if (completion) {
         completion(navi_con);
     }
@@ -39,11 +39,23 @@
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     
-    UINavigationController *navi_con = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:@"RegistSchoolNavigationViewController"];
+    UINavigationController *navi_con = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:@"RegistSchoolNavigationController"];
     if (completion) {
         completion(navi_con);
     }
     [((UIViewController *)owner) presentViewController:navi_con animated:YES completion:nil];
+}
+
++ (void)openContactViewController:(id)owner completion:(void(^)(id))completion {
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Contact" bundle:nil];
+    
+    UINavigationController *navi_con = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:@"ContactNavigationController"];
+    if (completion) {
+        completion(navi_con);
+    }
+    [((UIViewController *)owner) presentViewController:navi_con animated:YES completion:nil];
+    
 }
 
 @end

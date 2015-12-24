@@ -95,6 +95,8 @@ extern NSString * const kCMTRoleNameMember;
 #pragma mark - Role Category
 @interface CMTParseManager (Role)
 
+- (BOOL)hasAccessRoleToSchool;
+
 /*!
  * ロールは園長のみ作成できる。
  */

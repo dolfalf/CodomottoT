@@ -366,6 +366,35 @@ static CMTParseManager *_sharedInstance;
     return [NSString stringWithFormat:@"%@_%@",prefix, school.objectId];
 }
 
+- (BOOL)hasAccessRoleToSchool {
+    
+    NSLog(@"%s", __FUNCTION__);
+    
+    if (self.currentSchool) {
+        return NO;
+    }
+    
+    PFQuery *role_query = [PFRole query];
+    
+    [role_query whereKey:@"cmtSchool" equalTo:self.currentSchool];
+    
+    NSArray *school_roles = [role_query findObjects];
+    
+    for (PFRole *s_role in school_roles) {
+        
+        NSArray *school_users = [[s_role.users query] findObjects];
+        
+        for (User *s_user in school_users) {
+            if ([s_user isEqual:self.loginUser]) {
+                //Allowed
+                return YES;
+            }
+        }
+    }
+    
+    return NO;
+}
+
 /*!
  * 학원과 같이 롤을 생성한다.
  * 원장 Role.

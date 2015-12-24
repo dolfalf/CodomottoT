@@ -13,4 +13,6 @@
 + (void)openSignUpViewController:(id)owner completion:(void(^)(id))completion;
 + (void)openUserListViewController:(id)owner completion:(void(^)(id))completion;
 + (void)openRegistSchoolViewController:(id)owner completion:(void(^)(id))completion;
+
++ (void)openContactViewController:(id)owner completion:(void(^)(id))completion;
 @end

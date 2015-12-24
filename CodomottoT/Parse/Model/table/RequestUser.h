@@ -15,6 +15,7 @@
 
 @property (nonatomic, strong) User *requestUser;
 @property (nonatomic, strong) School *registSchool;
+@property (nonatomic, assign) BOOL ApprovedFlag;
 @property (nonatomic, assign) BOOL deleteFlag;
 @property (nonatomic, strong) PFACL *ACL;
 

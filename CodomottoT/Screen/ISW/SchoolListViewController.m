@@ -144,15 +144,11 @@
         [model save:user completion:^(BOOL succeeded, NSError *resultError) {
             //
             dispatch_async(dispatch_get_main_queue(), ^{
-                //遷移
-                [self performSegueWithIdentifier:@"RequestUserListSegue" sender:self];
+                //許可待ち画面へ遷移
+                [self performSegueWithIdentifier:@"AllowWaitSegue" sender:self];
             });
         }];
     }
-    
-    
-    
-    
 }
 
 @end

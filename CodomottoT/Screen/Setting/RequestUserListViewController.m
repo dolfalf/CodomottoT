@@ -127,7 +127,20 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    //タップされたら登録を行う。
+    //園長ではないときは許可できない。
+    CMTParseManager *mgr = [CMTParseManager sharedInstance];
+    
+    if (mgr.loginUser.cmtUserType != UserTypeHeadTeacher) {
+        NSLog(@"No Auth role.");
+        return;
+    }
+    
+    //園長の場合はロールを更新する
+    
+    
+    //RequestUSerにフラグを立てる
+        
+    
     
     [self.mainTableView reloadData];
 }

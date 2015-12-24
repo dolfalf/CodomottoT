@@ -30,10 +30,8 @@
 		BB0D6FCA1C23AA5C00E6AE82 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BB0D6FC91C23AA5C00E6AE82 /* libz.tbd */; };
 		BB0D6FCC1C23AA6500E6AE82 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = BB0D6FCB1C23AA6500E6AE82 /* libsqlite3.tbd */; };
 		BB0D6FE01C23BF1100E6AE82 /* CMTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0D6FDF1C23BF1100E6AE82 /* CMTViewController.m */; };
-		BB0D6FEC1C23BF1B00E6AE82 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB0D6FE11C23BF1B00E6AE82 /* Main.storyboard */; };
 		BB0D6FED1C23BF1B00E6AE82 /* RegistSchoolViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0D6FE31C23BF1B00E6AE82 /* RegistSchoolViewController.m */; };
 		BB0D6FEE1C23BF1B00E6AE82 /* SchoolListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0D6FE51C23BF1B00E6AE82 /* SchoolListViewController.m */; };
-		BB0D6FEF1C23BF1B00E6AE82 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0D6FE71C23BF1B00E6AE82 /* SignInViewController.m */; };
 		BB0D6FF01C23BF1B00E6AE82 /* SignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0D6FE91C23BF1B00E6AE82 /* SignUpViewController.m */; };
 		BB0D6FF41C23BF2500E6AE82 /* ContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0D6FF31C23BF2500E6AE82 /* ContactViewController.m */; };
 		BB0D6FF61C23BF3400E6AE82 /* Contact.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB0D6FF51C23BF3400E6AE82 /* Contact.storyboard */; };
@@ -57,13 +55,20 @@
 		BB0D70391C23C30300E6AE82 /* UIFont+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0D70251C23C30300E6AE82 /* UIFont+Helper.m */; };
 		BB0D703C1C23C30E00E6AE82 /* StoryboardUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0D703B1C23C30E00E6AE82 /* StoryboardUtil.m */; };
 		BB0D703F1C23C3A000E6AE82 /* NSError+Parse.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0D703E1C23C3A000E6AE82 /* NSError+Parse.m */; };
-		BB1570DF1C29385100B75CFF /* RequestUserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB1570DE1C29385100B75CFF /* RequestUserListViewController.m */; };
 		BB89B0BD1C27C75C00065975 /* LICENSE.md in Sources */ = {isa = PBXBuildFile; fileRef = BB89B0B61C27C75C00065975 /* LICENSE.md */; };
 		BB89B0BE1C27C75C00065975 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = BB89B0B71C27C75C00065975 /* README.md */; };
 		BB89B0BF1C27C75C00065975 /* SIAlertView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BB89B0B81C27C75C00065975 /* SIAlertView.bundle */; };
 		BB89B0C01C27C75C00065975 /* SIAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB89B0BA1C27C75C00065975 /* SIAlertView.m */; };
 		BB89B0C11C27C75C00065975 /* UIWindow+SIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BB89B0BC1C27C75C00065975 /* UIWindow+SIUtils.m */; };
-		BB89B0C41C27CA1100065975 /* UserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB89B0C31C27CA1100065975 /* UserListViewController.m */; };
+		BBCA87391C2B80E6006C46C7 /* AllowWaitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBCA87381C2B80E6006C46C7 /* AllowWaitViewController.m */; };
+		BBCA873C1C2B941C006C46C7 /* SignIn.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBCA873B1C2B941C006C46C7 /* SignIn.storyboard */; };
+		BBCA873F1C2B94EF006C46C7 /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBCA873E1C2B94EF006C46C7 /* Setting.storyboard */; };
+		BBCA87431C2B964E006C46C7 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBCA87421C2B964E006C46C7 /* MainViewController.m */; };
+		BBCA87451C2B965F006C46C7 /* ISW.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBCA87441C2B965F006C46C7 /* ISW.storyboard */; };
+		BBCA87471C2B9679006C46C7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBCA87461C2B9679006C46C7 /* Main.storyboard */; };
+		BBCA874C1C2B96FE006C46C7 /* RequestUserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBCA87491C2B96FE006C46C7 /* RequestUserListViewController.m */; };
+		BBCA874D1C2B96FE006C46C7 /* UserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBCA874B1C2B96FE006C46C7 /* UserListViewController.m */; };
+		BBCA87501C2B9709006C46C7 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBCA874F1C2B9709006C46C7 /* SignInViewController.m */; };
 		BBDDE1431C2803190071C4FD /* RequestUser.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDDE1421C2803190071C4FD /* RequestUser.m */; };
 		BBDDE1461C2809DE0071C4FD /* RequestUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDDE1451C2809DE0071C4FD /* RequestUserModel.m */; };
 		BBDDE14A1C2811F40071C4FD /* Model.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDDE1491C2811F40071C4FD /* Model.m */; };
@@ -118,13 +123,10 @@
 		BB0D6FCB1C23AA6500E6AE82 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		BB0D6FDE1C23BF1100E6AE82 /* CMTViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMTViewController.h; sourceTree = "<group>"; };
 		BB0D6FDF1C23BF1100E6AE82 /* CMTViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMTViewController.m; sourceTree = "<group>"; };
-		BB0D6FE11C23BF1B00E6AE82 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		BB0D6FE21C23BF1B00E6AE82 /* RegistSchoolViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegistSchoolViewController.h; sourceTree = "<group>"; };
 		BB0D6FE31C23BF1B00E6AE82 /* RegistSchoolViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegistSchoolViewController.m; sourceTree = "<group>"; };
 		BB0D6FE41C23BF1B00E6AE82 /* SchoolListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SchoolListViewController.h; sourceTree = "<group>"; };
 		BB0D6FE51C23BF1B00E6AE82 /* SchoolListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SchoolListViewController.m; sourceTree = "<group>"; };
-		BB0D6FE61C23BF1B00E6AE82 /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
-		BB0D6FE71C23BF1B00E6AE82 /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
 		BB0D6FE81C23BF1B00E6AE82 /* SignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignUpViewController.h; sourceTree = "<group>"; };
 		BB0D6FE91C23BF1B00E6AE82 /* SignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignUpViewController.m; sourceTree = "<group>"; };
 		BB0D6FF21C23BF2500E6AE82 /* ContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactViewController.h; sourceTree = "<group>"; };
@@ -172,8 +174,6 @@
 		BB0D703B1C23C30E00E6AE82 /* StoryboardUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoryboardUtil.m; sourceTree = "<group>"; };
 		BB0D703D1C23C3A000E6AE82 /* NSError+Parse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+Parse.h"; sourceTree = "<group>"; };
 		BB0D703E1C23C3A000E6AE82 /* NSError+Parse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+Parse.m"; sourceTree = "<group>"; };
-		BB1570DD1C29385100B75CFF /* RequestUserListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestUserListViewController.h; sourceTree = "<group>"; };
-		BB1570DE1C29385100B75CFF /* RequestUserListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestUserListViewController.m; sourceTree = "<group>"; };
 		BB89B0B61C27C75C00065975 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 		BB89B0B71C27C75C00065975 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		BB89B0B81C27C75C00065975 /* SIAlertView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SIAlertView.bundle; sourceTree = "<group>"; };
@@ -181,8 +181,20 @@
 		BB89B0BA1C27C75C00065975 /* SIAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIAlertView.m; sourceTree = "<group>"; };
 		BB89B0BB1C27C75C00065975 /* UIWindow+SIUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+SIUtils.h"; sourceTree = "<group>"; };
 		BB89B0BC1C27C75C00065975 /* UIWindow+SIUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+SIUtils.m"; sourceTree = "<group>"; };
-		BB89B0C21C27CA1100065975 /* UserListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserListViewController.h; sourceTree = "<group>"; };
-		BB89B0C31C27CA1100065975 /* UserListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserListViewController.m; sourceTree = "<group>"; };
+		BBCA87371C2B80E6006C46C7 /* AllowWaitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllowWaitViewController.h; sourceTree = "<group>"; };
+		BBCA87381C2B80E6006C46C7 /* AllowWaitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllowWaitViewController.m; sourceTree = "<group>"; };
+		BBCA873B1C2B941C006C46C7 /* SignIn.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SignIn.storyboard; sourceTree = "<group>"; };
+		BBCA873E1C2B94EF006C46C7 /* Setting.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Setting.storyboard; sourceTree = "<group>"; };
+		BBCA87411C2B964E006C46C7 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		BBCA87421C2B964E006C46C7 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		BBCA87441C2B965F006C46C7 /* ISW.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ISW.storyboard; sourceTree = "<group>"; };
+		BBCA87461C2B9679006C46C7 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		BBCA87481C2B96FE006C46C7 /* RequestUserListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestUserListViewController.h; sourceTree = "<group>"; };
+		BBCA87491C2B96FE006C46C7 /* RequestUserListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestUserListViewController.m; sourceTree = "<group>"; };
+		BBCA874A1C2B96FE006C46C7 /* UserListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserListViewController.h; sourceTree = "<group>"; };
+		BBCA874B1C2B96FE006C46C7 /* UserListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserListViewController.m; sourceTree = "<group>"; };
+		BBCA874E1C2B9709006C46C7 /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
+		BBCA874F1C2B9709006C46C7 /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
 		BBDDE1411C2803190071C4FD /* RequestUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestUser.h; sourceTree = "<group>"; };
 		BBDDE1421C2803190071C4FD /* RequestUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestUser.m; sourceTree = "<group>"; };
 		BBDDE1441C2809DE0071C4FD /* RequestUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestUserModel.h; sourceTree = "<group>"; };
@@ -300,6 +312,9 @@
 		BB0D6FA31C23A18D00E6AE82 /* Screen */ = {
 			isa = PBXGroup;
 			children = (
+				BBCA87401C2B9637006C46C7 /* Main */,
+				BBCA873D1C2B94DD006C46C7 /* Setting */,
+				BBCA873A1C2B9409006C46C7 /* SignIn */,
 				BB0D703A1C23C30E00E6AE82 /* StoryboardUtil.h */,
 				BB0D703B1C23C30E00E6AE82 /* StoryboardUtil.m */,
 				BB0D6FDE1C23BF1100E6AE82 /* CMTViewController.h */,
@@ -347,19 +362,15 @@
 		BB0D6FDD1C23BEC100E6AE82 /* ISW */ = {
 			isa = PBXGroup;
 			children = (
-				BB0D6FE11C23BF1B00E6AE82 /* Main.storyboard */,
-				BB0D6FE61C23BF1B00E6AE82 /* SignInViewController.h */,
-				BB0D6FE71C23BF1B00E6AE82 /* SignInViewController.m */,
-				BB89B0C21C27CA1100065975 /* UserListViewController.h */,
-				BB89B0C31C27CA1100065975 /* UserListViewController.m */,
+				BBCA87441C2B965F006C46C7 /* ISW.storyboard */,
 				BB0D6FE81C23BF1B00E6AE82 /* SignUpViewController.h */,
 				BB0D6FE91C23BF1B00E6AE82 /* SignUpViewController.m */,
 				BB0D6FE41C23BF1B00E6AE82 /* SchoolListViewController.h */,
 				BB0D6FE51C23BF1B00E6AE82 /* SchoolListViewController.m */,
 				BB0D6FE21C23BF1B00E6AE82 /* RegistSchoolViewController.h */,
 				BB0D6FE31C23BF1B00E6AE82 /* RegistSchoolViewController.m */,
-				BB1570DD1C29385100B75CFF /* RequestUserListViewController.h */,
-				BB1570DE1C29385100B75CFF /* RequestUserListViewController.m */,
+				BBCA87371C2B80E6006C46C7 /* AllowWaitViewController.h */,
+				BBCA87381C2B80E6006C46C7 /* AllowWaitViewController.m */,
 			);
 			path = ISW;
 			sourceTree = "<group>";
@@ -459,6 +470,38 @@
 				BB89B0BC1C27C75C00065975 /* UIWindow+SIUtils.m */,
 			);
 			path = SIAlertView;
+			sourceTree = "<group>";
+		};
+		BBCA873A1C2B9409006C46C7 /* SignIn */ = {
+			isa = PBXGroup;
+			children = (
+				BBCA873B1C2B941C006C46C7 /* SignIn.storyboard */,
+				BBCA874E1C2B9709006C46C7 /* SignInViewController.h */,
+				BBCA874F1C2B9709006C46C7 /* SignInViewController.m */,
+			);
+			path = SignIn;
+			sourceTree = "<group>";
+		};
+		BBCA873D1C2B94DD006C46C7 /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				BBCA873E1C2B94EF006C46C7 /* Setting.storyboard */,
+				BBCA87481C2B96FE006C46C7 /* RequestUserListViewController.h */,
+				BBCA87491C2B96FE006C46C7 /* RequestUserListViewController.m */,
+				BBCA874A1C2B96FE006C46C7 /* UserListViewController.h */,
+				BBCA874B1C2B96FE006C46C7 /* UserListViewController.m */,
+			);
+			path = Setting;
+			sourceTree = "<group>";
+		};
+		BBCA87401C2B9637006C46C7 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				BBCA87461C2B9679006C46C7 /* Main.storyboard */,
+				BBCA87411C2B964E006C46C7 /* MainViewController.h */,
+				BBCA87421C2B964E006C46C7 /* MainViewController.m */,
+			);
+			path = Main;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -564,10 +607,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BB0D6FEC1C23BF1B00E6AE82 /* Main.storyboard in Resources */,
+				BBCA87451C2B965F006C46C7 /* ISW.storyboard in Resources */,
 				BB89B0BF1C27C75C00065975 /* SIAlertView.bundle in Resources */,
+				BBCA873F1C2B94EF006C46C7 /* Setting.storyboard in Resources */,
+				BBCA87471C2B9679006C46C7 /* Main.storyboard in Resources */,
 				BB0D6FF61C23BF3400E6AE82 /* Contact.storyboard in Resources */,
 				BB0D6F801C23A12500E6AE82 /* LaunchScreen.storyboard in Resources */,
+				BBCA873C1C2B941C006C46C7 /* SignIn.storyboard in Resources */,
 				BB0D6F7D1C23A12500E6AE82 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -593,15 +639,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BBCA874C1C2B96FE006C46C7 /* RequestUserListViewController.m in Sources */,
 				BB0D70371C23C30300E6AE82 /* User.m in Sources */,
 				BB0D6FED1C23BF1B00E6AE82 /* RegistSchoolViewController.m in Sources */,
 				BB0D703C1C23C30E00E6AE82 /* StoryboardUtil.m in Sources */,
+				BBCA87501C2B9709006C46C7 /* SignInViewController.m in Sources */,
 				BBDDE14A1C2811F40071C4FD /* Model.m in Sources */,
+				BBCA87431C2B964E006C46C7 /* MainViewController.m in Sources */,
 				BB0D70381C23C30300E6AE82 /* UIColor+Helper.m in Sources */,
 				BB89B0BD1C27C75C00065975 /* LICENSE.md in Sources */,
 				BB0D6F751C23A12500E6AE82 /* AppDelegate.m in Sources */,
-				BB1570DF1C29385100B75CFF /* RequestUserListViewController.m in Sources */,
-				BB89B0C41C27CA1100065975 /* UserListViewController.m in Sources */,
 				BB0D70301C23C30300E6AE82 /* Group.m in Sources */,
 				BB0D6F721C23A12500E6AE82 /* main.m in Sources */,
 				BBDDE1461C2809DE0071C4FD /* RequestUserModel.m in Sources */,
@@ -614,14 +661,15 @@
 				BB0D702C1C23C30300E6AE82 /* Contact.m in Sources */,
 				BBDDE1431C2803190071C4FD /* RequestUser.m in Sources */,
 				BB0D702B1C23C30300E6AE82 /* SchoolModel.m in Sources */,
+				BBCA874D1C2B96FE006C46C7 /* UserListViewController.m in Sources */,
 				BB0D70271C23C30300E6AE82 /* ContactModel.m in Sources */,
 				BB0D702D1C23C30300E6AE82 /* ContactComment.m in Sources */,
 				BB0D6FF41C23BF2500E6AE82 /* ContactViewController.m in Sources */,
 				BB0D70311C23C30300E6AE82 /* Notice.m in Sources */,
 				BB0D702F1C23C30300E6AE82 /* ContactRead.m in Sources */,
-				BB0D6FEF1C23BF1B00E6AE82 /* SignInViewController.m in Sources */,
 				BB89B0BE1C27C75C00065975 /* README.md in Sources */,
 				BB0D703F1C23C3A000E6AE82 /* NSError+Parse.m in Sources */,
+				BBCA87391C2B80E6006C46C7 /* AllowWaitViewController.m in Sources */,
 				BB0D6FF01C23BF1B00E6AE82 /* SignUpViewController.m in Sources */,
 				BB0D70351C23C30300E6AE82 /* Schedule.m in Sources */,
 				BB0D70321C23C30300E6AE82 /* Role.m in Sources */,

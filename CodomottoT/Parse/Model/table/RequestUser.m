@@ -12,6 +12,7 @@
 
 @dynamic requestUser;
 @dynamic registSchool;
+@dynamic ApprovedFlag;
 @dynamic deleteFlag;
 @dynamic ACL;
 
@@ -27,21 +28,12 @@
     
     RequestUser *model = [[self alloc] init];
     
+    //default
+    model.ApprovedFlag = NO;
     model.deleteFlag = NO;
-    //model.ACL = [PFACL ACLWithUser:[PFUser currentUser]];
+    model.ACL = [PFACL ACLWithUser:[PFUser currentUser]];
     
     return model;
 }
 
-- (id)init {
-    
-    self = [super init];
-    
-    if (self) {
-        //initialize.
-        //여기서 초기화가 안된다.. 쿼리에서 에러남.
-    }
-    
-    return self;
-}
 @end
