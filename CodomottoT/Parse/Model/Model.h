@@ -9,13 +9,16 @@
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
 
+typedef void (^errorBlock)(NSError *);
+typedef void (^boolBlock)(BOOL);
+
 @interface Model : NSObject
 
 - (NSString *)parseObjectName;
 
-- (void)fetchAll:(void(^)(NSArray* objects, NSError* resultError))completion;
-- (void)save:(id)object completion:(void(^)(BOOL succeeded, NSError* resultError))completion;
-- (void)remove:(id)object completion:(void(^)(BOOL succeeded, NSError* resultError))completion;
-- (void)removeAll:(void(^)(BOOL succeeded,NSError* resultError))completion;
+- (void)fetchAll:(void(^)(NSArray* objects, NSError* err))block;
+- (void)save:(id)object block:(errorBlock)block;
+- (void)remove:(id)object block:(errorBlock)block;
+- (void)removeAll:(errorBlock)block;
 
 @end

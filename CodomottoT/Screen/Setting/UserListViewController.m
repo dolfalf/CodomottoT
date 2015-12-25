@@ -66,9 +66,9 @@
 - (void)initControls {
     
     //title
-    self.title = @"User List";
+    self.title = @"ユーザー一覧";
     
-    UIBarButtonItem *cancel_button = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+    UIBarButtonItem *cancel_button = [[UIBarButtonItem alloc] initWithTitle:@"キャンセル"
                                                                       style:UIBarButtonItemStylePlain
                                                                      target:self
                                                                      action:@selector(cancelButtonTouched:)];
@@ -80,21 +80,20 @@
 
 - (void)loadUserData {
     
-    [[CMTParseManager sharedInstance] fetchUsers:UserTypeNone block:^(NSArray *users, NSError *error) {
+    CMTParseManager *mgr = [CMTParseManager sharedInstance];
+    
+    [mgr fetchUsers:UserTypeNone block:^(NSArray *users, NSError *error) {
         if (error == nil) {
             //success
             self.users = users;
             
-            dispatch_async(dispatch_get_main_queue(), ^{
-                
-                if (_users != nil && _users.count > 0) {
-                    self.hasUserData = YES;
-                }else {
-                    self.hasUserData = NO;
-                }
-                
-                [self.mainTableView reloadData];
-            });
+            if (_users != nil && _users.count > 0) {
+                self.hasUserData = YES;
+            }else {
+                self.hasUserData = NO;
+            }
+            
+            [self.mainTableView reloadData];
         }
     }];
     
@@ -138,7 +137,6 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
     
 }
 

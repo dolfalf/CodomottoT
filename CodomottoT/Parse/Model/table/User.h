@@ -7,7 +7,6 @@
 //
 
 #import <Parse/Parse.h>
-#import "const.h"
 
 typedef NS_ENUM(NSInteger, Gender) {
     GenderKnown,
@@ -24,9 +23,6 @@ typedef NS_ENUM(NSInteger, UserType) {
 
 @class School;
 @interface User : PFUser <PFSubclassing>
-
-//메일 인증기능 ON시 사용하는 값이므로 필요없음
-//@property (nonatomic, assign) BOOL cmtEmailVerified;
 
 @property (nonatomic, strong) NSString* cmtUserName;
 @property (nonatomic, strong) NSString* cmtFuriganaUserName;

@@ -15,39 +15,46 @@
 }
 
 #pragma mark - class methods
-- (void)fetchAll:(void(^)(NSArray* objects, NSError* resultError))completion {
+- (void)fetchAll:(void(^)(NSArray* objects, NSError* err))completion {
     
     PFQuery *query = [PFQuery queryWithClassName:[self parseObjectName]];
     
     [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (completion) {
-            completion(objects, error);
-        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (completion) {
+                completion(objects, error);
+            }
+        });
     }];
     
 }
 
-- (void)save:(id)object completion:(void(^)(BOOL succeeded, NSError* resultError))completion {
+- (void)save:(id)object block:(errorBlock)block {
     
     [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         
-        if (completion) {
-            completion(succeeded, error);
-        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (block) {
+                block(error);
+            }
+        });
     }];
 }
 
-- (void)remove:(PFObject *)object completion:(void(^)(BOOL succeeded, NSError* resultError))completion {
+- (void)remove:(PFObject *)object block:(errorBlock)block {
     
-    [object deleteInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-        if (completion) {
-            completion(succeeded, error);
-        }
+    [object deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (block) {
+                block(error);
+            }
+        });
     }];
-    
 }
 
-- (void)removeAll:(void(^)(BOOL succeeded,NSError* resultError))completion {
+- (void)removeAll:(errorBlock)block {
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
@@ -57,11 +64,12 @@
         NSError *error = nil;
         [PFObject deleteAll:delete_models error:&error];
         
-        if (completion) {
-            completion(error==nil?YES:NO, error);
-        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (block) {
+                block(error);
+            }
+        }); 
     });
-    
 }
 
 @end

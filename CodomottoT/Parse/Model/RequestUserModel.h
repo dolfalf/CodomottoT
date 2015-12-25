@@ -11,7 +11,7 @@
 
 @interface RequestUserModel : Model
 
-- (void)fetchBySchool:(School *)school completion:(void(^)(NSArray *requestUsers, NSError* resultError))completion;
-- (void)save:(RequestUser *)object completion:(void (^)(BOOL, NSError *))completion;
+- (void)fetchByCurrentSchool:(void(^)(NSArray *requestUsers, NSError* err))block;
+- (void)save:(RequestUser *)object block:(errorBlock)block;
 - (void)approvedInBackground:(RequestUser *)object;
 @end

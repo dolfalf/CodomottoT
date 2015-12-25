@@ -12,16 +12,35 @@
 
 @implementation RequestUserModel
 
-- (void)fetchBySchool:(School *)school completion:(void(^)(NSArray* requestUsers, NSError* resultError))completion {
-    
-    PFQuery *query = [PFQuery queryWithClassName:[self parseObjectName]];
-    [query whereKey:@"registSchool" equalTo:school];
-    
-    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        if (completion) {
-            completion(objects, error);
+- (void)fetchByCurrentSchool:(void(^)(NSArray* requestUsers, NSError* err))block {
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+       
+        CMTParseManager *mgr = [CMTParseManager sharedInstance];
+        
+        NSError *school_error = nil;
+        School *current_school = mgr.currentSchool;
+        if (school_error != nil) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (block) {
+                    block(nil, [NSError errorWithCodomottoErrorCode:CMTErrorCodeNoData localizedDescription:@"No school data."]);
+                }
+            });
+            return;
         }
-    }];
+        
+        PFQuery *query = [PFQuery queryWithClassName:[self parseObjectName]];
+        [query whereKey:@"registSchool" equalTo:current_school];
+        
+        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (block) {
+                    block(objects, error);
+                }
+            });
+        }];
+    });
 }
 
 - (void)approvedInBackground:(RequestUser *)object {
@@ -31,31 +50,34 @@
 }
 
 #pragma mark - override methods
-- (void)save:(RequestUser *)object completion:(void (^)(BOOL, NSError *))completion {
+- (void)save:(RequestUser *)object block:(errorBlock)block {
 
-    CMTParseManager *mgr = [CMTParseManager sharedInstance];
-    if (mgr.currentSchool == nil) {
-        NSLog(@"No exist school info.");
-        if (completion) {
-            completion(NO, [NSError errorWithCodomottoErrorCode:CMTErrorCodeNoData localizedDescription:@"No exist school info."]);
-        }
-        return;
-    }
-    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        CMTParseManager *mgr = [CMTParseManager sharedInstance];
+        
+        NSError *school_error = nil;
+        School *current_school = mgr.currentSchool;
+        if (school_error != nil) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (block) {
+                    block([NSError errorWithCodomottoErrorCode:CMTErrorCodeNoData localizedDescription:@"No school data."]);
+                }
+            });
+            return;
+        }
         
         //権限設定
         RequestUser *req_user = (RequestUser *)object;
         
         PFQuery *role_query = [PFRole query];
-        [role_query whereKey:@"cmtSchool" equalTo:mgr.currentSchool];
+        [role_query whereKey:@"cmtSchool" equalTo:current_school];
         
         NSArray *school_roles = [role_query findObjects];
         
-        
         if (school_roles == nil || school_roles.count == 0) {
-            if (completion) {
-                completion(NO, [NSError errorWithCodomottoErrorCode:CMTErrorCodeNoData localizedDescription:@"No exist school role."]);
+            if (block) {
+                block([NSError errorWithCodomottoErrorCode:CMTErrorCodeNoData localizedDescription:@"No exist school role."]);
             }
             return;
         }
@@ -75,10 +97,11 @@
         NSError *user_error = nil;
         [req_user save:&user_error];
         
-        
-        if (completion) {
-            completion(YES, nil);
-        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (block) {
+                block(nil);
+            }
+        });
     });
 
 }

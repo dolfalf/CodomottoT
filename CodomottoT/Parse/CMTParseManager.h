@@ -10,24 +10,23 @@
 #import "NSError+Parse.h"
 #import "ParseModel.h"
 #import "const.h"
+#import "Model.h"
 
 extern NSString * const kCMTRoleNameHeadTeacher;
 extern NSString * const kCMTRoleNameTeacher;
 extern NSString * const kCMTRoleNameParents;
 extern NSString * const kCMTRoleNameMember;
 
-typedef void (^errorBlock)(NSError *);
-typedef void (^boolBlock)(BOOL);
-
 @interface CMTParseManager : NSObject
 
 @property (nonatomic, assign, readonly) BOOL isLogin;
 @property (nonatomic, assign, readonly) UserType userType;
-@property (nonatomic, strong, readonly) School *currentSchool;
 @property (nonatomic, strong, readonly) User *currentUser;
+@property (nonatomic, strong, readonly) School *currentSchool;
 
 + (CMTParseManager *)sharedInstance;
 
+- (NSString *)currentStatusDescription;
 @end
 
 #pragma mark - ACL Category
@@ -45,6 +44,12 @@ typedef void (^boolBlock)(BOOL);
 
 #pragma mark - User Category
 @interface CMTParseManager (User)
+
+/*!
+ @abstract 現在粗属している園をロード
+ */
+- (void)loadCurrentSchool;
+
 
 /*!
  @abstract 層属している園を登録

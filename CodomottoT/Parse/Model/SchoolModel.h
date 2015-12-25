@@ -13,8 +13,7 @@
 
 /*!
  * 園長が新しくSchoolを登録するときに使う。
- * Schoolを作成した後、園にアクセスできるようにRoleも作成する。
- *
+ * Schoolを作成した後、園にアクセスできるようRoleを作成する
  */
-- (void)registSchool:(School *)school completion:(void(^)(BOOL succeeded, NSError* resultError))completion;
+- (void)registSchool:(School *)school block:(errorBlock)block;
 @end

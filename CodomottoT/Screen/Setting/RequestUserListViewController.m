@@ -66,7 +66,7 @@
 - (void)initControls {
     
     //title
-    self.title = @"承認待ちユーザーリスト";
+    self.title = @"承認待ちユーザー一覧";
     
     //toolbar.
     UIBarButtonItem *close_button = [[UIBarButtonItem alloc] initWithTitle:@"閉じる"
@@ -81,23 +81,23 @@
 
 - (void)loadMemberData {
     
-    CMTParseManager *mgr = [CMTParseManager sharedInstance];
-    
     RequestUserModel *request_user_model = [RequestUserModel new];
     
-    [request_user_model fetchBySchool:mgr.currentSchool completion:^(NSArray *requestUsers, NSError *resultError) {
-        //
+    [request_user_model fetchByCurrentSchool:^(NSArray *requestUsers, NSError *err) {
+        
+        if (err != nil) {
+            return;
+        }
+        
         self.members = requestUsers;
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (requestUsers != nil && requestUsers.count > 0 ) {
-                self.hasMemberData = YES;
-            }else {
-                self.hasMemberData = NO;
-            }
-            
-            [self.mainTableView reloadData];
-        });
+        if (requestUsers != nil && requestUsers.count > 0 ) {
+            self.hasMemberData = YES;
+        }else {
+            self.hasMemberData = NO;
+        }
+        
+        [self.mainTableView reloadData];
     }];
 }
 
@@ -121,8 +121,8 @@
     RequestUser *requesst_user = _members[indexPath.row];
     User *usr = (User *)requesst_user.requestUser;
     
-//    cell.contentLabel.text = [NSString stringWithFormat:@"%@, %@", usr.objectId, usr.cmtUserType];
-        cell.contentLabel.text = [NSString stringWithFormat:@"%@", usr.objectId];
+    cell.contentLabel.text = [NSString stringWithFormat:@"%@, %@", usr.objectId, usr.cmtUserType];
+    
     return cell;
 }
 
@@ -135,17 +135,18 @@
     CMTParseManager *mgr = [CMTParseManager sharedInstance];
     
     if (mgr.userType != UserTypeHeadTeacher) {
-        NSLog(@"No Auth role.");
-        return;
+        NSAssert(1, @"role: cannot screen.");
     }
     
     //ロールリストにユーザー追加
-    [mgr addUserSchoolRoleInBackground:request_user block:nil];
-    
-    //リクエストユーザーにフラグを立てる
-    RequestUserModel *model = [RequestUserModel new];
-    [model approvedInBackground:request_user];
-    
+    [mgr addUserSchoolRoleInBackground:request_user block:^(NSError *error) {
+        
+        if(error==nil) {
+            //リクエストユーザーにフラグを立てる
+            RequestUserModel *model = [RequestUserModel new];
+            [model approvedInBackground:request_user];
+        }
+    }];
     
     [self.mainTableView reloadData];
 }

@@ -77,13 +77,13 @@ const float kRegistSchoolCellHeight = 50.f;
     school.name = _nameCell.inputTextField.text;
     school.description = _descriptionCell.inputTextField.text;
     
-    [school_model registSchool:school completion:^(BOOL succeeded, NSError *resultError) {
+    [school_model registSchool:school block:^(NSError *error) {
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (succeeded) {
+            if (error==nil) {
                 [self showAlertMessage:@"School resgited."];
             }else {
-                [self showAlertMessage:resultError.description];
+                [self showAlertMessage:error.description];
             }
         });
         

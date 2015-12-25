@@ -20,7 +20,6 @@ NSString * const kCMTRoleNameMember         = @"Member";
 @dynamic isLogin;
 @dynamic userType;
 @dynamic currentUser;
-@dynamic currentSchool;
 
 static CMTParseManager *_sharedInstance;
 
@@ -66,6 +65,12 @@ static CMTParseManager *_sharedInstance;
     
 }
 
+- (NSString *)currentStatusDescription {
+    
+    return [NSString stringWithFormat:@"userType[%ld] user[%@] school[%@]",
+            (long)self.userType, self.currentUser.username, self.currentSchool.name];
+}
+
 #pragma mark getter
 - (BOOL)isLogin {
     
@@ -83,10 +88,6 @@ static CMTParseManager *_sharedInstance;
 
 - (User *)currentUser {
     return [User currentUser];
-}
-
-- (School *)currentSchool {
-    return [User currentUser].cmtWorkSchool;
 }
 
 @end
@@ -175,6 +176,23 @@ static CMTParseManager *_sharedInstance;
 #pragma mark - User Category
 @implementation CMTParseManager (User)
 
+- (void)loadCurrentSchool {
+    
+    PFQuery *school_query = [PFQuery queryWithClassName:[School parseClassName]];
+    [school_query whereKey:@"objectId" equalTo:[User currentUser].cmtWorkSchool.objectId];
+    
+    NSError *school_error = nil;
+    NSArray *schools = [school_query findObjects:&school_error];
+    if (school_error != nil) {
+        NSLog(@"error.");
+    }
+    if (schools == nil || schools.count == 0) {
+        NSLog(@"No School data.");
+    }
+    
+    _currentSchool = [schools lastObject];
+}
+
 - (void)registUserSchool:(School *)school {
     NSLog(@"%s", __FUNCTION__);
     
@@ -182,6 +200,8 @@ static CMTParseManager *_sharedInstance;
         NSError *err = nil;
         [User currentUser].cmtWorkSchool = school;
         [[User currentUser] save:&err];
+        
+        _currentSchool = school;
     });
     
 }
@@ -199,9 +219,11 @@ static CMTParseManager *_sharedInstance;
         NSError *err = nil;
         NSArray *users = [query findObjects:&err];
         
-        if (block) {
-            block(users,err);
-        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (block) {
+                block(users,err);
+            }
+        });
         
     });
     
@@ -235,18 +257,18 @@ static CMTParseManager *_sharedInstance;
     });
 }
 
-/*!
- 
- @abstract ログイン
- 
- */
 - (void)signIn:(NSString *)email password:(NSString *)password block:(errorBlock)block {
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
         NSError* error = nil;
-        BOOL isSucceeded = [User logInWithUsername:email password:password error:&error];
-        if (isSucceeded == YES) {
+        [User logInWithUsername:email password:password error:&error];
+        if (error == nil) {
             NSLog(@"login Succeeded");
+            
+            //
+            [self loadCurrentSchool];
+            
         }else{
             NSLog(@"can't that- %@", error);
             error = [NSError errorWithCodomottoErrorCode:CMTErrorCodeLoginFailed

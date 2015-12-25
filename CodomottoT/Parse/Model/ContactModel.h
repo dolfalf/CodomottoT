@@ -15,6 +15,7 @@ extern NSString * const kContactImageDataKey;
 
 @interface ContactModel : NSObject
 
+//TODO: 実装
 #pragma mark - post
 - (void)contactListWithStartIndex:(NSInteger)startIndex block:(void(^)(NSArray *, NSError *))block;
 - (void)postContact:(NSString *)title content:(NSString *)content imageItems:(NSArray *)items completion:(void(^)(BOOL))completion;

@@ -11,13 +11,13 @@
 
 @implementation SchoolModel
 
-- (void)registSchool:(School *)school completion:(void(^)(BOOL succeeded, NSError* resultError))completion {
+- (void)registSchool:(School *)school block:(errorBlock)block {
     
     CMTParseManager *mgr = [CMTParseManager sharedInstance];
     
     if (mgr.userType != UserTypeHeadTeacher) {
-        if (completion) {
-            completion(NO, [NSError errorWithCodomottoErrorCode:CMTErrorCodeNoAuth localizedDescription:@"No Auth."]);
+        if (block) {
+            block([NSError errorWithCodomottoErrorCode:CMTErrorCodeNoAuth localizedDescription:@"No Auth."]);
         }
         return;
     }
@@ -29,9 +29,12 @@
         school_successed = [school save:&school_error];
         
         if (school_successed == NO) {
-            if (completion) {
-                completion(school_successed, school_error);
-            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (block) {
+                    block(school_error);
+                }
+            });
+            
         }
         
         //ロール生成
@@ -39,9 +42,11 @@
         BOOL role_successed = [mgr createRoleForSchool:school error:&role_error];
         
         if (role_successed == NO) {
-            if (completion) {
-                completion(role_successed, school_error);
-            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (block) {
+                    block(school_error);
+                }
+            });
         }
         
         PFQuery *query = [Role query];
@@ -76,9 +81,11 @@
         //ユーザーに登録
         [mgr registUserSchool:school];
         
-        if (completion) {
-            completion(YES, nil);
-        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (block) {
+                block(nil);
+            }
+        });
     });
 }
 

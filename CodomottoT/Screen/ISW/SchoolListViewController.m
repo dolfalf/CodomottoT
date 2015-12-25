@@ -130,17 +130,13 @@
     req_user.requestUser = mgr.currentUser;
     req_user.registSchool = school;
     
-    [model save:req_user completion:^(BOOL succeeded, NSError *resultError) {
+    [model save:req_user block:^(NSError *error) {
         
         //園選択情報保存
         [mgr registUserSchool:school];
         
-        if (succeeded) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                //許可待ち画面へ遷移
-                [StoryboardUtil pushAllowWaitViewController:self animated:YES completion:nil];
-            });
-        }
+        //許可待ち画面へ遷移
+        [StoryboardUtil pushAllowWaitViewController:self animated:YES completion:nil];
         
     }];
 }

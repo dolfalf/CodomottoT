@@ -13,6 +13,8 @@
 #import "SignInViewController.h"
 #import "SignUpViewController.h"
 
+#import "AppDelegate.h"
+
 @interface MainViewController ()
 
 @end
@@ -26,6 +28,13 @@
     NSLog(@"%s", __FUNCTION__);
     
     [self initControls];
+    
+    CMTParseManager *mgr = [CMTParseManager sharedInstance];
+    
+    if (mgr.isLogin) {
+        //園情報を更新
+        [mgr loadCurrentSchool];
+    }
     
     //add notification
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -49,7 +58,7 @@
                                                object:nil];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self transitionStartViewController];
+        [self transitionLoadViewController];
     });
     
 }
@@ -58,7 +67,16 @@
     [super viewWillAppear:animated];
     NSLog(@"%s", __FUNCTION__);
     
+    [self.navigationController setNavigationBarHidden:YES animated:NO];
+    [self.navigationController setToolbarHidden:YES animated:NO];
     
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [self.navigationController setNavigationBarHidden:NO animated:NO];
+    [self.navigationController setToolbarHidden:NO animated:NO];
 }
 
 - (void)dealloc {
@@ -100,7 +118,7 @@
 #pragma mark - Notification callback
 - (void)signInSuccess:(NSNotification *)notification {
     NSLog(@"%s", __FUNCTION__);
-    [self transitionStartViewController];
+    [self transitionLoadViewController];
 }
 
 - (void)signInFail:(NSNotification *)notification {
@@ -109,7 +127,7 @@
 
 - (void)signUpSuccess:(NSNotification *)notification {
     NSLog(@"%s", __FUNCTION__);
-    [self transitionStartViewController];
+    [self transitionLoadViewController];
 }
 
 - (void)signUpFail:(NSNotification *)notification {
@@ -119,14 +137,25 @@
 #pragma mark - Private methods
 - (void)initControls {
     NSLog(@"%s", __FUNCTION__);
+    
+    
+    CGRect frame = [UIScreen mainScreen].bounds;
+    UILabel *status_label = [[UILabel alloc] initWithFrame:CGRectMake(0, 22.f, frame.size.width, 13.f)];
+    status_label.tag = 998;
+    status_label.backgroundColor = [UIColor lightGrayColor];
+    status_label.font = [UIFont systemFontOfSize:9.f];
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    [appDelegate.window addSubview:status_label];
+    
 }
 
-- (void)transitionStartViewController {
+- (void)transitionLoadViewController {
+    
     NSLog(@"%s", __FUNCTION__);
     
     CMTParseManager *mgr = [CMTParseManager sharedInstance];
     
-    //REMARK: ログインチェック
+    //REMARK: 画面遷移処理
     if (mgr.currentUser == nil) {
         //ログインしてない場合はログイン画面へ
         [StoryboardUtil openSignInViewController:self animated:NO completion:nil];
@@ -148,7 +177,7 @@
             
             [mgr hasAccessRoleToSchoolInBackground:^(BOOL hasAccessRole) {
                 
-                if (hasAccessRole) {
+                if (hasAccessRole == NO) {
                     //園は選択しているがまだ未承認
                     if (mgr.userType == UserTypeHeadTeacher) {
                         //園長は生成と同時に登録するためここには配当なし。??
@@ -163,8 +192,15 @@
                 }
             }];
         }
-        
     }
+    
+    //debug code.
+    
+    //ステータス表示
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    UILabel *status_label = [appDelegate.window viewWithTag:998];
+    
+    status_label.text = [mgr currentStatusDescription];
 }
 
 @end
