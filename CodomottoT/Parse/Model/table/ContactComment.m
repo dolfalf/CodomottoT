@@ -25,16 +25,15 @@
 }
 
 + (NSString *)parseClassName {
-    return @"ContactComment";
+    return NSStringFromClass([self class]);
 }
 
 + (instancetype)createModel {
     
     ContactComment *model = [[self alloc] init];
     
-    //여기서 초기화 처리를 해준다.
     model.deleteFlag = NO;
-    //model.ACL = [PFACL ACLWithUser:[PFUser currentUser]];
+    model.ACL = [PFACL ACLWithUser:[PFUser currentUser]];
     
     return model;
 }

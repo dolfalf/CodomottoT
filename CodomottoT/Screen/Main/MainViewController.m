@@ -127,18 +127,17 @@
     CMTParseManager *mgr = [CMTParseManager sharedInstance];
     
     //REMARK: ログインチェック
-    if (mgr.loginUser == nil) {
+    if (mgr.currentUser == nil) {
         //ログインしてない場合はログイン画面へ
         [StoryboardUtil openSignInViewController:self animated:NO completion:nil];
     }else {
         //ログインしているなら下記の条件によって遷移する
         
-        BOOL selected_school = (mgr.loginUser.cmtWorkSchool)==nil?NO:YES;
-        UserType login_user_type = (UserType)[mgr.loginUser.cmtUserType integerValue];
+        BOOL selected_school = mgr.currentSchool==nil?NO:YES;
         
         if (selected_school == NO) {
             //園を選択してない
-            if (login_user_type == UserTypeHeadTeacher) {
+            if (mgr.userType == UserTypeHeadTeacher) {
                 //園長は園生成画面へ遷移する
                 [StoryboardUtil pushRegistSchoolViewController:self animated:NO completion:nil];
             }else {
@@ -151,7 +150,7 @@
                 
                 if (hasAccessRole) {
                     //園は選択しているがまだ未承認
-                    if (login_user_type == UserTypeHeadTeacher) {
+                    if (mgr.userType == UserTypeHeadTeacher) {
                         //園長は生成と同時に登録するためここには配当なし。??
                         [StoryboardUtil pushStartContactViewController:self animated:NO completion:nil];
                     }else {

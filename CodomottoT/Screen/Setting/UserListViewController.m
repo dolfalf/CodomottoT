@@ -38,7 +38,7 @@
     [self initControls];
     
     CMTParseManager *manager = [CMTParseManager sharedInstance];
-    NSLog(@"%s, loginUser[%@]", __FUNCTION__, manager.loginUser);
+    NSLog(@"%s, loginUser[%@]", __FUNCTION__, manager.currentUser);
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -80,8 +80,8 @@
 
 - (void)loadUserData {
     
-    [[CMTParseManager sharedInstance] fetchUsers:UserTypeNone withCompletion:^(NSArray *users, NSError *resultError) {
-        if (resultError == nil) {
+    [[CMTParseManager sharedInstance] fetchUsers:UserTypeNone block:^(NSArray *users, NSError *error) {
+        if (error == nil) {
             //success
             self.users = users;
             
@@ -111,7 +111,7 @@
 #pragma mark - TableView delegate metodhs
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     
-    User *current_user = [CMTParseManager sharedInstance].loginUser;
+    User *current_user = [CMTParseManager sharedInstance].currentUser;
     
     if (current_user == nil) {
         return @"Not login.";

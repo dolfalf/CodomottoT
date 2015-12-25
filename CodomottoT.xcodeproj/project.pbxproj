@@ -55,8 +55,6 @@
 		BB0D70391C23C30300E6AE82 /* UIFont+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0D70251C23C30300E6AE82 /* UIFont+Helper.m */; };
 		BB0D703C1C23C30E00E6AE82 /* StoryboardUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0D703B1C23C30E00E6AE82 /* StoryboardUtil.m */; };
 		BB0D703F1C23C3A000E6AE82 /* NSError+Parse.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0D703E1C23C3A000E6AE82 /* NSError+Parse.m */; };
-		BB89B0BD1C27C75C00065975 /* LICENSE.md in Sources */ = {isa = PBXBuildFile; fileRef = BB89B0B61C27C75C00065975 /* LICENSE.md */; };
-		BB89B0BE1C27C75C00065975 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = BB89B0B71C27C75C00065975 /* README.md */; };
 		BB89B0BF1C27C75C00065975 /* SIAlertView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BB89B0B81C27C75C00065975 /* SIAlertView.bundle */; };
 		BB89B0C01C27C75C00065975 /* SIAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB89B0BA1C27C75C00065975 /* SIAlertView.m */; };
 		BB89B0C11C27C75C00065975 /* UIWindow+SIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BB89B0BC1C27C75C00065975 /* UIWindow+SIUtils.m */; };
@@ -647,7 +645,6 @@
 				BBDDE14A1C2811F40071C4FD /* Model.m in Sources */,
 				BBCA87431C2B964E006C46C7 /* MainViewController.m in Sources */,
 				BB0D70381C23C30300E6AE82 /* UIColor+Helper.m in Sources */,
-				BB89B0BD1C27C75C00065975 /* LICENSE.md in Sources */,
 				BB0D6F751C23A12500E6AE82 /* AppDelegate.m in Sources */,
 				BB0D70301C23C30300E6AE82 /* Group.m in Sources */,
 				BB0D6F721C23A12500E6AE82 /* main.m in Sources */,
@@ -667,7 +664,6 @@
 				BB0D6FF41C23BF2500E6AE82 /* ContactViewController.m in Sources */,
 				BB0D70311C23C30300E6AE82 /* Notice.m in Sources */,
 				BB0D702F1C23C30300E6AE82 /* ContactRead.m in Sources */,
-				BB89B0BE1C27C75C00065975 /* README.md in Sources */,
 				BB0D703F1C23C3A000E6AE82 /* NSError+Parse.m in Sources */,
 				BBCA87391C2B80E6006C46C7 /* AllowWaitViewController.m in Sources */,
 				BB0D6FF01C23BF1B00E6AE82 /* SignUpViewController.m in Sources */,

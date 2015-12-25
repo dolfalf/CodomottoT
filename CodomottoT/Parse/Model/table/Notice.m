@@ -32,6 +32,6 @@
 }
 
 + (NSString *)parseClassName {
-    return @"Notice";
+    return NSStringFromClass([self class]);
 }
 @end

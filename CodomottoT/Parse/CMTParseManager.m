@@ -19,7 +19,8 @@ NSString * const kCMTRoleNameMember         = @"Member";
 
 @dynamic isLogin;
 @dynamic userType;
-@dynamic loginUser;
+@dynamic currentUser;
+@dynamic currentSchool;
 
 static CMTParseManager *_sharedInstance;
 
@@ -65,8 +66,7 @@ static CMTParseManager *_sharedInstance;
     
 }
 
-#pragma mark - getter Property
-
+#pragma mark getter
 - (BOOL)isLogin {
     
     return ([User currentUser]==nil)?NO:YES;
@@ -81,7 +81,7 @@ static CMTParseManager *_sharedInstance;
     return (UserType)[[User currentUser].cmtUserType integerValue];
 }
 
-- (User *)loginUser {
+- (User *)currentUser {
     return [User currentUser];
 }
 
@@ -89,66 +89,83 @@ static CMTParseManager *_sharedInstance;
     return [User currentUser].cmtWorkSchool;
 }
 
-#pragma mark ACL
+@end
 
-+(PFACL*)getPublicReadOnlyACL{
+#pragma mark - ACL Category
+@implementation CMTParseManager (ACL)
+
+- (PFACL *)publicReadOnlyACL {
+    
     PFACL *acl = [PFACL ACL];
-    User *masterTeacher = [User currentUser];
-    [acl setWriteAccess:YES forUser:masterTeacher];
-    [acl setReadAccess:YES forUser:masterTeacher];
+    [acl setWriteAccess:YES forUser:[User currentUser]];
+    [acl setReadAccess:YES forUser:[User currentUser]];
+    
     [acl setPublicReadAccess:YES];
     [acl setPublicWriteAccess:NO];
     
     return acl;
 }
 
-+(PFACL*)getPublicReadWriteACL{
+- (PFACL *)publicReadWriteACL {
+    
     PFACL *acl = [PFACL ACL];
-    User *masterTeacher = [User currentUser];
-    [acl setWriteAccess:YES forUser:masterTeacher];
-    [acl setReadAccess:YES forUser:masterTeacher];
+    [acl setWriteAccess:YES forUser:[User currentUser]];
+    [acl setReadAccess:YES forUser:[User currentUser]];
+    
     [acl setPublicReadAccess:YES];
     [acl setPublicWriteAccess:YES];
     
     return acl;
 }
 
-+(PFACL*)getReadOnlyACLWithRoleName:(NSString *)roleName{
+- (PFACL *)roleReadOnlyACL:(NSString *)roleName {
+    
     PFACL *acl = [PFACL ACL];
-    User *masterTeacher = [User currentUser];
-    [acl setWriteAccess:YES forUser:masterTeacher];
-    [acl setReadAccess:YES forUser:masterTeacher];
+    [acl setWriteAccess:YES forUser:[User currentUser]];
+    [acl setReadAccess:YES forUser:[User currentUser]];
+    
     [acl setReadAccess:YES forRoleWithName:roleName];
     [acl setWriteAccess:NO forRoleWithName:roleName];
-    [acl setPublicReadAccess:YES];
     
     return acl;
 }
 
-+(PFACL*)getReadWriteACLWithRoleName:(NSString *)roleName{
+- (PFACL *)roleReadWriteACL:(NSString *)roleName {
+    
     PFACL *acl = [PFACL ACL];
-    User *masterTeacher = [User currentUser];
-    [acl setWriteAccess:YES forUser:masterTeacher];
-    [acl setReadAccess:YES forUser:masterTeacher];
+    [acl setWriteAccess:YES forUser:[User currentUser]];
+    [acl setReadAccess:YES forUser:[User currentUser]];
+    
     [acl setReadAccess:YES forRoleWithName:roleName];
     [acl setWriteAccess:YES forRoleWithName:roleName];
+    
+    return acl;
+}
+
+- (PFACL *)publicReadOnlyACLWithReadWriteRole:(NSString *)roleName {
+    
+    PFACL *acl = [PFACL ACL];
+    [acl setWriteAccess:YES forUser:[User currentUser]];
+    [acl setReadAccess:YES forUser:[User currentUser]];
+    
+    [acl setReadAccess:YES forRoleWithName:roleName];
+    [acl setWriteAccess:YES forRoleWithName:roleName];
+    
     [acl setPublicReadAccess:YES];
     
     return acl;
 }
 
-+(PFACL*)getReadOnlyACLWithUser:(User *)userObject{
-    PFACL *acl = [PFACL ACL];
-    [acl setReadAccess:YES forUser:userObject];
-    [acl setWriteAccess:NO forUser:userObject];
+- (PFACL *)publicReadOnlyACLWithReadOnlyRole:(NSString *)roleName {
     
-    return acl;
-}
-
-+(PFACL*)getReadWriteACLWithUser:(User *)userObject{
     PFACL *acl = [PFACL ACL];
-    [acl setReadAccess:YES forUser:userObject];
-    [acl setWriteAccess:YES forUser:userObject];
+    [acl setWriteAccess:YES forUser:[User currentUser]];
+    [acl setReadAccess:YES forUser:[User currentUser]];
+    
+    [acl setReadAccess:YES forRoleWithName:roleName];
+    [acl setWriteAccess:NO forRoleWithName:roleName];
+    
+    [acl setPublicReadAccess:YES];
     
     return acl;
 }
@@ -159,13 +176,17 @@ static CMTParseManager *_sharedInstance;
 @implementation CMTParseManager (User)
 
 - (void)registUserSchool:(School *)school {
+    NSLog(@"%s", __FUNCTION__);
     
-    [User currentUser].cmtWorkSchool = school;
-    [[User currentUser] saveInBackground];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSError *err = nil;
+        [User currentUser].cmtWorkSchool = school;
+        [[User currentUser] save:&err];
+    });
+    
 }
 
-
-- (void)fetchUsers:(UserType)userType withCompletion:(void(^)(NSArray* users, NSError* resultError))completion {
+- (void)fetchUsers:(UserType)userType block:(void(^)(NSArray* users, NSError* error))block {
     
     NSLog(@"%s", __FUNCTION__);
     
@@ -175,94 +196,42 @@ static CMTParseManager *_sharedInstance;
     }
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSError *error = nil;
-        NSArray *users = [query findObjects:&error];
+        NSError *err = nil;
+        NSArray *users = [query findObjects:&err];
         
-        if (completion) {
-            completion(users, error);
+        if (block) {
+            block(users,err);
         }
         
     });
     
 }
 
-- (void)signInUserWithUserEmailAddress:(NSString *)email
-                         withPassword:(NSString *)userpassword
-                         withUserType:(UserType)userType
-                       withCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion {
+- (void)signUp:(NSString *)email password:(NSString *)password userType:(UserType)utype block:(void (^)(NSError *))block {
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         User *signInUser = [User user];
         //username = email と同じ!
         signInUser.username = email;
-        signInUser.password = userpassword;
+        signInUser.password = password;
         signInUser.email = email;
-        signInUser.cmtUserType = @(userType);
+        signInUser.cmtUserType = @(utype);
         
-        NSError *resultError;
-        BOOL isSucceeded = [signInUser signUp:&resultError];
+        NSError *error = nil;
+        BOOL isSucceeded = [signInUser signUp:&error];
         
         if (isSucceeded == YES) {
-            NSLog(@"signIn Succeeded");
-            resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNone
-                                    localizedDescription:@"Create account success."];
+            NSLog(@"signUp Succeeded");
         }else{
-            NSLog(@"signIn Failed - %@", resultError);
-            resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeSignInFailed
+            NSLog(@"signUp Failed - %@", error);
+            error = [NSError errorWithCodomottoErrorCode:CMTErrorCodeSignInFailed
                                     localizedDescription:@"Create account failed."];
         }
-        completion(isSucceeded, resultError);
-    });
-}
-
-/*!
- 
- @abstract 유저 상세 데이터 입력기능 - 이 기능은 유저가 로그인 한 상태(currentUser)를 전제로 한다.
- 
- */
-- (void)setDetailUserInfoWithUserType:(NSNumber *)cmtUserType
-                       withWorkSchool:(School *)cmtWorkSchool
-                         withUserName:(NSString *)cmtUserName
-                 withFuriganaUserName:(NSString *)cmtFuriganaUserName
-                           withGender:(NSNumber *)cmtGender
-                       withPostalCode:(NSString *)cmtPostalCode
-                 withCellPhoneAddress:(NSString *)cmtCellPhoneAddress
-                         withPicImage:(NSData *)cmtPicImage
-                    withCheckApproval:(NSNumber *)cmtCheckApproval
-                       withCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion{
-    
-    if ([PFUser currentUser] == nil) {
-        //logoutの場合
-        return;
-    }
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-        User *currentUser = [User currentUser];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            block(error);
+        });
         
-        currentUser.cmtUserType = cmtUserType;
-        currentUser.cmtWorkSchool = cmtWorkSchool;
-        currentUser.cmtUserName = cmtUserName;
-        currentUser.cmtFuriganaUserName = cmtFuriganaUserName;
-        currentUser.cmtGender = cmtGender;
-        currentUser.cmtPostalCode = cmtPostalCode;
-        currentUser.cmtCellPhoneAddress = cmtCellPhoneAddress;
-        currentUser.cmtPicImage = cmtPicImage;
-        currentUser.cmtCheckApproval = cmtCheckApproval;
-        
-        NSError *resultError;
-        BOOL isSucceeded = [currentUser save:&resultError];
-        
-        if (isSucceeded == YES) {
-            NSLog(@"User detail Info Edit Succeeded - %@", resultError);
-            resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNone
-                                          localizedDescription:@"상세 정보 수정 완료"];
-        }else{
-            NSLog(@"can't that- %@", resultError);
-            resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeSetDetailInfoFailed
-                                          localizedDescription:@"상세 정보 수정 실패"];
-        }
-        completion(isSucceeded, resultError);
     });
 }
 
@@ -271,94 +240,74 @@ static CMTParseManager *_sharedInstance;
  @abstract ログイン
  
  */
-- (void)loginWithUserEmailAddress:(NSString *)email
-                     withPassword:(NSString *)userpassword
-                   withCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion{
+- (void)signIn:(NSString *)email password:(NSString *)password block:(errorBlock)block {
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSError* resultError;
-        BOOL isSucceeded = [User logInWithUsername:email password:userpassword error:&resultError];
+        NSError* error = nil;
+        BOOL isSucceeded = [User logInWithUsername:email password:password error:&error];
         if (isSucceeded == YES) {
             NSLog(@"login Succeeded");
-            resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNone
-                                    localizedDescription:@"login success."];
         }else{
-            NSLog(@"can't that- %@", resultError);
-            resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeLoginFailed
+            NSLog(@"can't that- %@", error);
+            error = [NSError errorWithCodomottoErrorCode:CMTErrorCodeLoginFailed
                                     localizedDescription:@"login failed."];
         }
-        completion(isSucceeded, resultError);
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            block(error);
+        });
+        
     });
 }
 
-- (void)logoutCurrentUserWithCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion{
-        [User logOutInBackgroundWithBlock:^(NSError *error){
-        if (!error) {
-            NSLog(@"logout Succeeded");
-            error = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNone
-                                           localizedDescription:@"logout success."];
-            if (completion) {
-                completion(YES, error);
-            }
-
-        }else{
-            NSLog(@"logout error %@", error);
-            error = [NSError errorWithCodomottoErrorCode:CMTErrorCodeLogoutFailed
-                                           localizedDescription:@"logout failed."];
-            
-            if (completion) {
-                completion(NO, error);
-            }
-        }
-    }];
+- (void)signOut {
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [User logOut];
+    });
 }
 
 /*!
- 
  @abstract 비밀번호 리셋 기능
- 
  */
-- (void)currentUserPasswordResetWithUserEmailAddress:(NSString *)email
-                                      withCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion{
+- (void)resetPassword:(NSString *)email block:(errorBlock)block {
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSError *resultError;
-        BOOL isSucceeded = [User requestPasswordResetForEmail:email error:&resultError];
+        
+        NSError *error = nil;
+        BOOL isSucceeded = [User requestPasswordResetForEmail:email error:&error];
+        
         if (isSucceeded == YES) {
             NSLog(@"reset Succeeded");
-            resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNone
-                                    localizedDescription:@"비밀번호 리셋 성공"];
         }else{
-            NSLog(@"can't that- %@", resultError);
-            resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodePasswordResetFailed
-                                    localizedDescription:@"비밀번호 리셋 성공"];
+            NSLog(@"can't that- %@", error);
+            error = [NSError errorWithCodomottoErrorCode:CMTErrorCodePasswordResetFailed
+                                    localizedDescription:@"비밀번호 리셋 에러"];
         }
-        completion(isSucceeded, resultError);
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            block(error);
+        });
+        
     });
 }
-
-/*!
- 
- @abstract 선생 근무시작/근무종료시간 설정기능
- 
- */
-//+(void)setTeacherStartDate:(NSDate *)cmtStartDate withEndDate:(NSDate *)cmtEndDate{}
 
 @end
 
+#pragma mark - Role Category
 /*
  롤 추가시 유의점(내부적으로)
  어떤 롤이든 처음 생성할 때 반드시 acl을 지정해야 한다.
  acl은 절대로 빈 값을 넣을 수 없다.
- 그러므로 기본적으로 특정 보육원에 대한 롤을 생성시, acl설정은 학원롤 / 전체유저 읽기롤을 제외하고는 
+ 그러므로 기본적으로 특정 보육원에 대한 롤을 생성시, acl설정은 학원롤 / 전체유저 읽기롤을 제외하고는
  해당 보육원의 원장 유저를 읽기/쓰기 acl로 먼저 추가 후 롤 생성할 필요가 있다.
  그 후, 해당 롤 생성이 완료된 시점에서 바로 그 롤을 acl로 추가함으로 롤 추가시 acl설정은 완료된다.
  
- 임시롤의 경우는 
+ 임시롤의 경우는
  원장 유저 읽기/쓰기 acl + 특정유저 읽기전용 acl을 추가하기로 원장유저가 글을 삭제하고
  특정유저만 읽을 수 있게 된다.
  */
 
-#pragma mark - Role Category
 @implementation CMTParseManager (Role)
 
 - (NSString *)schoolRoleName:(School *)school prefix:(NSString *)prefix {
@@ -366,15 +315,15 @@ static CMTParseManager *_sharedInstance;
     return [NSString stringWithFormat:@"%@_%@",prefix, school.objectId];
 }
 
-- (void)hasAccessRoleToSchoolInBackground:(void(^)(BOOL))completion {
+- (void)hasAccessRoleToSchoolInBackground:(boolBlock)block {
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         BOOL hasAccess = [self hasAccessRoleToSchool];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (completion) {
-                completion(hasAccess);
+            if (block) {
+                block(hasAccess);
             }
         });
         
@@ -400,7 +349,7 @@ static CMTParseManager *_sharedInstance;
         NSArray *school_users = [[s_role.users query] findObjects];
         
         for (User *s_user in school_users) {
-            if ([s_user isEqual:self.loginUser]) {
+            if ([s_user isEqual:self.currentUser]) {
                 //Allowed
                 return YES;
             }
@@ -410,33 +359,28 @@ static CMTParseManager *_sharedInstance;
     return NO;
 }
 
-- (void)createRoleForSchoolInBackground:school block:(void(^)(BOOL, NSError*))completion {
+- (void)createRoleForSchoolInBackground:school block:(errorBlock)block {
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         NSError *error = nil;
-        BOOL success = [self createRoleForSchool:school error:&error];
+        [self createRoleForSchool:school error:&error];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (completion) {
-                completion(success, error);
+            if (block) {
+                block(error);
             }
         });
     });
 }
 
 /*!
- * 학원과 같이 롤을 생성한다.
- * 원장 Role.
- * 선생님 Role.(선생님은 원장유저를 상속받는다)
- * 학부모 Role.
- * 멤버 전체 Role.(학부모, 선생님유저를 상속받는다)
- * 설명:
- * 본인이 작성한 글에 대해서는 Role과 관계없이 ACL에 의해 읽기, 쓰기가 가능하다. 그러므로,
- * 원장은 읽기,쓰기 권한을, 그리고 선생님과 학부모는 읽기권한만 주기로 하자.
- *
- * 단, 비공개 글쓰기는 위에 권한구분과 별도로 그때마다 권한을 생성하기로 한다.(아니면.. 이건 권한이아닌 코드로 제어하는게 나을지도....)
- *
+ * 園とともに必要なロールを生成する。
+ * 全てのロールはPublicReadOnlyを設定する。
+ * 園長は全てのロールに対してReadWrite権限を設定する。
+ * 先生ロールは園長ロールから継承する。
+ * 保護者ロールはロール継承なし。
+ * メンバー全体ロールはロール継承なし。（ロールのユーザーリストには全ての園メンバーを追加する）
  */
 - (BOOL)createRoleForSchool:(School *)school error:(NSError **)error {
     
@@ -458,15 +402,9 @@ static CMTParseManager *_sharedInstance;
     NSError *role_error = nil;
     
     //園長ロール生成
-    Role *head_teacher_role = [Role roleWithName:[self schoolRoleName:school prefix:kCMTRoleNameHeadTeacher]
-                                              acl:[CMTParseManager getReadWriteACLWithUser:[User currentUser]]];
+    NSString *head_teacher_rolename = [self schoolRoleName:school prefix:kCMTRoleNameHeadTeacher];
     
-    //acl
-    PFACL *head_teacher_acl = [PFACL ACL];
-    [head_teacher_acl setPublicReadAccess:YES];
-    [head_teacher_acl setWriteAccess:YES forUser:self.loginUser];
-    head_teacher_role.ACL = head_teacher_acl;
-    
+    Role *head_teacher_role = [Role roleWithName:head_teacher_rolename acl:[self publicReadOnlyACL]];
     //Add extra data
     head_teacher_role.cmtSchool = school;
     [head_teacher_role.users addObject:[User currentUser]];
@@ -481,16 +419,12 @@ static CMTParseManager *_sharedInstance;
     
     //先生ロール生成
     Role *teacher_role = [Role roleWithName:[self schoolRoleName:school prefix:kCMTRoleNameTeacher]
-                                         acl:[CMTParseManager getReadWriteACLWithUser:[User currentUser]]];
-    
-    //acl
-    PFACL *teacher_acl = [PFACL ACL];
-    [teacher_acl setPublicReadAccess:YES];
-    [teacher_acl setWriteAccess:YES forUser:self.loginUser];
-    teacher_role.ACL = teacher_acl;
+                                         acl:[self publicReadOnlyACLWithReadWriteRole:head_teacher_rolename]];
     
     //Add extra data
     teacher_role.cmtSchool = school;
+    
+    //inherit role
     [teacher_role.roles addObject:head_teacher_role];
     
     role_succeeded = [teacher_role save:&role_error];
@@ -503,14 +437,7 @@ static CMTParseManager *_sharedInstance;
     
     //保護者ロール生成
     Role *parents_role = [Role roleWithName:[self schoolRoleName:school prefix:kCMTRoleNameParents]
-                                        acl:[CMTParseManager getReadWriteACLWithUser:[User currentUser]]];
-    
-    
-    //acl
-    PFACL *parents_acl = [PFACL ACL];
-    [parents_acl setPublicReadAccess:YES];
-    [parents_acl setWriteAccess:YES forUser:self.loginUser];
-    parents_role.ACL = parents_acl;
+                                        acl:[self publicReadOnlyACLWithReadWriteRole:head_teacher_rolename]];
     
     //Add extra data
     parents_role.cmtSchool = school;
@@ -525,17 +452,7 @@ static CMTParseManager *_sharedInstance;
     
     //全てのメンバーロール
     Role *member_role = [Role roleWithName:[self schoolRoleName:school prefix:kCMTRoleNameMember]
-                                       acl:[CMTParseManager getReadWriteACLWithUser:[User currentUser]]];
-    
-    [member_role.roles addObject:parents_role];
-    [member_role.roles addObject:teacher_role];
-    
-    
-    //acl
-    PFACL *member_acl = [PFACL ACL];
-    [member_acl setPublicReadAccess:YES];
-    [member_acl setWriteAccess:YES forUser:self.loginUser];
-    member_role.ACL = member_acl;
+                                       acl:[self publicReadOnlyACLWithReadWriteRole:head_teacher_rolename]];
     
     //Add extra data
     member_role.cmtSchool = school;
@@ -551,49 +468,67 @@ static CMTParseManager *_sharedInstance;
     return YES;
 }
 
-- (void)addUserSchoolRoleInBackground:(RequestUser *)requestUser block:(void(^)(BOOL, NSError*))completion {
+- (void)addUserSchoolRoleInBackground:(RequestUser *)requestUser block:(errorBlock)block {
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         NSError *error = nil;
-        BOOL success = [self addUserSchoolRole:requestUser error:&error];
+        [self addUserSchoolRole:requestUser error:&error];
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            if (completion) {
-                completion(success, error);
+            if (block) {
+                block(error);
             }
         });
     });
 }
 
-- (BOOL)addUserSchoolRole:(RequestUser *)requestUser error:(NSError **)error {
+/*!
+ * リクエストユーザーをロールに追加する
+ * リクエストしたユーザーの属性(UserType)を確認し、該当ロールに追加する
+ */
+- (BOOL)addUserSchoolRole:(RequestUser *)ruser error:(NSError **)error {
     
     //Role検索
-    PFQuery *query = [Role query];
-    [query whereKey:@"cmtSchool" equalTo:requestUser.registSchool];
+    PFQuery *role_query = [PFRole query];
+    [role_query whereKey:@"cmtSchool" equalTo:ruser.registSchool];
     
     NSError *is_exist_error = nil;
-    NSArray *objects = [query findObjects:&is_exist_error];
-    if (objects == nil || objects.count == 0) {
+    NSArray *roles = [role_query findObjects:&is_exist_error];
+    if (roles == nil || roles.count == 0) {
         *error = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNoData localizedDescription:@"no roles"];
         return NO;
     }
     
-    UserType request_user_type = (UserType)[requestUser.requestUser.cmtUserType integerValue];
+    PFQuery *user_query = [PFUser query];
+    [user_query whereKey:@"objectId" equalTo:ruser.requestUser.objectId];
+    
+    NSArray *users = [user_query findObjects:&is_exist_error];
+    if (users == nil || users.count == 0) {
+        *error = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNoData localizedDescription:@"no users"];
+        return NO;
+    }
+    
+    
+    UserType request_user_type = (UserType)[((User *)users.firstObject).cmtUserType integerValue];
     NSString *user_type_key =
     request_user_type == UserTypeHeadTeacher?kCMTRoleNameHeadTeacher:
     request_user_type == UserTypeTeacher?kCMTRoleNameTeacher:
     request_user_type == UserTypeParents?kCMTRoleNameParents:nil;
     
     
-    for (Role *s_role in objects) {
+    for (Role *s_role in roles) {
+        
+        //該当ロールに追加
         if ([s_role.name hasPrefix:user_type_key]) {
-            [s_role.users addObject:requestUser.requestUser];
+            [s_role.users addObject:ruser.requestUser];
             [s_role save];
             continue;
         }
+        
+        //園メンバー全員ロールに追加
         if ([s_role.name hasPrefix:kCMTRoleNameMember]) {
-            [s_role.users addObject:requestUser.requestUser];
+            [s_role.users addObject:ruser.requestUser];
             [s_role save];
             continue;
         }
@@ -602,602 +537,15 @@ static CMTParseManager *_sharedInstance;
     return YES;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#if 0
-+(void)createDefaultUserReadOnlyRoleWithCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion{
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        PFQuery *query = [Role query];
-        [query whereKey:@"name" equalTo:kCMTRoleNameDefaultUserReadOnly];
-        NSError *resultError;
-        BOOL isSucceeded;
-        NSArray *object = [query findObjects:&resultError];
-        if (object.count == 0) {
-            Role *newRole = [Role roleWithName:kCMTRoleNameDefaultUserReadOnly
-                                           acl:[self getReadWriteACLWithUser:[User currentUser]]];
-            isSucceeded = [newRole save:&resultError];
-            if (isSucceeded == YES) {
-                NSLog(@"%s - create success", __PRETTY_FUNCTION__);
-                [newRole setACL:[self getReadOnlyACLWithRoleName:kCMTRoleNameDefaultUserReadOnly]];
-                isSucceeded = [newRole save:&resultError];
-                
-                if (isSucceeded == YES) {
-                    NSLog(@"%s - acl success", __PRETTY_FUNCTION__);
-                    resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNone
-                                            localizedDescription:@"롤 생성 완료 & ACL수정 완료"];
-                }else{
-                    resultError = [NSError errorWithCodomottoErrorCode:CMTErrorOther
-                                            localizedDescription:@"롤 생성 완료 & ACL수정 실패"];
-                    NSLog(@"%s - acl failed : %@", __PRETTY_FUNCTION__ ,resultError);
-                }
-                
-            }else{
-                resultError = [NSError errorWithCodomottoErrorCode:CMTErrorOther
-                                        localizedDescription:@"롤 생성 실패"];
-                NSLog(@"%s - create failed : %@", __PRETTY_FUNCTION__ ,resultError);
-            }
-            
-        }else{
-            resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeAlreadyData
-                                    localizedDescription:@"이미 롤이 존재합니다"];
-            NSLog(@"%s - failed : %@", __PRETTY_FUNCTION__ ,resultError);
-        }
-        completion(isSucceeded, resultError);
-        
-    });
-}
-
-+(void)createTeacherReadOnlyRoleWithCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        PFQuery *query = [Role query];
-        [query whereKey:@"name" equalTo:kCMTRoleNameTeacherReadOnly];
-        NSError *resultError;
-        BOOL isSucceeded;
-        NSArray *object = [query findObjects:&resultError];
-        if (object.count == 0) {
-            Role *newRole = [Role roleWithName:kCMTRoleNameTeacherReadOnly
-                                           acl:[self getReadWriteACLWithUser:[User currentUser]]];
-            
-            isSucceeded = [newRole save:&resultError];
-            if (isSucceeded == YES) {
-                NSLog(@"%s - create success", __PRETTY_FUNCTION__);
-                [newRole setACL:[self getReadOnlyACLWithRoleName:kCMTRoleNameTeacherReadOnly]];
-                isSucceeded = [newRole save:&resultError];
-                if (isSucceeded == YES) {
-                    NSLog(@"%s - acl success", __PRETTY_FUNCTION__);
-                    resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNone
-                                                  localizedDescription:@"롤 생성 완료 & ACL수정 완료"];
-                }else{
-                    NSLog(@"%s - acl failed : %@", __PRETTY_FUNCTION__ ,resultError);
-                    resultError = [NSError errorWithCodomottoErrorCode:CMTErrorOther
-                                                  localizedDescription:@"롤 생성 완료 & ACL수정 실패"];;
-                }
-            }else{
-                NSLog(@"%s - create failed : %@", __PRETTY_FUNCTION__ ,resultError);
-                resultError = [NSError errorWithCodomottoErrorCode:CMTErrorOther
-                                              localizedDescription:@"롤 생성 실패"];
-            }
-        }else{
-            
-            NSLog(@"%s - failed : %@", __PRETTY_FUNCTION__ ,resultError);
-            resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeAlreadyData
-                                          localizedDescription:@"이미 롤이 존재합니다"];
-        }
-        completion(isSucceeded, resultError);
-    });
-}
-
-+(void)createTeacherRoleWithCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        PFQuery *query = [Role query];
-        [query whereKey:@"name" equalTo:kCMTRoleNameTeacher];
-        NSError *resultError;
-        BOOL isSucceeded;
-        NSArray *object = [query findObjects:&resultError];
-        if (object.count == 0) {
-            Role *newRole = [Role roleWithName:kCMTRoleNameTeacher
-                                           acl:[self getReadWriteACLWithUser:[User currentUser]]];
-            isSucceeded = [newRole save:&resultError];
-            if (isSucceeded == YES) {
-                NSLog(@"%s - create success", __PRETTY_FUNCTION__);
-                resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNone
-                                              localizedDescription:@"롤 생성 완료"];
-                [newRole setACL:[self getReadOnlyACLWithRoleName:kCMTRoleNameTeacher]];
-                
-                isSucceeded = [newRole save:&resultError];
-                if (isSucceeded == YES) {
-                    NSLog(@"%s - acl success", __PRETTY_FUNCTION__);
-                    resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNone
-                                                  localizedDescription:@"롤 생성 완료 & ACL수정 완료"];
-                }else{
-                    resultError = [NSError errorWithCodomottoErrorCode:CMTErrorOther
-                                                  localizedDescription:@"롤 생성 완료 & ACL수정 실패"];
-                    NSLog(@"%s - acl failed : %@", __PRETTY_FUNCTION__ ,resultError);
-                }
-                
-            }else{
-                NSLog(@"%s - create failed : %@", __PRETTY_FUNCTION__ ,resultError);
-                resultError = [NSError errorWithCodomottoErrorCode:CMTErrorOther
-                                              localizedDescription:@"롤 생성 실패"];
-            }
-        }else{
-            NSLog(@"%s - failed : %@", __PRETTY_FUNCTION__ ,resultError);
-            resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeAlreadyData
-                                          localizedDescription:@"이미 롤이 존재합니다"];
-        }
-        completion(isSucceeded, resultError);
-    });
-}
-
-+(void)createMasterTeacherRoleWithCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion{
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        PFQuery *query = [Role query];
-        [query whereKey:@"name" equalTo:kCMTRoleNameMasterTeacher];
-        BOOL isSucceeded;
-        NSError *resultError;
-        NSArray *object = [query findObjects:&resultError];
-        if (object.count == 0) {
-            Role *newRole = [Role roleWithName:kCMTRoleNameMasterTeacher
-                                           acl:[self getReadWriteACLWithUser:[User currentUser]]];
-            isSucceeded = [newRole save:&resultError];
-            if (isSucceeded == YES) {
-                NSLog(@"%s - create success", __PRETTY_FUNCTION__);
-                [newRole setACL:[self getReadOnlyACLWithRoleName:kCMTRoleNameMasterTeacher]];
-                isSucceeded = [newRole save:&resultError];
-                if (isSucceeded == YES) {
-                    NSLog(@"%s - acl success", __PRETTY_FUNCTION__);
-                    resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNone
-                                                  localizedDescription:@"롤 생성 완료 & ACL수정 완료"];
-                }else{
-                    NSLog(@"%s - acl failed : %@", __PRETTY_FUNCTION__ ,resultError);
-                    resultError = [NSError errorWithCodomottoErrorCode:CMTErrorOther
-                                                  localizedDescription:@"롤 생성 완료 & ACL수정 실패"];
-                }
-            }else{
-                NSLog(@"%s - create failed : %@", __PRETTY_FUNCTION__ ,resultError);
-                resultError = [NSError errorWithCodomottoErrorCode:CMTErrorOther
-                                              localizedDescription:@"롤 생성 실패"];
-            }
-        }else{
-            NSLog(@"%s - failed : %@", __PRETTY_FUNCTION__ ,resultError);
-            resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeAlreadyData
-                                          localizedDescription:@"이미 롤이 존재합니다"];
-        }
-        completion(isSucceeded, resultError);
-    });
-    
-}
-
-+(void)createSelectUserReadOnlyRoleWithUsers:(NSArray *)usersArray
-                              withCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    
-        //현재날짜/시각으로 임시롤 생성
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc]init];
-        [dateFormatter setDateFormat:@"yyyy-MM-dd/HH:mm:ss.SSS"];
-        NSDate *date = [NSDate date];
-        NSString *stringDate = [dateFormatter stringFromDate:date];
-        
-        PFQuery *query = [Role query];
-        [query whereKey:@"name" equalTo:stringDate];
-        BOOL isSucceeded;
-        NSError *resultError;
-        NSArray *object = [query findObjects:&resultError];
-        if (object.count == 0) {
-            Role *newRole = [Role roleWithName:stringDate
-                                           acl:[self getReadWriteACLWithUser:[User currentUser]]];
-            for (User *user in usersArray) {
-                [newRole.users addObject:user];
-            }
-            
-            isSucceeded = [newRole save:&resultError];
-            if (isSucceeded == YES) {
-                NSLog(@"%s - create success", __PRETTY_FUNCTION__);
-                [newRole setACL:[self getReadOnlyACLWithRoleName:stringDate]];
-                isSucceeded = [newRole save:&resultError];
-                if (isSucceeded == YES) {
-                    NSLog(@"%s - acl success", __PRETTY_FUNCTION__);
-                    resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNone
-                                                  localizedDescription:@"롤 생성 완료 & ACL수정 완료"];
-                }else{
-                    NSLog(@"%s - acl failed : %@", __PRETTY_FUNCTION__ ,resultError);
-                    resultError = [NSError errorWithCodomottoErrorCode:CMTErrorOther
-                                                  localizedDescription:@"롤 생성 완료 & ACL수정 실패"];
-                }
-                
-            }else{
-                NSLog(@"%s - create failed : %@", __PRETTY_FUNCTION__ ,resultError);
-                resultError = [NSError errorWithCodomottoErrorCode:CMTErrorOther
-                                              localizedDescription:@"롤 생성 실패"];
-            }
-        }else{
-            NSLog(@"%s - failed : %@", __PRETTY_FUNCTION__ ,resultError);
-            resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeAlreadyData
-                                          localizedDescription:@"이미 롤이 존재합니다"];
-        }
-        completion(isSucceeded, resultError);
-    
-    });
-}
-
-+(void)createSchoolRoleWithRoleName:(NSString*)roleName
-                          withCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    
-        PFQuery *query = [Role query];
-        [query whereKey:@"name" equalTo:roleName];
-        BOOL isSucceeded;
-        NSError *resultError;
-        NSArray *object = [query findObjects:&resultError];
-        if (object.count == 0) {
-            //학원 롤 생성전 해당 학원에 포함될 자식롤 검색
-            PFQuery *otherRoleSearchQuery = [Role query];
-            NSArray *otherRoleNames = @[kCMTRoleNameTeacher, kCMTRoleNameTeacherReadOnly, kCMTRoleNameMasterTeacher, kCMTRoleNameDefaultUserReadOnly];
-            [otherRoleSearchQuery whereKey:@"name" containedIn:otherRoleNames];
-            NSArray *objects = [otherRoleSearchQuery findObjects:&resultError];
-            if (objects.count == 4) {
-                //검색결과에 해당하는 롤들만 자식롤에 넣는다.
-                Role *newRole = [Role roleWithName:roleName
-                                               acl:[self getReadWriteACLWithUser:[User currentUser]]];
-                for (Role *childRole in objects) {
-                    [newRole.roles addObject:childRole];
-                }
-                isSucceeded = [newRole save:&resultError];
-                if (isSucceeded == YES) {
-                    NSLog(@"%s - create success", __PRETTY_FUNCTION__);
-                    resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNone
-                                                  localizedDescription:@"롤 생성 완료"];
-                    [newRole setACL:[self getReadOnlyACLWithRoleName:roleName]];
-                    isSucceeded = [newRole save:&resultError];
-                    if (isSucceeded == YES) {
-                        NSLog(@"%s - acl success", __PRETTY_FUNCTION__);
-                        resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNone
-                                                      localizedDescription:@"ACL수정 완료"];
-                    }else{
-                        NSLog(@"%s - acl failed : %@", __PRETTY_FUNCTION__ ,resultError);
-                        resultError = [NSError errorWithCodomottoErrorCode:CMTErrorOther
-                                                      localizedDescription:@"ACL수정 실패"];
-                    }
-                }else{
-                    NSLog(@"%s - create failed : %@", __PRETTY_FUNCTION__ ,resultError);
-                    resultError = [NSError errorWithCodomottoErrorCode:CMTErrorOther
-                                                  localizedDescription:@"롤 생성 실패"];
-                }
-            }else{
-                NSLog(@"%s - failed : %@", __PRETTY_FUNCTION__ ,resultError);
-                resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeAlreadyData
-                                              localizedDescription:@"필요한 롤의 갯수가 부족합니다"];
-                for (int i = 0; i >= (objects.count - 1); i++) {
-                    Role *transaction = (Role*)[objects objectAtIndex:i];;
-                    BOOL isTransactionSucceeded = [transaction delete:&resultError];
-                    if (isTransactionSucceeded == YES) {
-                        NSLog(@"transaction Succeeded - %@", [objects objectAtIndex:i]);
-                    }else{
-                        NSLog(@"transaction Failed - %@", [objects objectAtIndex:i]);
-                    }
-                }
-            }
-        }else{
-            NSLog(@"%s - failed : %@", __PRETTY_FUNCTION__ ,resultError);
-            resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeAlreadyData
-                                          localizedDescription:@"이미 롤이 존재합니다"];
-        }
-        
-        completion(isSucceeded, resultError);
-    
-    });
-}
-
-//퍼블릭롤은...서버상에서 관리하고 유저 추가만 하는게 좋을거같음;;
-//+(void)createPublicUserReadOnlyRoleWithError:(NSError **)resultError{
-//    PFQuery *query = [Role query];
-//    [query whereKey:@"name" equalTo:kCMTRoleNamePublicUserReadOnly];
-//    [query findObjectsInBackgroundWithBlock:^(NSArray *object, NSError *error) {
-//        if (object.count == 0) {
-//            Role *newRole = [Role roleWithName:kCMTRoleNamePublicUserReadOnly
-//                                           acl:[self getReadWriteACLWithUser:[User currentUser]]];
-//            [newRole saveInBackgroundWithBlock:^(BOOL success, NSError *error){
-//                if (success) {
-//                    NSLog(@"%s - create success", __PRETTY_FUNCTION__);
-//                    *resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNone
-//                                                   localizedDescription:@"롤 생성 완료"];
-//                    [newRole setACL:[self getReadOnlyACLWithRoleName:kCMTRoleNamePublicUserReadOnly]];
-//                    [newRole saveInBackgroundWithBlock:^(BOOL success, NSError *error){
-//                        if (success) {
-//                            NSLog(@"%s - acl success", __PRETTY_FUNCTION__);
-//                            *resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNone
-//                                                           localizedDescription:@"ACL수정 완료"];
-//                        }else{
-//                            *resultError = [NSError errorWithCodomottoErrorCode:CMTErrorOther
-//                                                           localizedDescription:@"ACL수정 실패"];
-//                            NSLog(@"%s - acl failed : %@", __PRETTY_FUNCTION__ ,error);
-//                        }
-//                    }];
-//
-//                }else{
-//                    *resultError = [NSError errorWithCodomottoErrorCode:CMTErrorOther
-//                                                   localizedDescription:@"롤 생성 실패"];
-//                    NSLog(@"%s - create failed : %@", __PRETTY_FUNCTION__ ,error);
-//                }
-//            }];
-//        }else{
-//            *resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeAlreadyData
-//                                           localizedDescription:@"이미 롤이 존재합니다"];
-//            NSLog(@"%s - failed : %@", __PRETTY_FUNCTION__ ,error);
-//        }
-//    }];
-//}
-
-
-
-#pragma mark - Add User
 /*!
- 
- @abstract 일반유저(읽기전용)롤에 유저 추가기능(원장 아이디로만 롤에 유저 추가가능)
- 
- */
-+(void)addDefaultUserReadOnlyRoleUsersWithUserInformation:(User *)user
-                                           withCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
-        PFQuery *query = [Role query];
-        
-        [query whereKey:@"name" equalTo:kCMTRoleNameDefaultUserReadOnly];
-        BOOL isSucceeded;
-        NSError *resultError;
-        NSArray *object = [query findObjects:&resultError];
-        if (object.count != 0) {
-            NSLog(@"%s - find success", __PRETTY_FUNCTION__);
-            PFObject *resultObject = [object objectAtIndex:0];
-            Role *role = (Role *)resultObject;
-            [role.users addObject:user];
-            isSucceeded = [role save:&resultError];
-            if (isSucceeded == YES) {
-                NSLog(@"%s - add success", __PRETTY_FUNCTION__);
-                resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNone
-                                              localizedDescription:@"유저 추가 성공"];
-            }else{
-                NSLog(@"add failed%@", resultError);
-                resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeUserAddFailed
-                                              localizedDescription:@"유저 추가 실패"];
-            }
-        }else{
-            NSLog(@"%s - failed : %@", __PRETTY_FUNCTION__ ,resultError);
-            resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNoData
-                                          localizedDescription:@"롤이 존재하지 않습니다"];
-        }
-        completion(isSucceeded, resultError);
-        
-    });
-}
-
-/*!
- 
- @abstract 선생유저(읽기전용)롤에 유저 추가 기능(원장 아이디로만 롤에 유저 추가가능)
- 
- */
-+(void)addTeacherReadOnlyRoleUsersWithUserInformation:(User *)user
-                                       withCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    
-        PFQuery *query = [Role query];
-        
-        [query whereKey:@"name" equalTo:kCMTRoleNameTeacherReadOnly];
-        BOOL isSucceeded;
-        NSError *resultError;
-        NSArray * object = [query findObjects:&resultError];
-        if (object.count != 0) {
-            NSLog(@"%s - find success", __PRETTY_FUNCTION__);
-            PFObject *resultObject = [object objectAtIndex:0];
-            Role *role = (Role *)resultObject;
-            [role.users addObject:user];
-            isSucceeded = [role save:&resultError];
-            if (isSucceeded == YES) {
-                NSLog(@"%s - add success", __PRETTY_FUNCTION__);
-                resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNone
-                                              localizedDescription:@"유저 추가 성공"];
-            }else{
-                NSLog(@"add failed%@", resultError);
-                resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeUserAddFailed
-                                              localizedDescription:@"유저 추가 실패"];
-            }
-        }else{
-            NSLog(@"%s - failed : %@", __PRETTY_FUNCTION__ ,resultError);
-            resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNoData
-                                          localizedDescription:@"롤이 존재하지 않습니다"];
-        }
-        completion(isSucceeded, resultError);
-        
-    });
-}
-
-/*!
- 
- @abstract 선생유저(읽기,쓰기)롤에 유저 추가기능(원장 아이디로만 롤에 유저 추가가능)
- 
- */
-+(void)addTeacherRoleUsersWithUserInformation:(User *)user
-                               withCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    
-        PFQuery *query = [Role query];
-        
-        [query whereKey:@"name" equalTo:kCMTRoleNameTeacher];
-        BOOL isSucceeded;
-        NSError *resultError;
-        NSArray *object = [query findObjects:&resultError];
-        if (object.count != 0) {
-            NSLog(@"%s - find success", __PRETTY_FUNCTION__);
-            PFObject *resultObject = [object objectAtIndex:0];
-            Role *role = (Role *)resultObject;
-            [role.users addObject:user];
-            isSucceeded = [role save:&resultError];
-            if (isSucceeded == YES) {
-                NSLog(@"%s - add success", __PRETTY_FUNCTION__);
-                resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNone
-                                              localizedDescription:@"유저 추가 성공"];
-            }else{
-                NSLog(@"add failed%@", resultError);
-                resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeUserAddFailed
-                                              localizedDescription:@"유저 추가 실패"];
-            }
-            
-        }else{
-            NSLog(@"%s - failed : %@", __PRETTY_FUNCTION__ ,resultError);
-            resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNoData
-                                          localizedDescription:@"롤이 존재하지 않습니다"];
-        }
-        completion(isSucceeded, resultError);
-    
-    });
-}
-
-/*!
- 
- @abstract 원장유저(읽기,쓰기)롤에 유저 추가기능(원장 아이디로만 롤에 유저 추가가능)
- 
- */
-+(void)addMasterTeacherRoleUsersWithUserInformation:(User *)user
-                                          withCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion{
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    
-        PFQuery *query = [Role query];
-        [query whereKey:@"name" equalTo:kCMTRoleNameMasterTeacher];
-        BOOL isSucceeded;
-        NSError *resultError;
-        NSArray *object = [query findObjects:&resultError];
-        if (object.count != 0) {
-            NSLog(@"%s - find success", __PRETTY_FUNCTION__);
-            PFObject *resultObject = [object objectAtIndex:0];
-            Role *role = (Role *)resultObject;
-            [role.users addObject:user];
-            isSucceeded = [role save:&resultError];
-            if (isSucceeded == YES) {
-                NSLog(@"%s - add success", __PRETTY_FUNCTION__);
-                resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNone
-                                              localizedDescription:@"유저 추가 성공"];
-            }else{
-                NSLog(@"add failed%@", resultError);
-                resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeUserAddFailed
-                                              localizedDescription:@"유저 추가 실패"];
-            }
-        }else{
-            NSLog(@"%s - failed : %@", __PRETTY_FUNCTION__ ,resultError);
-            resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNoData
-                                          localizedDescription:@"롤이 존재하지 않습니다"];
-        }
-        completion(isSucceeded, resultError);
-    });
-}
-
-/*
- 미완성, const값을 동적으로 지정 하는법을 잘 몰라서...
- */
-//+(void)addSchoolRoleUsersWithUserInformation:(User *)user
-//                                   withError:(NSError **)resultError{
-//    PFQuery *query = [Role query];
-//    
-//    [query whereKey:@"name" equalTo:<#Rolename#>];
-//    
-//    [query findObjectsInBackgroundWithBlock:^(NSArray *object, NSError *error){
-//        if (object.count != 0) {
-//            NSLog(@"%s - find success", __PRETTY_FUNCTION__);
-//            PFObject *resultObject = [object objectAtIndex:0];
-//            Role *role = (Role *)resultObject;
-//            [role.users addObject:user];
-//            [role saveInBackgroundWithBlock:^(BOOL success, NSError *error){
-//                if (success) {
-//                    NSLog(@"%s - add success", __PRETTY_FUNCTION__);
-//                    *resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNone
-//                                                   localizedDescription:@"유저 추가 성공"];
-//                }else{
-//                    NSLog(@"add failed%@", resultError);
-//                    *resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeUserAddFailed
-//                                                   localizedDescription:@"유저 추가 실패"];
-//                }
-//            }];
-//        }else{
-//            *resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNoData
-//                                           localizedDescription:@"롤이 존재하지 않습니다"];
-//            NSLog(@"%s - failed : %@", __PRETTY_FUNCTION__ ,error);
-//        }
-//    }];
-//}
-
-/*
- Public이니...그냥 전체유저 쿼리를 돌려서 다 추가하는걸로?
- */
-
-/*!
- 
- @abstract 전체유저(읽기전용)롤에 유저 추가기능(원장 아이디로만 롤에 유저 추가가능)
- 
- */
-+(void)addPublicUserReadOnlyRoleUsersWithUserInformation:(User *)user
-                                          withCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    
-        PFQuery *query = [Role query];
-        [query whereKey:@"name" equalTo:kCMTRoleNamePublicUserReadOnly];
-        BOOL isSucceeded;
-        NSError *resultError;
-        NSArray *object = [query findObjects:&resultError];
-        if (object.count != 0) {
-            NSLog(@"%s - find success", __PRETTY_FUNCTION__);
-            PFObject *resultObject = [object objectAtIndex:0];
-            Role *role = (Role *)resultObject;
-            [role.users addObject:user];
-            [role save:&resultError];
-                if (isSucceeded == YES) {
-                    NSLog(@"%s - add success", __PRETTY_FUNCTION__);
-                    resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNone
-                                                   localizedDescription:@"유저 추가 성공"];
-                }else{
-                    NSLog(@"add failed%@", resultError);
-                    resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeUserAddFailed
-                                                   localizedDescription:@"유저 추가 실패"];
-                }
-        }else{
-            NSLog(@"%s - failed : %@", __PRETTY_FUNCTION__ ,resultError);
-            resultError = [NSError errorWithCodomottoErrorCode:CMTErrorCodeNoData
-                                           localizedDescription:@"롤이 존재하지 않습니다"];
-        }
-    });
-}
-
-#pragma mark - Remove Role
-//삭제는 가능하나 로그인한 유저와 관계있는 롤만 삭제가능함...
-/*!
- 
+ * まだ検証してない
  @abstract 로그인 유저에 쓰기권한을 가진경우 롤 삭제기능
- 
  */
-+(void)removeRoleWithRoleName:(NSString *)roleName
-                    withCompletion:(void(^)(BOOL isSucceeded, NSError* resultError))completion{
+- (void)removeSchoolRole:(School *)school block:(errorBlock)block {
     
+#if 0
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-    
+        
         PFQuery *roleSearchQuery = [Role query];
         [roleSearchQuery whereKey:@"name" equalTo:roleName];
         BOOL isSucceeded;
@@ -1221,24 +569,11 @@ static CMTParseManager *_sharedInstance;
                                           localizedDescription:@"롤이 존재하지 않습니다"];
             NSLog(@"object not found");
         }
-     
+        
     });
+    
+#endif
+    
 }
 
-#pragma mark - Test API'S
-/*!
- 
- @abstract 테스트용 api - 유저네임으로 유저 오브젝트 검색기능
- 
- */
-+(User*)getUserObjectWithUserName:(NSString*)userName{
-    PFQuery *query = [User query];
-    [query whereKey:@"username" equalTo:userName];
-    NSError *resultError;
-    NSArray *object = [query findObjects:&resultError];
-    User *resultUser = (User*)object.firstObject;
-    
-    return resultUser;
-}
-#endif
 @end

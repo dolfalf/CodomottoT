@@ -106,17 +106,15 @@
     //root画面へ遷移してログイン画面に戻る
 
     NSLog(@"%s", __FUNCTION__);
+    CMTParseManager *mgr = [CMTParseManager sharedInstance];
     
-    [[CMTParseManager sharedInstance] logoutCurrentUserWithCompletion:^(BOOL isSucceeded, NSError *resultError) {
-        if (isSucceeded) {
-            NSLog(@"logout success");
-            [self showAlertMessage:@"logout success"];
-        }else {
-            NSLog(@"logout failed.");
-            [self showAlertMessage:@"logout failed"];
-        }
-    }];
+    [mgr signOut];
     
+    if (mgr.isLogin == NO) {
+        [self showAlertMessage:@"Logout success"];
+    }else {
+        [self showAlertMessage:@"Logout failed"];
+    }
 }
 
 - (IBAction)gotoMainButtonTouched:(id)sender {

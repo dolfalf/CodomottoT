@@ -119,22 +119,22 @@
     CMTParseManager *mgr = [CMTParseManager sharedInstance];
     School *school = _schools[indexPath.row];
     
-    if (mgr.loginUser.cmtUserType == UserTypeHeadTeacher) {
+    if (mgr.userType == UserTypeHeadTeacher) {
         //園長は園選択画面は使わない
         return;
     }
     
     //Request Userへ登録しておく
     RequestUserModel *model = [RequestUserModel new];
-    RequestUser *user = [RequestUser createModel];
-    user.requestUser = mgr.loginUser;
-    user.registSchool = school;
+    RequestUser *req_user = [RequestUser createModel];
+    req_user.requestUser = mgr.currentUser;
+    req_user.registSchool = school;
     
-    //園選択情報保存
-    [mgr registUserSchool:school];
-    
-    [model save:user completion:^(BOOL succeeded, NSError *resultError) {
-        //
+    [model save:req_user completion:^(BOOL succeeded, NSError *resultError) {
+        
+        //園選択情報保存
+        [mgr registUserSchool:school];
+        
         if (succeeded) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 //許可待ち画面へ遷移

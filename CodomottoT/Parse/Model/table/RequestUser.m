@@ -21,7 +21,7 @@
 }
 
 + (NSString *)parseClassName {
-    return @"RequestUser";
+    return NSStringFromClass([self class]);
 }
 
 + (instancetype)createModel {
@@ -34,6 +34,16 @@
     model.ACL = [PFACL ACLWithUser:[PFUser currentUser]];
     
     return model;
+}
+
+- (id)init {
+    
+    self = [super init];
+    
+    if (self) {
+        //ここでは初期化をしない。クエリー時エラーの原因となる。
+    }
+    return self;
 }
 
 @end

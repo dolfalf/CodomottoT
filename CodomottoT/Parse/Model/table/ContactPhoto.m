@@ -18,15 +18,14 @@
 }
 
 + (NSString *)parseClassName {
-    return @"ContactPhoto";
+    return NSStringFromClass([self class]);
 }
 
 + (instancetype)createModel {
     
     ContactPhoto *model = [[self alloc] init];
     
-    //여기서 초기화 처리를 해준다.
-    //model.ACL = [PFACL ACLWithUser:[PFUser currentUser]];
+    model.ACL = [PFACL ACLWithUser:[PFUser currentUser]];
     
     return model;
 }

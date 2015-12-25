@@ -56,13 +56,12 @@
         
         for (Role *role in objects) {
             
-#if 0
             if ([role.name hasPrefix:kCMTRoleNameMember]) {
                 //Read権限
                 [school_acl setReadAccess:YES forRole:role];
                 continue;
             }
-#endif
+            
             if ([role.name hasPrefix:kCMTRoleNameTeacher]) {
                 //Write権限
                 [school_acl setWriteAccess:YES forRole:role];

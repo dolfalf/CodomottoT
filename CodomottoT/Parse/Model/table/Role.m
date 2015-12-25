@@ -7,7 +7,7 @@
 //
 
 #import "Role.h"
-#import "User.h"
+#import "School.h"
 
 @implementation Role
 

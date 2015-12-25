@@ -32,7 +32,7 @@
     Group *model = [[self alloc] init];
     
     model.deleteFlag = NO;
-    //model.ACL = [PFACL ACLWithUser:[PFUser currentUser]];
+    model.ACL = [PFACL ACLWithUser:[PFUser currentUser]];
     
     return model;
 }

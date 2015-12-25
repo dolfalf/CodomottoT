@@ -29,17 +29,16 @@
 }
 
 + (NSString *)parseClassName {
-    return @"Contact";
+    return NSStringFromClass([self class]);;
 }
 
 + (instancetype)createModel {
     
     Contact *model = [[self alloc] init];
     
-    //여기서 초기화 처리를 해준다.
     model.noticeFlag = NO;
     model.deleteFlag = NO;
-    //model.ACL = [PFACL ACLWithUser:[PFUser currentUser]];
+    model.ACL = [PFACL ACLWithUser:[PFUser currentUser]];
     
     return model;
 }
@@ -49,10 +48,8 @@
     self = [super init];
     
     if (self) {
-        //initialize.
-        //여기서 초기화가 안된다.. 쿼리에서 에러남.
+        //ここでは初期化をしない。クエリー時エラーの原因となる。
     }
-    
     return self;
 }
 

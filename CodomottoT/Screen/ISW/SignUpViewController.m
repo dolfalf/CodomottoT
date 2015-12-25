@@ -75,33 +75,25 @@ const float kSignupCellHeight = 50.f;
           (long)_userTypeCell.segmentControl.selectedSegmentIndex);
     
     //TODO: いろいろ設定する項目はあるが、とりあえず最小限の情報のみセット
-    [[CMTParseManager sharedInstance] signInUserWithUserEmailAddress:_userIdCell.inputTextField.text
-                                                        withPassword:_passwordCell.inputTextField.text
-                                                        withUserType:_userTypeCell.segmentControl.selectedSegmentIndex
-                                                      withCompletion:^(BOOL isSucceeded, NSError *resultError) {
+    [[CMTParseManager sharedInstance] signUp:_userIdCell.inputTextField.text
+                                    password:_passwordCell.inputTextField.text
+                                    userType:_userTypeCell.segmentControl.selectedSegmentIndex
+                                       block:^(NSError *error) {
                                                           
-                                                          NSLog(@"isSucceeded[%@]", isSucceeded?@"YES":@"NO");
-                                                          
-                                                          if (isSucceeded) {
-                                                              
-                                                              dispatch_async(dispatch_get_main_queue(), ^{
-                                                                  
-                                                                  [[NSNotificationCenter defaultCenter] postNotificationName:kSignUpViewControllerNotificationSignUpSuccess object:nil];
-                                                              });
-                                                              
-                                                              //遷移処理
-                                                              [self dismissViewControllerAnimated:YES completion:nil];
-                                                          }else {
-                                                              dispatch_async(dispatch_get_main_queue(), ^{
-                                                                  
-                                                                  [[NSNotificationCenter defaultCenter] postNotificationName:kSignUpViewControllerNotificationSignUpFail object:nil];
-                                                              });
-                                                          }
-                                                          
-                                                      }];
+                                           NSLog(@"success[%@]", error==nil?@"YES":@"NO");
+                                          if (error==nil) {
+                                              [[NSNotificationCenter defaultCenter] postNotificationName:kSignUpViewControllerNotificationSignUpSuccess
+                                                                                                  object:nil];
+                                              
+                                              [self dismissViewControllerAnimated:YES completion:nil];
+                                              
+                                          }else {
+                                              [[NSNotificationCenter defaultCenter] postNotificationName:kSignUpViewControllerNotificationSignUpFail
+                                                                                                  object:nil];
+                                          }
+                                       }];
     
 }
-
 
 #pragma mark - Action
 - (void)cancelButtonTouched:(id)sender {

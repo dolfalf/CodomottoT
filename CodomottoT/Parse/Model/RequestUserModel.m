@@ -45,8 +45,7 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         //権限設定
-        RequestUser *user = (RequestUser *)object;
-        user.ACL = [mgr.loginUser ACL]; //default.
+        RequestUser *req_user = (RequestUser *)object;
         
         PFQuery *role_query = [PFRole query];
         [role_query whereKey:@"cmtSchool" equalTo:mgr.currentSchool];
@@ -67,14 +66,14 @@
                 [work_acl setReadAccess:YES forRole:s_role];
                 [work_acl setWriteAccess:YES forRole:s_role];
                 
-                user.ACL = work_acl;
+                req_user.ACL = work_acl;
                 break;
             }
         }
         
         //保存
         NSError *user_error = nil;
-        [user save:&user_error];
+        [req_user save:&user_error];
         
         
         if (completion) {

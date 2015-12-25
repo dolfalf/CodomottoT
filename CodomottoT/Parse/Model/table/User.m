@@ -23,7 +23,7 @@
 @dynamic cmtEndDate;
 @dynamic cmtDeleteFlag;
 @dynamic cmtCheckApproval;
-//기본적으로 유저 자기자신의 ACL은 읽기/쓰기가 설정되어있음(자동)
+@dynamic ACL;
 
 + (void)load {
     [self registerSubclass];

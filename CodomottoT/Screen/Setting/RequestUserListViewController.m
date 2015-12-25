@@ -134,7 +134,7 @@
     //園長ではないときは許可できない。
     CMTParseManager *mgr = [CMTParseManager sharedInstance];
     
-    if ([mgr.loginUser.cmtUserType integerValue] != UserTypeHeadTeacher) {
+    if (mgr.userType != UserTypeHeadTeacher) {
         NSLog(@"No Auth role.");
         return;
     }

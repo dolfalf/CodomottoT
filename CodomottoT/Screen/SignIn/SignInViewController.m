@@ -89,10 +89,10 @@ NSString* const kSignInViewControllerNotificationSignInFail     = @"signInViewCo
 - (void)updateStatusLabel {
     
     CMTParseManager *manager = [CMTParseManager sharedInstance];
-    NSLog(@"%s, loginUser[%@]", __FUNCTION__, manager.loginUser);
+    NSLog(@"%s, loginUser[%@]", __FUNCTION__, manager.currentUser);
     
     if (manager.isLogin) {
-        _statusLabel.text = [NSString stringWithFormat:@"login User[%@]", manager.loginUser.username];
+        _statusLabel.text = [NSString stringWithFormat:@"login User[%@]", manager.currentUser.username];
     }else {
         _statusLabel.text = @"Not logined.";
     }
@@ -144,7 +144,7 @@ NSString* const kSignInViewControllerNotificationSignInFail     = @"signInViewCo
     
     CMTParseManager *manager = [CMTParseManager sharedInstance];
     //login状態をチェック
-    if (manager.loginUser != nil) {
+    if (manager.currentUser != nil) {
         //logoutしてから利用可能
         return;
         
@@ -158,51 +158,37 @@ NSString* const kSignInViewControllerNotificationSignInFail     = @"signInViewCo
 - (void)logoutButtonTouched:(id)sender {
     NSLog(@"%s", __FUNCTION__);
     
-    [[CMTParseManager sharedInstance] logoutCurrentUserWithCompletion:^(BOOL isSucceeded, NSError *resultError) {
-        if (isSucceeded) {
-            NSLog(@"logout success");
-            [self showAlertMessage:@"logout success"];
-        }else {
-            NSLog(@"logout failed.");
-            [self showAlertMessage:@"logout failed"];
-        }
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self updateStatusLabel];
-        });
-        
-    }];
+    CMTParseManager *mgr = [CMTParseManager sharedInstance];
+    
+    [mgr signOut];
+    
+    if (mgr.isLogin == NO) {
+        [self showAlertMessage:@"Logout success"];
+    }else {
+        [self showAlertMessage:@"Logout failed"];
+    }
+    
+    [self updateStatusLabel];
     
 }
 
 - (IBAction)loginButtonTouched:(id)sender {
     NSLog(@"%s", __FUNCTION__);
     
-    [[CMTParseManager sharedInstance] loginWithUserEmailAddress:_inputLoginId.text
-                                                   withPassword:_inputPassword.text
-                                                 withCompletion:^(BOOL isSucceeded, NSError *resultError) {
-                                                     
-                                                     if (isSucceeded) {
-                                                         NSLog(@"login success");
-                                                         //画面遷移
-                                                         dispatch_async(dispatch_get_main_queue(), ^{
-                                                             
-                                                             [[NSNotificationCenter defaultCenter] postNotificationName:kSignInViewControllerNotificationSignInSuccess object:nil];
-                                                         });
-                                                         
-                                                         
-                                                     }else {
-                                                         NSLog(@"login failed.");
-                                                         [self showAlertMessage:@"login failed."];
-
-                                                         dispatch_async(dispatch_get_main_queue(), ^{
-                                                             
-                                                             [[NSNotificationCenter defaultCenter] postNotificationName:kSignInViewControllerNotificationSignInFail object:nil];
-                                                         });
-                                                         
-                                                     }
-                                                     
-                                                   }];
+    CMTParseManager *mgr = [CMTParseManager sharedInstance];
+    
+    [mgr signIn:_inputLoginId.text password:_inputPassword.text block:^(NSError *error) {
+        
+        if (error==nil) {
+            NSLog(@"login success");
+            //画面遷移
+            [[NSNotificationCenter defaultCenter] postNotificationName:kSignInViewControllerNotificationSignInSuccess object:nil];
+        }else {
+            NSLog(@"login failed.");
+            [self showAlertMessage:@"login failed."];
+            [[NSNotificationCenter defaultCenter] postNotificationName:kSignInViewControllerNotificationSignInFail object:nil];
+        }
+    }];
     
 }
 
