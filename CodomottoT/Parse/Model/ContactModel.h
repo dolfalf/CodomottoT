@@ -7,26 +7,42 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Model.h"
 #import "Contact.h"
 #import "ContactComment.h"
+#import "ContactPhoto.h"
 
-extern NSString * const kContactImageAssetKey;
-extern NSString * const kContactImageDataKey;
+/*!
+ * 連絡帳に関連するモデルアクセスクラス
+ */
+@interface ContactModel : Model
 
-@interface ContactModel : NSObject
-
-//TODO: 実装
-#pragma mark - post
-- (void)contactListWithStartIndex:(NSInteger)startIndex block:(void(^)(NSArray *, NSError *))block;
-- (void)postContact:(NSString *)title content:(NSString *)content imageItems:(NSArray *)items completion:(void(^)(BOOL))completion;
-
-//- (void)removeContact:(id)model;
-//- (void)modifyContact:(id)model;
+@property (nonatomic, assign) NSInteger fetchContactLimit;
 
 
-#pragma mark - comment
-- (void)addComment:(NSString *)comment contact:(id)contact completion:(void(^)(BOOL))completion;
-- (void)modifyComment:(NSString *)comment model:(ContactComment *)model;
-- (void)removeComment:(ContactComment *)model;
+/*!
+ * 連絡帳情報を返す
+ * @param NSInteger 開始インデックス（ページング処理のため）
+ */
+- (void)fetchContacts:(NSInteger)startIndex block:(void(^)(NSArray *, NSError *))block;
+
+/*!
+ * 連絡帳を作成する
+ */
+- (void)postContact:(NSString *)content photoItems:(NSArray *)photoItems block:(boolBlock)block;
+
+#if 0
+- (void)removeContact:(id)model block:(boolBlock)block;
+- (void)modifyContact:(id)model block:(boolBlock)block;
+#endif
+
+@end
+
+#pragma mark - Comment Category
+@interface ContactModel (Comment)
+
+- (void)addComment:(NSString *)comment contact:(id)contact block:(boolBlock)block;
+- (void)modifyComment:(NSString *)comment model:(ContactComment *)model block:(boolBlock)block;
+- (void)removeComment:(ContactComment *)model block:(boolBlock)block;
 
 @end

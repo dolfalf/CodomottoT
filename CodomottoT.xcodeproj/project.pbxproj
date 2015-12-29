@@ -55,6 +55,8 @@
 		BB0D70391C23C30300E6AE82 /* UIFont+Helper.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0D70251C23C30300E6AE82 /* UIFont+Helper.m */; };
 		BB0D703C1C23C30E00E6AE82 /* StoryboardUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0D703B1C23C30E00E6AE82 /* StoryboardUtil.m */; };
 		BB0D703F1C23C3A000E6AE82 /* NSError+Parse.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0D703E1C23C3A000E6AE82 /* NSError+Parse.m */; };
+		BB5271551C313B90005F3C2D /* UITextView+Placeholder.m in Sources */ = {isa = PBXBuildFile; fileRef = BB5271541C313B90005F3C2D /* UITextView+Placeholder.m */; };
+		BB5271591C313C2B005F3C2D /* ContactEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB5271581C313C2B005F3C2D /* ContactEditViewController.m */; };
 		BB89B0BF1C27C75C00065975 /* SIAlertView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BB89B0B81C27C75C00065975 /* SIAlertView.bundle */; };
 		BB89B0C01C27C75C00065975 /* SIAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB89B0BA1C27C75C00065975 /* SIAlertView.m */; };
 		BB89B0C11C27C75C00065975 /* UIWindow+SIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BB89B0BC1C27C75C00065975 /* UIWindow+SIUtils.m */; };
@@ -70,6 +72,21 @@
 		BBDDE1431C2803190071C4FD /* RequestUser.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDDE1421C2803190071C4FD /* RequestUser.m */; };
 		BBDDE1461C2809DE0071C4FD /* RequestUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDDE1451C2809DE0071C4FD /* RequestUserModel.m */; };
 		BBDDE14A1C2811F40071C4FD /* Model.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDDE1491C2811F40071C4FD /* Model.m */; };
+		BBFE4B601C3228F900342EBA /* QBImagePicker.strings in Resources */ = {isa = PBXBuildFile; fileRef = BBFE4B441C3228F900342EBA /* QBImagePicker.strings */; };
+		BBFE4B611C3228F900342EBA /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BBFE4B481C3228F900342EBA /* Info.plist */; };
+		BBFE4B621C3228F900342EBA /* QBAlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BBFE4B4C1C3228F900342EBA /* QBAlbumCell.m */; };
+		BBFE4B631C3228F900342EBA /* QBAlbumsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBFE4B4E1C3228F900342EBA /* QBAlbumsViewController.m */; };
+		BBFE4B641C3228F900342EBA /* QBAssetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BBFE4B501C3228F900342EBA /* QBAssetCell.m */; };
+		BBFE4B651C3228F900342EBA /* QBAssetsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBFE4B521C3228F900342EBA /* QBAssetsViewController.m */; };
+		BBFE4B661C3228F900342EBA /* QBCheckmarkView.m in Sources */ = {isa = PBXBuildFile; fileRef = BBFE4B541C3228F900342EBA /* QBCheckmarkView.m */; };
+		BBFE4B671C3228F900342EBA /* QBImagePicker.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBFE4B561C3228F900342EBA /* QBImagePicker.storyboard */; };
+		BBFE4B681C3228F900342EBA /* QBImagePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBFE4B581C3228F900342EBA /* QBImagePickerController.m */; };
+		BBFE4B691C3228F900342EBA /* QBSlomoIconView.m in Sources */ = {isa = PBXBuildFile; fileRef = BBFE4B5A1C3228F900342EBA /* QBSlomoIconView.m */; };
+		BBFE4B6A1C3228F900342EBA /* QBVideoIconView.m in Sources */ = {isa = PBXBuildFile; fileRef = BBFE4B5C1C3228F900342EBA /* QBVideoIconView.m */; };
+		BBFE4B6B1C3228F900342EBA /* QBVideoIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = BBFE4B5E1C3228F900342EBA /* QBVideoIndicatorView.m */; };
+		BBFE4B711C322A0000342EBA /* RFKeyboardToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = BBFE4B6E1C322A0000342EBA /* RFKeyboardToolbar.m */; };
+		BBFE4B721C322A0000342EBA /* RFToolbarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = BBFE4B701C322A0000342EBA /* RFToolbarButton.m */; };
+		BBFE4B751C32459800342EBA /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = BBFE4B741C32459800342EBA /* UIImage+Resize.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -172,6 +189,11 @@
 		BB0D703B1C23C30E00E6AE82 /* StoryboardUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StoryboardUtil.m; sourceTree = "<group>"; };
 		BB0D703D1C23C3A000E6AE82 /* NSError+Parse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSError+Parse.h"; sourceTree = "<group>"; };
 		BB0D703E1C23C3A000E6AE82 /* NSError+Parse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSError+Parse.m"; sourceTree = "<group>"; };
+		BB5271531C313B90005F3C2D /* UITextView+Placeholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+Placeholder.h"; sourceTree = "<group>"; };
+		BB5271541C313B90005F3C2D /* UITextView+Placeholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+Placeholder.m"; sourceTree = "<group>"; };
+		BB5271561C313BAB005F3C2D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		BB5271571C313C2B005F3C2D /* ContactEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactEditViewController.h; sourceTree = "<group>"; };
+		BB5271581C313C2B005F3C2D /* ContactEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactEditViewController.m; sourceTree = "<group>"; };
 		BB89B0B61C27C75C00065975 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 		BB89B0B71C27C75C00065975 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		BB89B0B81C27C75C00065975 /* SIAlertView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SIAlertView.bundle; sourceTree = "<group>"; };
@@ -199,6 +221,39 @@
 		BBDDE1451C2809DE0071C4FD /* RequestUserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestUserModel.m; sourceTree = "<group>"; };
 		BBDDE1481C2811F40071C4FD /* Model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
 		BBDDE1491C2811F40071C4FD /* Model.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Model.m; sourceTree = "<group>"; };
+		BBFE4B451C3228F900342EBA /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/QBImagePicker.strings; sourceTree = "<group>"; };
+		BBFE4B461C3228F900342EBA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/QBImagePicker.strings; sourceTree = "<group>"; };
+		BBFE4B471C3228F900342EBA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/QBImagePicker.strings; sourceTree = "<group>"; };
+		BBFE4B481C3228F900342EBA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BBFE4B491C3228F900342EBA /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/QBImagePicker.strings; sourceTree = "<group>"; };
+		BBFE4B4A1C3228F900342EBA /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/QBImagePicker.strings; sourceTree = "<group>"; };
+		BBFE4B4B1C3228F900342EBA /* QBAlbumCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBAlbumCell.h; sourceTree = "<group>"; };
+		BBFE4B4C1C3228F900342EBA /* QBAlbumCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBAlbumCell.m; sourceTree = "<group>"; };
+		BBFE4B4D1C3228F900342EBA /* QBAlbumsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBAlbumsViewController.h; sourceTree = "<group>"; };
+		BBFE4B4E1C3228F900342EBA /* QBAlbumsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBAlbumsViewController.m; sourceTree = "<group>"; };
+		BBFE4B4F1C3228F900342EBA /* QBAssetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBAssetCell.h; sourceTree = "<group>"; };
+		BBFE4B501C3228F900342EBA /* QBAssetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBAssetCell.m; sourceTree = "<group>"; };
+		BBFE4B511C3228F900342EBA /* QBAssetsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBAssetsViewController.h; sourceTree = "<group>"; };
+		BBFE4B521C3228F900342EBA /* QBAssetsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBAssetsViewController.m; sourceTree = "<group>"; };
+		BBFE4B531C3228F900342EBA /* QBCheckmarkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBCheckmarkView.h; sourceTree = "<group>"; };
+		BBFE4B541C3228F900342EBA /* QBCheckmarkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBCheckmarkView.m; sourceTree = "<group>"; };
+		BBFE4B551C3228F900342EBA /* QBImagePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePicker.h; sourceTree = "<group>"; };
+		BBFE4B561C3228F900342EBA /* QBImagePicker.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = QBImagePicker.storyboard; sourceTree = "<group>"; };
+		BBFE4B571C3228F900342EBA /* QBImagePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBImagePickerController.h; sourceTree = "<group>"; };
+		BBFE4B581C3228F900342EBA /* QBImagePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBImagePickerController.m; sourceTree = "<group>"; };
+		BBFE4B591C3228F900342EBA /* QBSlomoIconView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBSlomoIconView.h; sourceTree = "<group>"; };
+		BBFE4B5A1C3228F900342EBA /* QBSlomoIconView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBSlomoIconView.m; sourceTree = "<group>"; };
+		BBFE4B5B1C3228F900342EBA /* QBVideoIconView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBVideoIconView.h; sourceTree = "<group>"; };
+		BBFE4B5C1C3228F900342EBA /* QBVideoIconView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBVideoIconView.m; sourceTree = "<group>"; };
+		BBFE4B5D1C3228F900342EBA /* QBVideoIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QBVideoIndicatorView.h; sourceTree = "<group>"; };
+		BBFE4B5E1C3228F900342EBA /* QBVideoIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QBVideoIndicatorView.m; sourceTree = "<group>"; };
+		BBFE4B5F1C3228F900342EBA /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/QBImagePicker.strings"; sourceTree = "<group>"; };
+		BBFE4B6D1C322A0000342EBA /* RFKeyboardToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFKeyboardToolbar.h; sourceTree = "<group>"; };
+		BBFE4B6E1C322A0000342EBA /* RFKeyboardToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFKeyboardToolbar.m; sourceTree = "<group>"; };
+		BBFE4B6F1C322A0000342EBA /* RFToolbarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RFToolbarButton.h; sourceTree = "<group>"; };
+		BBFE4B701C322A0000342EBA /* RFToolbarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RFToolbarButton.m; sourceTree = "<group>"; };
+		BBFE4B731C32459800342EBA /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
+		BBFE4B741C32459800342EBA /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -353,6 +408,8 @@
 				BB0D6FF51C23BF3400E6AE82 /* Contact.storyboard */,
 				BB0D6FF21C23BF2500E6AE82 /* ContactViewController.h */,
 				BB0D6FF31C23BF2500E6AE82 /* ContactViewController.m */,
+				BB5271571C313C2B005F3C2D /* ContactEditViewController.h */,
+				BB5271581C313C2B005F3C2D /* ContactEditViewController.m */,
 			);
 			path = Contact;
 			sourceTree = "<group>";
@@ -427,10 +484,10 @@
 				BB0D700D1C23C30300E6AE82 /* ContactPhoto.m */,
 				BB0D700E1C23C30300E6AE82 /* ContactRead.h */,
 				BB0D700F1C23C30300E6AE82 /* ContactRead.m */,
-				BB0D70101C23C30300E6AE82 /* Group.h */,
-				BB0D70111C23C30300E6AE82 /* Group.m */,
 				BB0D70121C23C30300E6AE82 /* Notice.h */,
 				BB0D70131C23C30300E6AE82 /* Notice.m */,
+				BB0D70101C23C30300E6AE82 /* Group.h */,
+				BB0D70111C23C30300E6AE82 /* Group.m */,
 				BB0D701B1C23C30300E6AE82 /* Schedule.h */,
 				BB0D701C1C23C30300E6AE82 /* Schedule.m */,
 			);
@@ -444,14 +501,29 @@
 				BB0D70231C23C30300E6AE82 /* UIColor+Helper.m */,
 				BB0D70241C23C30300E6AE82 /* UIFont+Helper.h */,
 				BB0D70251C23C30300E6AE82 /* UIFont+Helper.m */,
+				BBFE4B731C32459800342EBA /* UIImage+Resize.h */,
+				BBFE4B741C32459800342EBA /* UIImage+Resize.m */,
 			);
 			path = Util;
+			sourceTree = "<group>";
+		};
+		BB5271521C313B90005F3C2D /* UITextView+Placeholder */ = {
+			isa = PBXGroup;
+			children = (
+				BB5271561C313BAB005F3C2D /* README.md */,
+				BB5271531C313B90005F3C2D /* UITextView+Placeholder.h */,
+				BB5271541C313B90005F3C2D /* UITextView+Placeholder.m */,
+			);
+			path = "UITextView+Placeholder";
 			sourceTree = "<group>";
 		};
 		BB89B0B41C27C75C00065975 /* Lib */ = {
 			isa = PBXGroup;
 			children = (
+				BBFE4B6C1C322A0000342EBA /* RFKeyboardToolbar */,
+				BBFE4B431C3228F900342EBA /* QBImagePicker */,
 				BB89B0B51C27C75C00065975 /* SIAlertView */,
+				BB5271521C313B90005F3C2D /* UITextView+Placeholder */,
 			);
 			path = Lib;
 			sourceTree = "<group>";
@@ -500,6 +572,46 @@
 				BBCA87421C2B964E006C46C7 /* MainViewController.m */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		BBFE4B431C3228F900342EBA /* QBImagePicker */ = {
+			isa = PBXGroup;
+			children = (
+				BBFE4B441C3228F900342EBA /* QBImagePicker.strings */,
+				BBFE4B481C3228F900342EBA /* Info.plist */,
+				BBFE4B4B1C3228F900342EBA /* QBAlbumCell.h */,
+				BBFE4B4C1C3228F900342EBA /* QBAlbumCell.m */,
+				BBFE4B4D1C3228F900342EBA /* QBAlbumsViewController.h */,
+				BBFE4B4E1C3228F900342EBA /* QBAlbumsViewController.m */,
+				BBFE4B4F1C3228F900342EBA /* QBAssetCell.h */,
+				BBFE4B501C3228F900342EBA /* QBAssetCell.m */,
+				BBFE4B511C3228F900342EBA /* QBAssetsViewController.h */,
+				BBFE4B521C3228F900342EBA /* QBAssetsViewController.m */,
+				BBFE4B531C3228F900342EBA /* QBCheckmarkView.h */,
+				BBFE4B541C3228F900342EBA /* QBCheckmarkView.m */,
+				BBFE4B551C3228F900342EBA /* QBImagePicker.h */,
+				BBFE4B561C3228F900342EBA /* QBImagePicker.storyboard */,
+				BBFE4B571C3228F900342EBA /* QBImagePickerController.h */,
+				BBFE4B581C3228F900342EBA /* QBImagePickerController.m */,
+				BBFE4B591C3228F900342EBA /* QBSlomoIconView.h */,
+				BBFE4B5A1C3228F900342EBA /* QBSlomoIconView.m */,
+				BBFE4B5B1C3228F900342EBA /* QBVideoIconView.h */,
+				BBFE4B5C1C3228F900342EBA /* QBVideoIconView.m */,
+				BBFE4B5D1C3228F900342EBA /* QBVideoIndicatorView.h */,
+				BBFE4B5E1C3228F900342EBA /* QBVideoIndicatorView.m */,
+			);
+			path = QBImagePicker;
+			sourceTree = "<group>";
+		};
+		BBFE4B6C1C322A0000342EBA /* RFKeyboardToolbar */ = {
+			isa = PBXGroup;
+			children = (
+				BBFE4B6D1C322A0000342EBA /* RFKeyboardToolbar.h */,
+				BBFE4B6E1C322A0000342EBA /* RFKeyboardToolbar.m */,
+				BBFE4B6F1C322A0000342EBA /* RFToolbarButton.h */,
+				BBFE4B701C322A0000342EBA /* RFToolbarButton.m */,
+			);
+			path = RFKeyboardToolbar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -587,6 +699,11 @@
 			knownRegions = (
 				en,
 				Base,
+				de,
+				es,
+				ja,
+				pl,
+				"zh-Hans",
 			);
 			mainGroup = BB0D6F641C23A12500E6AE82;
 			productRefGroup = BB0D6F6E1C23A12500E6AE82 /* Products */;
@@ -607,11 +724,14 @@
 			files = (
 				BBCA87451C2B965F006C46C7 /* ISW.storyboard in Resources */,
 				BB89B0BF1C27C75C00065975 /* SIAlertView.bundle in Resources */,
+				BBFE4B671C3228F900342EBA /* QBImagePicker.storyboard in Resources */,
 				BBCA873F1C2B94EF006C46C7 /* Setting.storyboard in Resources */,
 				BBCA87471C2B9679006C46C7 /* Main.storyboard in Resources */,
 				BB0D6FF61C23BF3400E6AE82 /* Contact.storyboard in Resources */,
+				BBFE4B601C3228F900342EBA /* QBImagePicker.strings in Resources */,
 				BB0D6F801C23A12500E6AE82 /* LaunchScreen.storyboard in Resources */,
 				BBCA873C1C2B941C006C46C7 /* SignIn.storyboard in Resources */,
+				BBFE4B611C3228F900342EBA /* Info.plist in Resources */,
 				BB0D6F7D1C23A12500E6AE82 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -648,6 +768,7 @@
 				BB0D6F751C23A12500E6AE82 /* AppDelegate.m in Sources */,
 				BB0D70301C23C30300E6AE82 /* Group.m in Sources */,
 				BB0D6F721C23A12500E6AE82 /* main.m in Sources */,
+				BBFE4B681C3228F900342EBA /* QBImagePickerController.m in Sources */,
 				BBDDE1461C2809DE0071C4FD /* RequestUserModel.m in Sources */,
 				BB0D702A1C23C30300E6AE82 /* ScheduleModel.m in Sources */,
 				BB0D70291C23C30300E6AE82 /* NoticeModel.m in Sources */,
@@ -655,24 +776,37 @@
 				BB0D70281C23C30300E6AE82 /* GroupModel.m in Sources */,
 				BB0D70391C23C30300E6AE82 /* UIFont+Helper.m in Sources */,
 				BB89B0C11C27C75C00065975 /* UIWindow+SIUtils.m in Sources */,
+				BBFE4B6B1C3228F900342EBA /* QBVideoIndicatorView.m in Sources */,
 				BB0D702C1C23C30300E6AE82 /* Contact.m in Sources */,
+				BBFE4B661C3228F900342EBA /* QBCheckmarkView.m in Sources */,
 				BBDDE1431C2803190071C4FD /* RequestUser.m in Sources */,
 				BB0D702B1C23C30300E6AE82 /* SchoolModel.m in Sources */,
+				BBFE4B641C3228F900342EBA /* QBAssetCell.m in Sources */,
 				BBCA874D1C2B96FE006C46C7 /* UserListViewController.m in Sources */,
 				BB0D70271C23C30300E6AE82 /* ContactModel.m in Sources */,
 				BB0D702D1C23C30300E6AE82 /* ContactComment.m in Sources */,
 				BB0D6FF41C23BF2500E6AE82 /* ContactViewController.m in Sources */,
+				BB5271591C313C2B005F3C2D /* ContactEditViewController.m in Sources */,
 				BB0D70311C23C30300E6AE82 /* Notice.m in Sources */,
 				BB0D702F1C23C30300E6AE82 /* ContactRead.m in Sources */,
+				BBFE4B751C32459800342EBA /* UIImage+Resize.m in Sources */,
+				BBFE4B6A1C3228F900342EBA /* QBVideoIconView.m in Sources */,
+				BBFE4B721C322A0000342EBA /* RFToolbarButton.m in Sources */,
+				BB5271551C313B90005F3C2D /* UITextView+Placeholder.m in Sources */,
 				BB0D703F1C23C3A000E6AE82 /* NSError+Parse.m in Sources */,
+				BBFE4B691C3228F900342EBA /* QBSlomoIconView.m in Sources */,
+				BBFE4B711C322A0000342EBA /* RFKeyboardToolbar.m in Sources */,
 				BBCA87391C2B80E6006C46C7 /* AllowWaitViewController.m in Sources */,
 				BB0D6FF01C23BF1B00E6AE82 /* SignUpViewController.m in Sources */,
 				BB0D70351C23C30300E6AE82 /* Schedule.m in Sources */,
 				BB0D70321C23C30300E6AE82 /* Role.m in Sources */,
 				BB0D6FEE1C23BF1B00E6AE82 /* SchoolListViewController.m in Sources */,
 				BB0D70361C23C30300E6AE82 /* School.m in Sources */,
+				BBFE4B651C3228F900342EBA /* QBAssetsViewController.m in Sources */,
+				BBFE4B621C3228F900342EBA /* QBAlbumCell.m in Sources */,
 				BB0D70261C23C30300E6AE82 /* CMTParseManager.m in Sources */,
 				BB89B0C01C27C75C00065975 /* SIAlertView.m in Sources */,
+				BBFE4B631C3228F900342EBA /* QBAlbumsViewController.m in Sources */,
 				BB0D702E1C23C30300E6AE82 /* ContactPhoto.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -715,6 +849,19 @@
 				BB0D6F7F1C23A12500E6AE82 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		BBFE4B441C3228F900342EBA /* QBImagePicker.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BBFE4B451C3228F900342EBA /* de */,
+				BBFE4B461C3228F900342EBA /* en */,
+				BBFE4B471C3228F900342EBA /* es */,
+				BBFE4B491C3228F900342EBA /* ja */,
+				BBFE4B4A1C3228F900342EBA /* pl */,
+				BBFE4B5F1C3228F900342EBA /* zh-Hans */,
+			);
+			name = QBImagePicker.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

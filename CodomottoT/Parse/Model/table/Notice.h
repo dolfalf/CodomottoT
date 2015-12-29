@@ -14,7 +14,6 @@
 
 @interface Notice : PFObject<PFSubclassing>
 
-//  objectId (auto)
 @property (nonatomic, strong) NSString *relationTable;
 @property (nonatomic, strong) NSString *relationId;
 @property (nonatomic, strong) NSString *title;
@@ -23,10 +22,9 @@
 @property (nonatomic, strong) Group *viewGroups;
 @property (nonatomic, strong) User *viewUsers;
 @property (nonatomic, assign) BOOL *viewAll;
+@property (nonatomic, assign) BOOL deleteFlag;          //default NO.
 @property (nonatomic, strong) PFACL *ACL;
-//  createAt (auto)
-//  updateAt (auto)
 
 + (NSString *)parseClassName;
-
++ (instancetype)createModel;
 @end

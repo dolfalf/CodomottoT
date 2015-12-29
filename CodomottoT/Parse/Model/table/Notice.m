@@ -14,7 +14,6 @@
 
 @implementation Notice
 
-//  objectId (auto)
 @dynamic relationTable;
 @dynamic relationId;
 @dynamic title;
@@ -23,9 +22,8 @@
 @dynamic viewGroups;
 @dynamic viewUsers;
 @dynamic viewAll;
+@dynamic deleteFlag;
 @dynamic ACL;
-//  createAt (auto)
-//  updateAt (auto)
 
 + (void)load {
     [self registerSubclass];
@@ -34,4 +32,15 @@
 + (NSString *)parseClassName {
     return NSStringFromClass([self class]);
 }
+
++ (instancetype)createModel {
+    
+    Notice *model = [[self alloc] init];
+    
+    model.deleteFlag = NO;
+    model.ACL = [PFACL ACLWithUser:[PFUser currentUser]];
+    
+    return model;
+}
+
 @end

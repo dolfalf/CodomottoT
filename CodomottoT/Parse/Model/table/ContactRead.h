@@ -10,10 +10,14 @@
 
 @class Contact;
 
+/*!
+ * 既読の表示のためのクラス。
+ * 該当連絡帳にアクセスしたユーザーを保存する。
+ */
 @interface ContactRead : PFObject<PFSubclassing>
 
 @property (nonatomic, strong) Contact *contact;
-@property (nonatomic, strong) PFRelation *readUsers;    //읽은 유저. Role에 있는 유저, 그룹과 비교할것.
+@property (nonatomic, strong) PFRelation *readUsers;    //既読ユーザー
 @property (nonatomic, assign) BOOL deleteFlag;          //default NO.
 @property (nonatomic, strong) PFACL *ACL;               //set Role.
 

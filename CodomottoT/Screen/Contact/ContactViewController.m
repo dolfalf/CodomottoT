@@ -80,8 +80,10 @@
     //title
     self.title = @"連絡帳";
     [self.navigationItem setHidesBackButton:YES animated:NO];
+    [self.navigationController setToolbarHidden:NO animated:NO];
     
     //toolbar.
+    
 #if 0
     UIBarButtonItem *spacer = [[UIBarButtonItem alloc]
                                initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
@@ -94,8 +96,12 @@
         UIBarButtonItem *request_user_button = [[UIBarButtonItem alloc] initWithTitle:@"リクエスト一覧"
                                                                                 style:UIBarButtonItemStyleDone target:self
                                                                                action:@selector(requestUserButtonTouched:)];
-        
         self.toolbarItems = @[request_user_button];
+    }else {
+        UIBarButtonItem *post_button = [[UIBarButtonItem alloc] initWithTitle:@"投稿"
+                                                                        style:UIBarButtonItemStyleDone target:self
+                                                                       action:@selector(postButtonTouched:)];
+        self.toolbarItems = @[post_button];
     }
     
 
@@ -147,6 +153,10 @@
     
     [StoryboardUtil openRequestUserViewController:self completion:nil];
     
+}
+
+- (void)postButtonTouched:(id)sender {
+    [self performSegueWithIdentifier:@"ContactEditSegue" sender:self];
 }
 
 #pragma mark - UITableView helper methods

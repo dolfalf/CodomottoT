@@ -15,6 +15,11 @@ NSString * const kCMTRoleNameTeacher        = @"Teacher";
 NSString * const kCMTRoleNameParents        = @"Parents";
 NSString * const kCMTRoleNameMember         = @"Member";
 
+@interface CMTParseManager ()
+
+@property (nonatomic, strong) NSMutableDictionary *roleInfo;
+@end
+
 @implementation CMTParseManager
 
 @dynamic isLogin;
@@ -30,6 +35,7 @@ static CMTParseManager *_sharedInstance;
     dispatch_once(&onceToken, ^{
         _sharedInstance = [[super alloc] init];
         //initialize.
+        _sharedInstance.roleInfo = [NSMutableDictionary new];
     });
     
     return _sharedInstance;
@@ -331,6 +337,46 @@ static CMTParseManager *_sharedInstance;
  */
 
 @implementation CMTParseManager (Role)
+
+- (Role *)roleInfo:(NSString *)key {
+    
+    if(_roleInfo == nil || _roleInfo.allKeys.count == 0) {
+        //load
+        [self fetchSchoolRoles];
+    }
+    
+    return _roleInfo[key];
+}
+
+- (void)fetchSchoolRoles {
+    
+    PFQuery *query = [Role query];
+    
+    if (_currentSchool == nil) {
+        NSLog(@"is exist current school.");
+        return;
+    }
+    
+    [query whereKey:@"cmtSchool" equalTo:_currentSchool];
+    NSError *is_exist_error = nil;
+    NSArray *objects = [query findObjects:&is_exist_error];
+    
+    NSLog(@"role object[%ld]", (long)objects.count);
+    
+    for (Role *role in objects) {
+        
+        if ([role.name hasPrefix:kCMTRoleNameHeadTeacher]) {
+            _roleInfo[kCMTRoleNameHeadTeacher] = role;
+        }else if ([role.name hasPrefix:kCMTRoleNameTeacher]) {
+            _roleInfo[kCMTRoleNameTeacher] = role;
+        }else if ([role.name hasPrefix:kCMTRoleNameParents]) {
+            _roleInfo[kCMTRoleNameParents] = role;
+        }else if ([role.name hasPrefix:kCMTRoleNameMember]) {
+            _roleInfo[kCMTRoleNameMember] = role;
+        }
+    }
+    
+}
 
 - (NSString *)schoolRoleName:(School *)school prefix:(NSString *)prefix {
     

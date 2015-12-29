@@ -7,14 +7,12 @@
 //
 
 #import "ContactComment.h"
-#import <Parse/PFObject+Subclass.h>
-#import "User.h"
 #import "Contact.h"
+#import "User.h"
 
 @implementation ContactComment
 
-@dynamic title;
-@dynamic content;
+@dynamic comment;
 @dynamic postContact;
 @dynamic postUser;
 @dynamic deleteFlag;

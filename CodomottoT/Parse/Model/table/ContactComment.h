@@ -13,8 +13,7 @@
 
 @interface ContactComment : PFObject<PFSubclassing>
 
-@property (nonatomic, strong) NSString *title;
-@property (nonatomic, strong) NSString *content;
+@property (nonatomic, strong) NSString *comment;
 @property (nonatomic, strong) Contact *postContact;     //relation contact.
 @property (nonatomic, strong) User *postUser;           //relation contact.
 @property (nonatomic, assign) BOOL deleteFlag;          //defaullt NO

@@ -9,146 +9,214 @@
 #import "ContactModel.h"
 #import "ContactPhoto.h"
 #import "User.h"
-
 #import "CMTParseManager.h"
-
-NSString * const kContactImageAssetKey = @"ContactImageAssetKey";
-NSString * const kContactImageDataKey = @"ContactImageDataKey";
 
 @implementation ContactModel
 
+- (instancetype)init {
+    self = [super init];
+    if (self) {
+        _fetchContactLimit = 30;    //default
+    }
+    
+    return self;
+}
 - (void)dealloc {
     NSLog(@"%s", __FUNCTION__);
     
 }
-- (void)contactListWithStartIndex:(NSInteger)startIndex block:(void(^)(NSArray *, NSError *))block {
+
+- (void)fetchContacts:(NSInteger)startIndex block:(void(^)(NSArray *, NSError *))block {
+    
     NSLog(@"%s", __FUNCTION__);
     
     PFQuery *query = [PFQuery queryWithClassName:[Contact parseClassName]];
-    query.limit = 30;
-    query.skip = startIndex;    //skip the first 10 results
+    query.limit = _fetchContactLimit;
+    query.skip = startIndex;    //skip the first 30 results
     
     [query findObjectsInBackgroundWithBlock:[block copy]];
     
 }
 
-- (void)postContact:(NSString *)title content:(NSString *)content imageItems:(NSArray *)items completion:(void(^)(BOOL))completion {
+- (void)postContact:(NSString *)content photoItems:(NSArray *)photoItems block:(boolBlock)block {
+    
     NSLog(@"%s", __FUNCTION__);
+    
+    //UI系クラスはスレッド前に処理しておく。
+    NSMutableArray *photoDatas = [NSMutableArray new];
+    for (UIImage *photo in photoItems) {
+        NSData *photoData = UIImagePNGRepresentation(photo);
+        [photoDatas addObject:photoData];
+    }
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-        //upload image
+        //role info
+        PFACL *contact_acl = [PFACL ACL];
+        
+        CMTParseManager *mgr = [CMTParseManager sharedInstance];
+        [contact_acl setWriteAccess:YES forRole:[mgr roleInfo:kCMTRoleNameHeadTeacher]];
+        [contact_acl setReadAccess:YES forRole:[mgr roleInfo:kCMTRoleNameMember]];
+        [contact_acl setWriteAccess:YES forUser:[mgr currentUser]];
+        
+        //upload photo
         NSMutableArray *upload_photos = [NSMutableArray new];
         
         int index = 0;
-        for (NSDictionary *item in items) {
+        for (NSData *p_data in photoDatas) {
             
-            //REMARK: 後で使うかもしれない。。。
-            //NSDictionary *info = item[kContactImageAssetKey];
-            
-            NSString *image_name = [NSString stringWithFormat:@"contact_photo_%d", index];
-            NSData *imageData = item[kContactImageDataKey];
-            PFFile *imageFile = [PFFile fileWithName:image_name data:imageData];
-            
-            ContactPhoto *photo = [ContactPhoto new];
-            photo.imageName = image_name;
-            photo.imageFile = imageFile;
+            NSString *photoFilename = [NSString stringWithFormat:@"CMT%03d.png", index];
+            PFFile *photoFile = [PFFile fileWithName:photoFilename data:p_data];
+            ContactPhoto *photo = [ContactPhoto createModel];
+            photo.imageName = photoFilename;
+            photo.imageFile = photoFile;
             
             [upload_photos addObject:photo];
+            
+            index++;
         }
         
+        //Contact info.
         Contact *contact = [Contact createModel];
-        contact.title = title;
         contact.content = content;
-        
         contact.postUser = [User currentUser];
-        
-        contact.ACL = [User currentUser].ACL;
         
         //relation
         PFRelation *relation = [contact relationForKey:@"photo"];
         for (ContactPhoto *photo in upload_photos) {
             
-            photo.ACL = [User currentUser].ACL;
+            photo.ACL = contact_acl;
             
             BOOL b = [photo save];
             
             if(b == NO) {
                 NSLog(@"photo save error.");
-                completion(NO);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    if (block) {
+                        block(NO);
+                    }
+                });
                 return;
             }
             
             [relation addObject:photo];
         }
         
-        [contact saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            if(error) {
-                completion(NO);
-                NSLog(@"%@", error);
-                return;
-            }
-            
-            completion(succeeded);
-        }];
+        contact.ACL = contact_acl;
         
+        //save.
+        NSError *contact_error = nil;
+        BOOL b = [contact save:&contact_error];
+        
+        if(contact_error) {
+            NSLog(@"contact save error.");
+        }
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (block) {
+                block(b);
+            }
+        });
     });
 }
 
-int comment_count = 0;
-- (void)addComment:(NSString *)comment contact:(id)contact completion:(void(^)(BOOL))completion {
+@end
+
+#pragma mark - Comment Category
+@implementation ContactModel (Comment)
+
+- (void)addComment:(NSString *)comment contact:(id)contact block:(boolBlock)block {
 
     NSLog(@"%s", __FUNCTION__);
     
-    //comment모델 생성
-    ContactComment *contact_comment = [ContactComment createModel];
-    contact_comment.title = [NSString stringWithFormat:@"%@ %d", comment, comment_count++];
-    contact_comment.content = comment;
-    contact_comment.postContact = contact;
-    
-    //ACL설정
-    contact_comment.ACL = [User currentUser].ACL;
-    
-    BOOL b = [contact_comment save];
-    
-    if (b) {
-        //contact에 릴레이션 한다.
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        //comment info.
+        ContactComment *contact_comment = [ContactComment createModel];
+        contact_comment.comment = comment;
+        contact_comment.postContact = contact;
+        
+        //role info.
+        contact_comment.ACL = [User currentUser].ACL;
+        CMTParseManager *mgr = [CMTParseManager sharedInstance];
+        PFACL *comment_acl = [PFACL ACL];
+        [comment_acl setWriteAccess:YES forRole:[mgr roleInfo:kCMTRoleNameHeadTeacher]];
+        [comment_acl setReadAccess:YES forRole:[mgr roleInfo:kCMTRoleNameMember]];
+        
+        BOOL comment_saved = [contact_comment save];
+        
+        if (comment_saved == NO) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (block) {
+                    block(NO);
+                }
+            });
+
+            return;
+        }
+        
+        //releation save.
         PFRelation *relation_comment = [contact relationForKey:@"comments"];
         [relation_comment addObject:contact_comment];
-        [contact saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            //
-            if (error) {
-                //error
-                completion(NO);
-                return;
-            }
-            
-            completion(YES);
-            
-        }];
-    }
-    
-    
+        
+        NSError *contact_error = nil;
+        BOOL contact_saved = [contact save:&contact_error];
+        
+        if (contact_saved == NO) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (block) {
+                    block(NO);
+                }
+            });
+            return;
+        }
+        
+        
+        //TODO: お知らせ対応
 #if 0
-    //나중에 공지보기 화면에서 알림을 하기 위해 처리하는 부분.. 지금은 실장 안함
-    //Notice trigger
-    Notice *notice = [Notice object];
-    notice.title = @"new comment";
-    notice.relation_table = @"ContactComment";
-    notice.relation_id = @(1111);
-    //ACL설정
-    notice.ACL = ??
-    [notice saveInBackground];
+        //나중에 공지보기 화면에서 알림을 하기 위해 처리하는 부분.. 지금은 실장 안함
+        //Notice trigger
+        Notice *notice = [Notice createModel];
+        notice.title = @"new comment";
+        notice.relation_table = @"ContactComment";
+        notice.relation_id = @(1111);
+        //ACL설정
+        notice.ACL = ??
+        [notice saveInBackground];
 #endif
+        
+        //finished
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (block) {
+                block(YES);
+            }
+        });
+        
+        
+    });
+    
 }
 
-- (void)modifyComment:(NSString *)comment model:(ContactComment *)model {
-    model.content = comment;
-    [model save];
+- (void)modifyComment:(NSString *)comment model:(ContactComment *)model block:(boolBlock)block {
+    NSLog(@"%s", __FUNCTION__);
+    
+    model.comment = comment;
+    
+    [model saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (block) {
+            block(succeeded);
+        }
+    }];
 }
 
-- (void)removeComment:(ContactComment *)model {
-    [model delete];
+- (void)removeComment:(ContactComment *)model block:(boolBlock)block {
+    NSLog(@"%s", __FUNCTION__);
+    
+    [model deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        if (block) {
+            block(succeeded);
+        }
+    }];
 }
 
 @end

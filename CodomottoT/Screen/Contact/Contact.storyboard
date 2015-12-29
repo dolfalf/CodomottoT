@@ -14,15 +14,15 @@
                         <viewControllerLayoutGuide type="bottom" id="xRG-hS-X7d"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="BLA-ot-8gZ">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="400"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="336"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="40" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="l2L-vJ-7Dn">
-                                <rect key="frame" x="0.0" y="64" width="320" height="336"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="292"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ContactMainCell" rowHeight="100" id="qpp-0H-IZ6" customClass="ContactMainCell">
-                                        <rect key="frame" x="0.0" y="92" width="320" height="100"/>
+                                        <rect key="frame" x="0.0" y="28" width="320" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qpp-0H-IZ6" id="Hr3-04-uxq">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="99"/>
@@ -69,7 +69,6 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="l2L-vJ-7Dn" firstAttribute="leading" secondItem="BLA-ot-8gZ" secondAttribute="leading" id="AFZ-27-4No"/>
                             <constraint firstAttribute="trailing" secondItem="l2L-vJ-7Dn" secondAttribute="trailing" id="Qyw-7h-KRF"/>
@@ -77,19 +76,70 @@
                             <constraint firstItem="l2L-vJ-7Dn" firstAttribute="top" secondItem="Do0-3S-HGO" secondAttribute="bottom" id="rku-I6-mxG"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="607-AT-O2C"/>
                     <connections>
                         <outlet property="mainTableView" destination="l2L-vJ-7Dn" id="1kY-Hc-Xbs"/>
+                        <segue destination="q0k-ID-hQw" kind="show" identifier="ContactEditSegue" id="40k-1p-7tS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AHy-UL-sgA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="561" y="477"/>
+            <point key="canvasLocation" x="505" y="457"/>
+        </scene>
+        <!--Contact Edit View Controller-->
+        <scene sceneID="A3a-j1-bKY">
+            <objects>
+                <viewController storyboardIdentifier="ContactEditViewController" id="q0k-ID-hQw" customClass="ContactEditViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="GeT-yQ-xyA"/>
+                        <viewControllerLayoutGuide type="bottom" id="yaK-5I-8q0"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="G1Y-C7-g5V">
+                        <rect key="frame" x="0.0" y="64" width="320" height="336"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eYw-mK-Ks0">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="212"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <connections>
+                                    <outlet property="delegate" destination="q0k-ID-hQw" id="8mv-yr-oIF"/>
+                                </connections>
+                            </textView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bjg-0k-Iwm">
+                                <rect key="frame" x="0.0" y="212" width="320" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="biE-Nf-S67"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="bjg-0k-Iwm" secondAttribute="trailing" id="4hf-wb-hXo"/>
+                            <constraint firstItem="eYw-mK-Ks0" firstAttribute="top" secondItem="GeT-yQ-xyA" secondAttribute="bottom" id="BcV-a1-Dbd"/>
+                            <constraint firstAttribute="trailing" secondItem="eYw-mK-Ks0" secondAttribute="trailing" id="NO5-XJ-DFF"/>
+                            <constraint firstItem="eYw-mK-Ks0" firstAttribute="leading" secondItem="G1Y-C7-g5V" secondAttribute="leading" id="P0n-YV-oxb"/>
+                            <constraint firstItem="bjg-0k-Iwm" firstAttribute="leading" secondItem="G1Y-C7-g5V" secondAttribute="leading" id="g2b-At-tn7"/>
+                            <constraint firstItem="yaK-5I-8q0" firstAttribute="top" secondItem="bjg-0k-Iwm" secondAttribute="bottom" id="oCq-5b-reM"/>
+                            <constraint firstItem="bjg-0k-Iwm" firstAttribute="top" secondItem="eYw-mK-Ks0" secondAttribute="bottom" id="pZW-wT-Qid"/>
+                        </constraints>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <connections>
+                        <outlet property="bottomConstraint" destination="oCq-5b-reM" id="k39-eh-N8T"/>
+                        <outlet property="photoScrollView" destination="bjg-0k-Iwm" id="T1t-ds-Mgp"/>
+                        <outlet property="postTextView" destination="eYw-mK-Ks0" id="ngF-Is-SPM"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AyM-qd-l1P" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="903" y="457"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="f6X-WV-oyi">
             <objects>
-                <navigationController storyboardIdentifier="ContactNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="CmG-9f-2kL" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ContactNavigationController" automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="CmG-9f-2kL" sceneMemberID="viewController">
                     <toolbarItems/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="400"/>
@@ -98,13 +148,17 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="XjA-fA-wJZ">
+                        <rect key="frame" x="0.0" y="356" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="DrQ-QX-5Fh" kind="relationship" relationship="rootViewController" id="STE-Ca-7hp"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="r0N-Cq-hOG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="161" y="477"/>
+            <point key="canvasLocation" x="157" y="457"/>
         </scene>
     </scenes>
 </document>

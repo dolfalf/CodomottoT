@@ -7,14 +7,12 @@
 //
 
 #import "Contact.h"
-#import <Parse/PFObject+Subclass.h>
-#import "User.h"
 #import "ContactPhoto.h"
 #import "ContactRead.h"
+#import "User.h"
 
 @implementation Contact
 
-@dynamic title;
 @dynamic content;
 @dynamic postUser;
 @dynamic photos;
@@ -29,7 +27,7 @@
 }
 
 + (NSString *)parseClassName {
-    return NSStringFromClass([self class]);;
+    return NSStringFromClass([self class]);
 }
 
 + (instancetype)createModel {
@@ -41,16 +39,6 @@
     model.ACL = [PFACL ACLWithUser:[PFUser currentUser]];
     
     return model;
-}
-
-- (id)init {
-    
-    self = [super init];
-    
-    if (self) {
-        //ここでは初期化をしない。クエリー時エラーの原因となる。
-    }
-    return self;
 }
 
 @end

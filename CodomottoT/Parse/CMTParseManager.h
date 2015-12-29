@@ -83,6 +83,8 @@ extern NSString * const kCMTRoleNameMember;
 #pragma mark - Role Category
 @interface CMTParseManager (Role)
 
+- (Role *)roleInfo:(NSString *)key;
+
 /*!
  * 現在園のアクセス権限があるかどうか。
  */
