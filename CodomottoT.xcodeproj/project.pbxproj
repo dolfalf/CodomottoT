@@ -62,6 +62,7 @@
 		BB89B0C11C27C75C00065975 /* UIWindow+SIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BB89B0BC1C27C75C00065975 /* UIWindow+SIUtils.m */; };
 		BBB9192E1C325E7800CA18CC /* PFACL+Role.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB9192D1C325E7800CA18CC /* PFACL+Role.m */; };
 		BBB919311C326D4000CA18CC /* Child.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB919301C326D4000CA18CC /* Child.m */; };
+		BBB919361C3276D700CA18CC /* DCCommentView.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB919341C3276D700CA18CC /* DCCommentView.m */; };
 		BBCA87391C2B80E6006C46C7 /* AllowWaitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBCA87381C2B80E6006C46C7 /* AllowWaitViewController.m */; };
 		BBCA873C1C2B941C006C46C7 /* SignIn.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBCA873B1C2B941C006C46C7 /* SignIn.storyboard */; };
 		BBCA873F1C2B94EF006C46C7 /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBCA873E1C2B94EF006C46C7 /* Setting.storyboard */; };
@@ -207,6 +208,9 @@
 		BBB9192D1C325E7800CA18CC /* PFACL+Role.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PFACL+Role.m"; sourceTree = "<group>"; };
 		BBB9192F1C326D4000CA18CC /* Child.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Child.h; sourceTree = "<group>"; };
 		BBB919301C326D4000CA18CC /* Child.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Child.m; sourceTree = "<group>"; };
+		BBB919331C3276D700CA18CC /* DCCommentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCCommentView.h; sourceTree = "<group>"; };
+		BBB919341C3276D700CA18CC /* DCCommentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCCommentView.m; sourceTree = "<group>"; };
+		BBB919351C3276D700CA18CC /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		BBCA87371C2B80E6006C46C7 /* AllowWaitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllowWaitViewController.h; sourceTree = "<group>"; };
 		BBCA87381C2B80E6006C46C7 /* AllowWaitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllowWaitViewController.m; sourceTree = "<group>"; };
 		BBCA873B1C2B941C006C46C7 /* SignIn.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SignIn.storyboard; sourceTree = "<group>"; };
@@ -530,6 +534,7 @@
 		BB89B0B41C27C75C00065975 /* Lib */ = {
 			isa = PBXGroup;
 			children = (
+				BBB919321C3276D700CA18CC /* DCCommentView */,
 				BBFE4B6C1C322A0000342EBA /* RFKeyboardToolbar */,
 				BBFE4B431C3228F900342EBA /* QBImagePicker */,
 				BB89B0B51C27C75C00065975 /* SIAlertView */,
@@ -550,6 +555,16 @@
 				BB89B0BC1C27C75C00065975 /* UIWindow+SIUtils.m */,
 			);
 			path = SIAlertView;
+			sourceTree = "<group>";
+		};
+		BBB919321C3276D700CA18CC /* DCCommentView */ = {
+			isa = PBXGroup;
+			children = (
+				BBB919331C3276D700CA18CC /* DCCommentView.h */,
+				BBB919341C3276D700CA18CC /* DCCommentView.m */,
+				BBB919351C3276D700CA18CC /* LICENSE */,
+			);
+			path = DCCommentView;
 			sourceTree = "<group>";
 		};
 		BBCA873A1C2B9409006C46C7 /* SignIn */ = {
@@ -812,6 +827,7 @@
 				BB0D6FF01C23BF1B00E6AE82 /* SignUpViewController.m in Sources */,
 				BB0D70351C23C30300E6AE82 /* Schedule.m in Sources */,
 				BB0D70321C23C30300E6AE82 /* Role.m in Sources */,
+				BBB919361C3276D700CA18CC /* DCCommentView.m in Sources */,
 				BB0D6FEE1C23BF1B00E6AE82 /* SchoolListViewController.m in Sources */,
 				BB0D70361C23C30300E6AE82 /* School.m in Sources */,
 				BBFE4B651C3228F900342EBA /* QBAssetsViewController.m in Sources */,

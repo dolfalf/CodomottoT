@@ -12,14 +12,18 @@
 #import "QBImagePickerController.h"
 #import "UIImage+Resize.h"
 #import "SIAlertView.h"
+#import "DCCommentView.h"
 
 #import "ContactModel.h"
 
-@interface ContactEditViewController () <UITextViewDelegate, QBImagePickerControllerDelegate>
+@interface ContactEditViewController () <UITextViewDelegate, QBImagePickerControllerDelegate, DCCommentViewDelegate>
 
 @property (nonatomic, weak) IBOutlet UITextView *postTextView;
 @property (nonatomic, weak) IBOutlet UIScrollView *photoScrollView;
 @property (nonatomic, strong) RFKeyboardToolbar *keyboardToolbar;
+
+@property (nonatomic, weak) IBOutlet UITableView *commentTableView;
+@property (nonatomic, strong) DCCommentView *commentView;
 
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *bottomConstraint;
 
@@ -81,7 +85,7 @@
     _postTextView.placeholder = @"連絡帳を書いてください。";
     
     //前画面で設定される
-    _postTextView.editable = _editable;
+    _postTextView.editable = _newPost;
     
     //右、完了
     UIBarButtonItem *right_button = [[UIBarButtonItem alloc] initWithTitle:@"完了"
@@ -92,7 +96,7 @@
     self.navigationItem.rightBarButtonItems = @[right_button];
     
     //左、キーボド閉じる、戻る
-    UIBarButtonItem *close_button = [[UIBarButtonItem alloc] initWithTitle:_editable?@"キャンセル":@"戻る"
+    UIBarButtonItem *close_button = [[UIBarButtonItem alloc] initWithTitle:_newPost?@"キャンセル":@"戻る"
                                                                       style:UIBarButtonItemStylePlain
                                                                      target:self
                                                                      action:@selector(closeButtonTouched:)];
@@ -108,9 +112,20 @@
     
     [buttons addObject:button];
     
-    _keyboardToolbar = [RFKeyboardToolbar toolbarWithButtons:buttons];
-    _postTextView.inputAccessoryView = _keyboardToolbar;
-    _postTextView.delegate = self;
+    if (_newPost) {
+        _keyboardToolbar = [RFKeyboardToolbar toolbarWithButtons:buttons];
+        _postTextView.inputAccessoryView = _keyboardToolbar;
+        _postTextView.delegate = self;
+    }else {
+        self.commentView = [[DCCommentView alloc] initWithScrollView:_commentTableView frame:self.view.bounds];
+        self.commentView.delegate = self;
+        [self.view addSubview:self.commentView];
+        
+        //self.commentView.charLimit = 255; you can set this if you want a character limit
+        self.commentView.tintColor = [UIColor redColor]; //sets the proper accent items to red
+        //self.commentView.accessoryImage = [UIImage imageNamed:@"someimage"]; where the camera button would go
+        //more setup code
+    }
     
 }
 
@@ -288,6 +303,12 @@
                                                     }
                                                 }
                                             }];
+}
+
+#pragma mark - DCCommentView delegate methods
+-(void)didSendComment:(NSString*)text {
+    NSLog(@"%s", __FUNCTION__);
+    
 }
 
 @end

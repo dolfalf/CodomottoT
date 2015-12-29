@@ -11,7 +11,7 @@
 @class Contact;
 @interface ContactEditViewController : UIViewController
 
-@property (nonatomic, assign) BOOL editable;
+@property (nonatomic, assign) BOOL newPost;
 @property (nonatomic, strong) Contact *contact;
 
 @end

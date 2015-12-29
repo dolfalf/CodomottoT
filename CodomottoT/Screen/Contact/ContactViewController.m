@@ -93,10 +93,10 @@
         
         if (sender == nil) {
             //新規投稿
-            dest_con.editable = YES;
+            dest_con.newPost = YES;
         }else {
             //連絡帳選択
-            dest_con.editable = NO;
+            dest_con.newPost = NO;
             dest_con.contact = sender;
         }
     }
