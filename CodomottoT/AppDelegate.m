@@ -66,7 +66,8 @@
 #pragma mark - parse
 - (void)loadParseModel {
     
-    //add PFObject.
+    //REMARK: regist PFObject.
+    
     [User registerSubclass];
     [Role registerSubclass];
     
@@ -74,10 +75,13 @@
     [RequestUser registerSubclass];
     
     [Contact registerSubclass];
-    [ContactPhoto registerSubclass];
     [ContactComment registerSubclass];
+    [ContactPhoto registerSubclass];
     [ContactRead registerSubclass];
     
+    [Notice registerSubclass];
+    [Group registerSubclass];
+    [Child registerSubclass];
 }
 
 @end

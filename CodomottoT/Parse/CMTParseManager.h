@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "NSError+Parse.h"
 #import "ParseModel.h"
+#import "PFACL+Role.h"
 #import "const.h"
 #import "Model.h"
 
@@ -27,19 +28,6 @@ extern NSString * const kCMTRoleNameMember;
 + (CMTParseManager *)sharedInstance;
 
 - (NSString *)currentStatusDescription;
-@end
-
-#pragma mark - ACL Category
-@interface CMTParseManager (ACL)
-
-- (PFACL *)publicReadOnlyACL;
-- (PFACL *)publicReadWriteACL;
-- (PFACL *)roleReadOnlyACL:(NSString *)roleName;
-- (PFACL *)roleReadWriteACL:(NSString *)roleName;
-
-- (PFACL *)publicReadOnlyACLWithReadWriteRole:(NSString *)roleName;
-- (PFACL *)publicReadOnlyACLWithReadOnlyRole:(NSString *)roleName;
-
 @end
 
 #pragma mark - User Category
@@ -83,8 +71,6 @@ extern NSString * const kCMTRoleNameMember;
 #pragma mark - Role Category
 @interface CMTParseManager (Role)
 
-- (Role *)roleInfo:(NSString *)key;
-
 /*!
  * 現在園のアクセス権限があるかどうか。
  */
@@ -109,5 +95,12 @@ extern NSString * const kCMTRoleNameMember;
  */
 - (void)removeSchoolRole:(School *)school block:(errorBlock)block;
 
+@end
 
+#pragma mark - ACL Category
+@interface CMTParseManager (ACL)
+
+- (PFACL *)schoolACL;
+- (PFACL *)postContactACL;
+- (PFACL *)commentContactACL;
 @end

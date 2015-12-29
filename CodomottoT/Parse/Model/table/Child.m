@@ -1,23 +1,22 @@
 //
-//  Group.m
-//  Codomotto
+//  Child.m
+//  CodomottoT
 //
-//  Created by kjcode on 2015/07/08.
-//  Copyright (c) 2015年 Codomotto. All rights reserved.
+//  Created by lee jaeeun on 2015/12/29.
+//  Copyright © 2015年 kjcode. All rights reserved.
 //
 
-#import "Group.h"
-#import "School.h"
-#import "User.h"
+#import "Child.h"
+#import "CMTParseManager.h"
 
-@implementation Group
+@implementation Child
 
-@dynamic school;
-@dynamic teachers;
+@dynamic cmtSchool;
+@dynamic cmtGroup;
+@dynamic parentsUser;
 @dynamic name;
 @dynamic deleteFlag;
 @dynamic ACL;
-
 
 + (void)load {
     [self registerSubclass];
@@ -29,12 +28,11 @@
 
 + (instancetype)createModel {
     
-    Group *model = [[self alloc] init];
+    Child *model = [[self alloc] init];
     
     model.deleteFlag = NO;
     model.ACL = [PFACL ACLWithUser:[PFUser currentUser]];
     
     return model;
 }
-
 @end

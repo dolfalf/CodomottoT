@@ -7,6 +7,7 @@
 //
 
 #import "ContactPhoto.h"
+#import "CMTParseManager.h"
 
 @implementation ContactPhoto
 
@@ -25,7 +26,7 @@
     
     ContactPhoto *model = [[self alloc] init];
     
-    model.ACL = [PFACL ACLWithUser:[PFUser currentUser]];
+    model.ACL = [[CMTParseManager sharedInstance] postContactACL];
     
     return model;
 }

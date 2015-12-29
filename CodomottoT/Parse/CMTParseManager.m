@@ -98,87 +98,6 @@ static CMTParseManager *_sharedInstance;
 
 @end
 
-#pragma mark - ACL Category
-@implementation CMTParseManager (ACL)
-
-- (PFACL *)publicReadOnlyACL {
-    
-    PFACL *acl = [PFACL ACL];
-    [acl setWriteAccess:YES forUser:[User currentUser]];
-    [acl setReadAccess:YES forUser:[User currentUser]];
-    
-    [acl setPublicReadAccess:YES];
-    [acl setPublicWriteAccess:NO];
-    
-    return acl;
-}
-
-- (PFACL *)publicReadWriteACL {
-    
-    PFACL *acl = [PFACL ACL];
-    [acl setWriteAccess:YES forUser:[User currentUser]];
-    [acl setReadAccess:YES forUser:[User currentUser]];
-    
-    [acl setPublicReadAccess:YES];
-    [acl setPublicWriteAccess:YES];
-    
-    return acl;
-}
-
-- (PFACL *)roleReadOnlyACL:(NSString *)roleName {
-    
-    PFACL *acl = [PFACL ACL];
-    [acl setWriteAccess:YES forUser:[User currentUser]];
-    [acl setReadAccess:YES forUser:[User currentUser]];
-    
-    [acl setReadAccess:YES forRoleWithName:roleName];
-    [acl setWriteAccess:NO forRoleWithName:roleName];
-    
-    return acl;
-}
-
-- (PFACL *)roleReadWriteACL:(NSString *)roleName {
-    
-    PFACL *acl = [PFACL ACL];
-    [acl setWriteAccess:YES forUser:[User currentUser]];
-    [acl setReadAccess:YES forUser:[User currentUser]];
-    
-    [acl setReadAccess:YES forRoleWithName:roleName];
-    [acl setWriteAccess:YES forRoleWithName:roleName];
-    
-    return acl;
-}
-
-- (PFACL *)publicReadOnlyACLWithReadWriteRole:(NSString *)roleName {
-    
-    PFACL *acl = [PFACL ACL];
-    [acl setWriteAccess:YES forUser:[User currentUser]];
-    [acl setReadAccess:YES forUser:[User currentUser]];
-    
-    [acl setReadAccess:YES forRoleWithName:roleName];
-    [acl setWriteAccess:YES forRoleWithName:roleName];
-    
-    [acl setPublicReadAccess:YES];
-    
-    return acl;
-}
-
-- (PFACL *)publicReadOnlyACLWithReadOnlyRole:(NSString *)roleName {
-    
-    PFACL *acl = [PFACL ACL];
-    [acl setWriteAccess:YES forUser:[User currentUser]];
-    [acl setReadAccess:YES forUser:[User currentUser]];
-    
-    [acl setReadAccess:YES forRoleWithName:roleName];
-    [acl setWriteAccess:NO forRoleWithName:roleName];
-    
-    [acl setPublicReadAccess:YES];
-    
-    return acl;
-}
-
-@end
-
 #pragma mark - User Category
 @implementation CMTParseManager (User)
 
@@ -472,7 +391,7 @@ static CMTParseManager *_sharedInstance;
     //園長ロール生成
     NSString *head_teacher_rolename = [self schoolRoleName:school prefix:kCMTRoleNameHeadTeacher];
     
-    Role *head_teacher_role = [Role roleWithName:head_teacher_rolename acl:[self publicReadOnlyACL]];
+    Role *head_teacher_role = [Role roleWithName:head_teacher_rolename acl:[PFACL publicReadOnlyACL]];
     //Add extra data
     head_teacher_role.cmtSchool = school;
     [head_teacher_role.users addObject:[User currentUser]];
@@ -486,8 +405,12 @@ static CMTParseManager *_sharedInstance;
     }
     
     //先生ロール生成
+    //create acl
+    PFACL *teacher_acl = [PFACL publicReadOnlyACL];
+    [teacher_acl addWriteRole:head_teacher_role];
+    
     Role *teacher_role = [Role roleWithName:[self schoolRoleName:school prefix:kCMTRoleNameTeacher]
-                                         acl:[self publicReadOnlyACLWithReadWriteRole:head_teacher_rolename]];
+                                         acl:teacher_acl];
     
     //Add extra data
     teacher_role.cmtSchool = school;
@@ -504,8 +427,12 @@ static CMTParseManager *_sharedInstance;
     }
     
     //保護者ロール生成
+    //create acl
+    PFACL *parents_acl = [PFACL publicReadOnlyACL];
+    [parents_acl addWriteRole:head_teacher_role];
+    
     Role *parents_role = [Role roleWithName:[self schoolRoleName:school prefix:kCMTRoleNameParents]
-                                        acl:[self publicReadOnlyACLWithReadWriteRole:head_teacher_rolename]];
+                                        acl:parents_acl];
     
     //Add extra data
     parents_role.cmtSchool = school;
@@ -519,8 +446,12 @@ static CMTParseManager *_sharedInstance;
     }
     
     //全てのメンバーロール
+    //create acl
+    PFACL *member_acl = [PFACL publicReadOnlyACL];
+    [member_acl addWriteRole:head_teacher_role];
+    
     Role *member_role = [Role roleWithName:[self schoolRoleName:school prefix:kCMTRoleNameMember]
-                                       acl:[self publicReadOnlyACLWithReadWriteRole:head_teacher_rolename]];
+                                       acl:member_acl];
     
     //Add extra data
     member_role.cmtSchool = school;
@@ -532,6 +463,13 @@ static CMTParseManager *_sharedInstance;
         *error = [NSError errorWithCodomottoErrorCode:CMTErrorOther localizedDescription:@"Create role failed."];
         return NO;
     }
+    
+    
+    //Save role buffer
+    _roleInfo[kCMTRoleNameHeadTeacher] = head_teacher_role;
+    _roleInfo[kCMTRoleNameTeacher] = teacher_role;
+    _roleInfo[kCMTRoleNameParents] = parents_role;
+    _roleInfo[kCMTRoleNameMember] = member_role;
     
     return YES;
 }
@@ -645,3 +583,36 @@ static CMTParseManager *_sharedInstance;
 }
 
 @end
+
+#pragma mark - ACL Category
+@implementation CMTParseManager (ACL)
+
+- (PFACL *)schoolACL {
+    
+    PFACL *school_acl = [PFACL publicReadOnlyACL];
+    [school_acl addWriteRole:[self roleInfo:kCMTRoleNameHeadTeacher]];
+    [school_acl addReadOnlyRole:[self roleInfo:kCMTRoleNameMember]];
+    
+    return school_acl;
+}
+
+- (PFACL *)postContactACL {
+
+    PFACL *contact_acl = [PFACL userACL];
+    [contact_acl addWriteRole:[self roleInfo:kCMTRoleNameHeadTeacher]];
+    [contact_acl addReadOnlyRole:[self roleInfo:kCMTRoleNameMember]];
+    
+    return contact_acl;
+}
+
+- (PFACL *)commentContactACL {
+    
+    PFACL *contact_acl = [PFACL userACL];
+    [contact_acl addWriteRole:[self roleInfo:kCMTRoleNameHeadTeacher]];
+    [contact_acl addReadOnlyRole:[self roleInfo:kCMTRoleNameMember]];
+    
+    return contact_acl;
+}
+
+@end
+

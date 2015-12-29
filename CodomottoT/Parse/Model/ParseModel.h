@@ -22,6 +22,8 @@
 #import "ContactPhoto.h"
 #import "ContactRead.h"
 
+#import "Notice.h"
 #import "Group.h"
+#import "Child.h"
 
 #endif

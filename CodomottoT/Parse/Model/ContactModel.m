@@ -51,14 +51,6 @@
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
-        //role info
-        PFACL *contact_acl = [PFACL ACL];
-        
-        CMTParseManager *mgr = [CMTParseManager sharedInstance];
-        [contact_acl setWriteAccess:YES forRole:[mgr roleInfo:kCMTRoleNameHeadTeacher]];
-        [contact_acl setReadAccess:YES forRole:[mgr roleInfo:kCMTRoleNameMember]];
-        [contact_acl setWriteAccess:YES forUser:[mgr currentUser]];
-        
         //upload photo
         NSMutableArray *upload_photos = [NSMutableArray new];
         
@@ -85,8 +77,6 @@
         PFRelation *relation = [contact relationForKey:@"photo"];
         for (ContactPhoto *photo in upload_photos) {
             
-            photo.ACL = contact_acl;
-            
             BOOL b = [photo save];
             
             if(b == NO) {
@@ -101,8 +91,6 @@
             
             [relation addObject:photo];
         }
-        
-        contact.ACL = contact_acl;
         
         //save.
         NSError *contact_error = nil;
@@ -137,11 +125,7 @@
         contact_comment.postContact = contact;
         
         //role info.
-        contact_comment.ACL = [User currentUser].ACL;
-        CMTParseManager *mgr = [CMTParseManager sharedInstance];
-        PFACL *comment_acl = [PFACL ACL];
-        [comment_acl setWriteAccess:YES forRole:[mgr roleInfo:kCMTRoleNameHeadTeacher]];
-        [comment_acl setReadAccess:YES forRole:[mgr roleInfo:kCMTRoleNameMember]];
+        contact_comment.ACL = [[CMTParseManager sharedInstance] commentContactACL];
         
         BOOL comment_saved = [contact_comment save];
         

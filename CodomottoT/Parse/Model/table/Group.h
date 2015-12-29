@@ -11,10 +11,14 @@
 @class School;
 @class User;
 
+/*!
+ * 園内の教室クラス
+ */
 @interface Group : PFObject<PFSubclassing>
 
 @property (nonatomic, strong) School *school;
 @property (nonatomic, strong) PFRelation *teachers;
+@property (nonatomic, strong) PFRelation *childs;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, assign) BOOL deleteFlag;
 @property (nonatomic, strong) PFACL *ACL;

@@ -10,6 +10,7 @@
 #import "ContactPhoto.h"
 #import "ContactRead.h"
 #import "User.h"
+#import "CMTParseManager.h"
 
 @implementation Contact
 
@@ -36,7 +37,8 @@
     
     model.noticeFlag = NO;
     model.deleteFlag = NO;
-    model.ACL = [PFACL ACLWithUser:[PFUser currentUser]];
+    
+    model.ACL = [[CMTParseManager sharedInstance] postContactACL];
     
     return model;
 }

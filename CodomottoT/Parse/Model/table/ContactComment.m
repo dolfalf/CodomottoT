@@ -9,6 +9,7 @@
 #import "ContactComment.h"
 #import "Contact.h"
 #import "User.h"
+#import "CMTParseManager.h"
 
 @implementation ContactComment
 
@@ -31,7 +32,7 @@
     ContactComment *model = [[self alloc] init];
     
     model.deleteFlag = NO;
-    model.ACL = [PFACL ACLWithUser:[PFUser currentUser]];
+    model.ACL = [[CMTParseManager sharedInstance] postContactACL];
     
     return model;
 }

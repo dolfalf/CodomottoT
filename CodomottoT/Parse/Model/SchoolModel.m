@@ -49,35 +49,12 @@
             });
         }
         
-        PFQuery *query = [Role query];
-        [query whereKey:@"cmtSchool" equalTo:school];
-        NSError *is_exist_error = nil;
-        NSArray *objects = [query findObjects:&is_exist_error];
+        //set acl
+        school.ACL = [mgr schoolACL];
         
-        NSLog(@"role object[%ld]", (long)objects.count);
-        
-        PFACL *school_acl = [PFACL ACL];
-        [school_acl setPublicReadAccess:YES];
-        
-        for (Role *role in objects) {
-            
-            if ([role.name hasPrefix:kCMTRoleNameMember]) {
-                //Read権限
-                [school_acl setReadAccess:YES forRole:role];
-                continue;
-            }
-            
-            if ([role.name hasPrefix:kCMTRoleNameTeacher]) {
-                //Write権限
-                [school_acl setWriteAccess:YES forRole:role];
-                continue;
-            }
-            
-        }
-        
-        school.ACL = school_acl;
+        //save school
         [school save];
-    
+        
         //ユーザーに登録
         [mgr registUserSchool:school];
         

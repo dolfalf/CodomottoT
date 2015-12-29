@@ -42,6 +42,15 @@
     _postImages = [NSMutableArray new];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if (_contact) {
+        _postTextView.text = _contact.content;
+    }
+    
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
@@ -71,6 +80,8 @@
     
     _postTextView.placeholder = @"連絡帳を書いてください。";
     
+    //前画面で設定される
+    _postTextView.editable = _editable;
     
     //右、完了
     UIBarButtonItem *right_button = [[UIBarButtonItem alloc] initWithTitle:@"完了"
@@ -81,7 +92,7 @@
     self.navigationItem.rightBarButtonItems = @[right_button];
     
     //左、キーボド閉じる、戻る
-    UIBarButtonItem *close_button = [[UIBarButtonItem alloc] initWithTitle:@"キャンセル"
+    UIBarButtonItem *close_button = [[UIBarButtonItem alloc] initWithTitle:_editable?@"キャンセル":@"戻る"
                                                                       style:UIBarButtonItemStylePlain
                                                                      target:self
                                                                      action:@selector(closeButtonTouched:)];

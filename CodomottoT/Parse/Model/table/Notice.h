@@ -12,6 +12,9 @@
 @class Group;
 @class User;
 
+/*!
+ * お知らせ表示用クラス
+ */
 @interface Notice : PFObject<PFSubclassing>
 
 @property (nonatomic, strong) NSString *relationTable;

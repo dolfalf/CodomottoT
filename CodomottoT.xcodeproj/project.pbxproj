@@ -60,6 +60,8 @@
 		BB89B0BF1C27C75C00065975 /* SIAlertView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BB89B0B81C27C75C00065975 /* SIAlertView.bundle */; };
 		BB89B0C01C27C75C00065975 /* SIAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB89B0BA1C27C75C00065975 /* SIAlertView.m */; };
 		BB89B0C11C27C75C00065975 /* UIWindow+SIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BB89B0BC1C27C75C00065975 /* UIWindow+SIUtils.m */; };
+		BBB9192E1C325E7800CA18CC /* PFACL+Role.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB9192D1C325E7800CA18CC /* PFACL+Role.m */; };
+		BBB919311C326D4000CA18CC /* Child.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB919301C326D4000CA18CC /* Child.m */; };
 		BBCA87391C2B80E6006C46C7 /* AllowWaitViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBCA87381C2B80E6006C46C7 /* AllowWaitViewController.m */; };
 		BBCA873C1C2B941C006C46C7 /* SignIn.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBCA873B1C2B941C006C46C7 /* SignIn.storyboard */; };
 		BBCA873F1C2B94EF006C46C7 /* Setting.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BBCA873E1C2B94EF006C46C7 /* Setting.storyboard */; };
@@ -201,6 +203,10 @@
 		BB89B0BA1C27C75C00065975 /* SIAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIAlertView.m; sourceTree = "<group>"; };
 		BB89B0BB1C27C75C00065975 /* UIWindow+SIUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+SIUtils.h"; sourceTree = "<group>"; };
 		BB89B0BC1C27C75C00065975 /* UIWindow+SIUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+SIUtils.m"; sourceTree = "<group>"; };
+		BBB9192C1C325E7800CA18CC /* PFACL+Role.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PFACL+Role.h"; sourceTree = "<group>"; };
+		BBB9192D1C325E7800CA18CC /* PFACL+Role.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PFACL+Role.m"; sourceTree = "<group>"; };
+		BBB9192F1C326D4000CA18CC /* Child.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Child.h; sourceTree = "<group>"; };
+		BBB919301C326D4000CA18CC /* Child.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Child.m; sourceTree = "<group>"; };
 		BBCA87371C2B80E6006C46C7 /* AllowWaitViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllowWaitViewController.h; sourceTree = "<group>"; };
 		BBCA87381C2B80E6006C46C7 /* AllowWaitViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllowWaitViewController.m; sourceTree = "<group>"; };
 		BBCA873B1C2B941C006C46C7 /* SignIn.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SignIn.storyboard; sourceTree = "<group>"; };
@@ -435,6 +441,8 @@
 			children = (
 				BB0D703D1C23C3A000E6AE82 /* NSError+Parse.h */,
 				BB0D703E1C23C3A000E6AE82 /* NSError+Parse.m */,
+				BBB9192C1C325E7800CA18CC /* PFACL+Role.h */,
+				BBB9192D1C325E7800CA18CC /* PFACL+Role.m */,
 				BB0D6FF91C23C30300E6AE82 /* CMTParseManager.h */,
 				BB0D6FFA1C23C30300E6AE82 /* CMTParseManager.m */,
 				BB0D6FFB1C23C30300E6AE82 /* Model */,
@@ -488,6 +496,8 @@
 				BB0D70131C23C30300E6AE82 /* Notice.m */,
 				BB0D70101C23C30300E6AE82 /* Group.h */,
 				BB0D70111C23C30300E6AE82 /* Group.m */,
+				BBB9192F1C326D4000CA18CC /* Child.h */,
+				BBB919301C326D4000CA18CC /* Child.m */,
 				BB0D701B1C23C30300E6AE82 /* Schedule.h */,
 				BB0D701C1C23C30300E6AE82 /* Schedule.m */,
 			);
@@ -775,10 +785,12 @@
 				BB0D6FE01C23BF1100E6AE82 /* CMTViewController.m in Sources */,
 				BB0D70281C23C30300E6AE82 /* GroupModel.m in Sources */,
 				BB0D70391C23C30300E6AE82 /* UIFont+Helper.m in Sources */,
+				BBB919311C326D4000CA18CC /* Child.m in Sources */,
 				BB89B0C11C27C75C00065975 /* UIWindow+SIUtils.m in Sources */,
 				BBFE4B6B1C3228F900342EBA /* QBVideoIndicatorView.m in Sources */,
 				BB0D702C1C23C30300E6AE82 /* Contact.m in Sources */,
 				BBFE4B661C3228F900342EBA /* QBCheckmarkView.m in Sources */,
+				BBB9192E1C325E7800CA18CC /* PFACL+Role.m in Sources */,
 				BBDDE1431C2803190071C4FD /* RequestUser.m in Sources */,
 				BB0D702B1C23C30300E6AE82 /* SchoolModel.m in Sources */,
 				BBFE4B641C3228F900342EBA /* QBAssetCell.m in Sources */,
