@@ -101,11 +101,11 @@
 #pragma mark - Setting Category
 @implementation StoryboardUtil (Setting)
 
-+ (void)openRequestUserViewController:(id)owner completion:(void(^)(id))completion {
++ (void)openSettingViewController:(id)owner completion:(void(^)(id))completion {
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Setting" bundle:nil];
     
-    UINavigationController *navi_con = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:@"RequestUserNavigationController"];
+    UINavigationController *navi_con = (UINavigationController *)[storyboard instantiateInitialViewController];
     if (completion) {
         completion(navi_con);
     }

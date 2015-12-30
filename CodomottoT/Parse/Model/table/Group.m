@@ -12,8 +12,9 @@
 
 @implementation Group
 
-@dynamic school;
+@dynamic cmtSchool;
 @dynamic teachers;
+@dynamic childs;
 @dynamic name;
 @dynamic deleteFlag;
 @dynamic ACL;

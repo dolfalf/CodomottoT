@@ -108,13 +108,15 @@
     NSLog(@"%s", __FUNCTION__);
     CMTParseManager *mgr = [CMTParseManager sharedInstance];
     
-    [mgr signOut];
+    [mgr signOut:^{
+        if (mgr.isLogin == NO) {
+            [self showAlertMessage:@"Logout success"];
+        }else {
+            [self showAlertMessage:@"Logout failed"];
+        }
+    }];
     
-    if (mgr.isLogin == NO) {
-        [self showAlertMessage:@"Logout success"];
-    }else {
-        [self showAlertMessage:@"Logout failed"];
-    }
+    
 }
 
 - (IBAction)gotoMainButtonTouched:(id)sender {

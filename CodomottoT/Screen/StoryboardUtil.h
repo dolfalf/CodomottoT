@@ -28,7 +28,7 @@
 
 @interface StoryboardUtil (Setting)
 
-+ (void)openRequestUserViewController:(id)owner completion:(void(^)(id))completion;
++ (void)openSettingViewController:(id)owner completion:(void(^)(id))completion;
 @end
 
 @interface StoryboardUtil (Contact)

@@ -67,21 +67,6 @@ NSString* const kSignInViewControllerNotificationSignInFail     = @"signInViewCo
                                                                      action:@selector(signUpButtonTouched:)];
     self.navigationItem.rightBarButtonItems = @[signup_button];
     
-    //toolbar.
-    UIBarButtonItem *spacer = [[UIBarButtonItem alloc]
-                               initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
-                               target:nil action:nil];
-    
-    UIBarButtonItem *logout_button = [[UIBarButtonItem alloc] initWithTitle:@"ログアウト"
-                                                                      style:UIBarButtonItemStyleDone target:self
-                                                                     action:@selector(logoutButtonTouched:)];
-    
-    UIBarButtonItem *userlist_button = [[UIBarButtonItem alloc] initWithTitle:@"ユーザー一覧(debug)"
-                                                                      style:UIBarButtonItemStyleDone target:self
-                                                                     action:@selector(userlistButtonTouched:)];
-    
-    self.toolbarItems = @[logout_button,spacer, userlist_button];
-    
 }
 
 #pragma mark - private methods
@@ -155,23 +140,6 @@ NSString* const kSignInViewControllerNotificationSignInFail     = @"signInViewCo
     
 }
 
-- (void)logoutButtonTouched:(id)sender {
-    NSLog(@"%s", __FUNCTION__);
-    
-    CMTParseManager *mgr = [CMTParseManager sharedInstance];
-    
-    [mgr signOut];
-    
-    if (mgr.isLogin == NO) {
-        [self showAlertMessage:@"Logout success"];
-    }else {
-        [self showAlertMessage:@"Logout failed"];
-    }
-    
-    [self updateStatusLabel];
-    
-}
-
 - (IBAction)loginButtonTouched:(id)sender {
     NSLog(@"%s", __FUNCTION__);
     
@@ -182,7 +150,11 @@ NSString* const kSignInViewControllerNotificationSignInFail     = @"signInViewCo
         if (error==nil) {
             NSLog(@"login success");
             //画面遷移
-            [[NSNotificationCenter defaultCenter] postNotificationName:kSignInViewControllerNotificationSignInSuccess object:nil];
+            [self dismissViewControllerAnimated:YES completion:^{
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:kSignInViewControllerNotificationSignInSuccess object:nil];
+            }];
+            
         }else {
             NSLog(@"login failed.");
             [self showAlertMessage:@"login failed."];
@@ -190,12 +162,6 @@ NSString* const kSignInViewControllerNotificationSignInFail     = @"signInViewCo
         }
     }];
     
-}
-
-- (void)userlistButtonTouched:(id)sender {
-    NSLog(@"%s", __FUNCTION__);
-    
-    [StoryboardUtil openUserListViewController:self completion:nil];
 }
 
 @end

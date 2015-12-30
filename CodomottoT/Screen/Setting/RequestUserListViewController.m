@@ -68,14 +68,6 @@
     //title
     self.title = @"承認待ちユーザー一覧";
     
-    //toolbar.
-    UIBarButtonItem *close_button = [[UIBarButtonItem alloc] initWithTitle:@"閉じる"
-                                                                     style:UIBarButtonItemStyleDone
-                                                                    target:self
-                                                                    action:@selector(closeButtonTouched:)];
-    
-    self.navigationItem.leftBarButtonItems = @[close_button];
-    
     self.hasMemberData = YES;
 }
 

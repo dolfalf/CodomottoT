@@ -115,37 +115,52 @@
     
     //toolbar.
     
-#if 0
+#if 1
     UIBarButtonItem *spacer = [[UIBarButtonItem alloc]
-                               initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
+                               initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
                                target:nil action:nil];
 #endif
+    
+    UIBarButtonItem *logout_button = [[UIBarButtonItem alloc] initWithTitle:@"ログアウト"
+                                                                     style:UIBarButtonItemStyleDone target:self
+                                                                    action:@selector(logoutButtonTouched:)];
     
     CMTParseManager *mgr = [CMTParseManager sharedInstance];
     if (mgr.userType == UserTypeHeadTeacher) {
         //園長の場合、リクエストユーザー見る画面へ
-        UIBarButtonItem *request_user_button = [[UIBarButtonItem alloc] initWithTitle:@"リクエスト一覧"
+        UIBarButtonItem *setup_button = [[UIBarButtonItem alloc] initWithTitle:@"設定"
                                                                                 style:UIBarButtonItemStyleDone target:self
-                                                                               action:@selector(requestUserButtonTouched:)];
-        self.toolbarItems = @[request_user_button];
+                                                                               action:@selector(settingButtonTouched:)];
+        self.toolbarItems = @[setup_button,spacer,logout_button];
     }else {
         UIBarButtonItem *post_button = [[UIBarButtonItem alloc] initWithTitle:@"投稿"
                                                                         style:UIBarButtonItemStyleDone target:self
                                                                        action:@selector(postButtonTouched:)];
-        self.toolbarItems = @[post_button];
+        self.toolbarItems = @[post_button,spacer,logout_button];
     }
     
 }
 
 #pragma mark - Action
-- (void)requestUserButtonTouched:(id)sender {
+- (void)settingButtonTouched:(id)sender {
     
-    [StoryboardUtil openRequestUserViewController:self completion:nil];
+    [StoryboardUtil openSettingViewController:self completion:nil];
     
 }
 
 - (void)postButtonTouched:(id)sender {
     [self performSegueWithIdentifier:@"ContactEditSegue" sender:nil];
+}
+
+- (void)logoutButtonTouched:(id)sender {
+    NSLog(@"%s", __FUNCTION__);
+    CMTParseManager *mgr = [CMTParseManager sharedInstance];
+    
+    [mgr signOut:^{
+        [self.navigationController popToRootViewControllerAnimated:NO];
+        [StoryboardUtil openSignInViewController:self animated:NO completion:nil];
+    }];
+
 }
 
 #pragma mark - UITableView helper methods

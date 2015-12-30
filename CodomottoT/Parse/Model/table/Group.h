@@ -16,7 +16,7 @@
  */
 @interface Group : PFObject<PFSubclassing>
 
-@property (nonatomic, strong) School *school;
+@property (nonatomic, strong) School *cmtSchool;
 @property (nonatomic, strong) PFRelation *teachers;
 @property (nonatomic, strong) PFRelation *childs;
 @property (nonatomic, strong) NSString *name;

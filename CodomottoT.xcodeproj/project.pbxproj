@@ -72,6 +72,9 @@
 		BBCA874C1C2B96FE006C46C7 /* RequestUserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBCA87491C2B96FE006C46C7 /* RequestUserListViewController.m */; };
 		BBCA874D1C2B96FE006C46C7 /* UserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBCA874B1C2B96FE006C46C7 /* UserListViewController.m */; };
 		BBCA87501C2B9709006C46C7 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBCA874F1C2B9709006C46C7 /* SignInViewController.m */; };
+		BBD5A6A51C3366E600B9CA6E /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD5A6A41C3366E600B9CA6E /* SettingViewController.m */; };
+		BBD5A6AB1C336C7500B9CA6E /* TeacherListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD5A6AA1C336C7500B9CA6E /* TeacherListViewController.m */; };
+		BBD5A6AE1C336C8500B9CA6E /* GroupListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD5A6AD1C336C8500B9CA6E /* GroupListViewController.m */; };
 		BBDDE1431C2803190071C4FD /* RequestUser.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDDE1421C2803190071C4FD /* RequestUser.m */; };
 		BBDDE1461C2809DE0071C4FD /* RequestUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDDE1451C2809DE0071C4FD /* RequestUserModel.m */; };
 		BBDDE14A1C2811F40071C4FD /* Model.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDDE1491C2811F40071C4FD /* Model.m */; };
@@ -225,6 +228,12 @@
 		BBCA874B1C2B96FE006C46C7 /* UserListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserListViewController.m; sourceTree = "<group>"; };
 		BBCA874E1C2B9709006C46C7 /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
 		BBCA874F1C2B9709006C46C7 /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
+		BBD5A6A31C3366E600B9CA6E /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
+		BBD5A6A41C3366E600B9CA6E /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
+		BBD5A6A91C336C7500B9CA6E /* TeacherListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeacherListViewController.h; sourceTree = "<group>"; };
+		BBD5A6AA1C336C7500B9CA6E /* TeacherListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeacherListViewController.m; sourceTree = "<group>"; };
+		BBD5A6AC1C336C8500B9CA6E /* GroupListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupListViewController.h; sourceTree = "<group>"; };
+		BBD5A6AD1C336C8500B9CA6E /* GroupListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupListViewController.m; sourceTree = "<group>"; };
 		BBDDE1411C2803190071C4FD /* RequestUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestUser.h; sourceTree = "<group>"; };
 		BBDDE1421C2803190071C4FD /* RequestUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestUser.m; sourceTree = "<group>"; };
 		BBDDE1441C2809DE0071C4FD /* RequestUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestUserModel.h; sourceTree = "<group>"; };
@@ -581,6 +590,12 @@
 			isa = PBXGroup;
 			children = (
 				BBCA873E1C2B94EF006C46C7 /* Setting.storyboard */,
+				BBD5A6A31C3366E600B9CA6E /* SettingViewController.h */,
+				BBD5A6A41C3366E600B9CA6E /* SettingViewController.m */,
+				BBD5A6AC1C336C8500B9CA6E /* GroupListViewController.h */,
+				BBD5A6AD1C336C8500B9CA6E /* GroupListViewController.m */,
+				BBD5A6A91C336C7500B9CA6E /* TeacherListViewController.h */,
+				BBD5A6AA1C336C7500B9CA6E /* TeacherListViewController.m */,
 				BBCA87481C2B96FE006C46C7 /* RequestUserListViewController.h */,
 				BBCA87491C2B96FE006C46C7 /* RequestUserListViewController.m */,
 				BBCA874A1C2B96FE006C46C7 /* UserListViewController.h */,
@@ -791,12 +806,14 @@
 				BBCA87431C2B964E006C46C7 /* MainViewController.m in Sources */,
 				BB0D70381C23C30300E6AE82 /* UIColor+Helper.m in Sources */,
 				BB0D6F751C23A12500E6AE82 /* AppDelegate.m in Sources */,
+				BBD5A6A51C3366E600B9CA6E /* SettingViewController.m in Sources */,
 				BB0D70301C23C30300E6AE82 /* Group.m in Sources */,
 				BB0D6F721C23A12500E6AE82 /* main.m in Sources */,
 				BBFE4B681C3228F900342EBA /* QBImagePickerController.m in Sources */,
 				BBDDE1461C2809DE0071C4FD /* RequestUserModel.m in Sources */,
 				BB0D702A1C23C30300E6AE82 /* ScheduleModel.m in Sources */,
 				BB0D70291C23C30300E6AE82 /* NoticeModel.m in Sources */,
+				BBD5A6AB1C336C7500B9CA6E /* TeacherListViewController.m in Sources */,
 				BB0D6FE01C23BF1100E6AE82 /* CMTViewController.m in Sources */,
 				BB0D70281C23C30300E6AE82 /* GroupModel.m in Sources */,
 				BB0D70391C23C30300E6AE82 /* UIFont+Helper.m in Sources */,
@@ -815,6 +832,7 @@
 				BB0D6FF41C23BF2500E6AE82 /* ContactViewController.m in Sources */,
 				BB5271591C313C2B005F3C2D /* ContactEditViewController.m in Sources */,
 				BB0D70311C23C30300E6AE82 /* Notice.m in Sources */,
+				BBD5A6AE1C336C8500B9CA6E /* GroupListViewController.m in Sources */,
 				BB0D702F1C23C30300E6AE82 /* ContactRead.m in Sources */,
 				BBFE4B751C32459800342EBA /* UIImage+Resize.m in Sources */,
 				BBFE4B6A1C3228F900342EBA /* QBVideoIconView.m in Sources */,

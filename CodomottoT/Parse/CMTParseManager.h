@@ -59,7 +59,7 @@ extern NSString * const kCMTRoleNameMember;
 /*!
  @abstract ログアウト
  */
-- (void)signOut;
+- (void)signOut:(void(^)(void))block;
 
 /*!
  @abstract パスワードリセット
