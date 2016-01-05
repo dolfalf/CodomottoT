@@ -79,6 +79,7 @@
 		BBD5A6AE1C336C8500B9CA6E /* GroupListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD5A6AD1C336C8500B9CA6E /* GroupListViewController.m */; };
 		BBDA2FD51C3B8222002E5972 /* ChildListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDA2FD41C3B8222002E5972 /* ChildListViewController.m */; };
 		BBDA2FD81C3B870A002E5972 /* ChildModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDA2FD71C3B870A002E5972 /* ChildModel.m */; };
+		BBDA2FDB1C3BC287002E5972 /* ZipSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDA2FDA1C3BC287002E5972 /* ZipSearch.m */; };
 		BBDDE1431C2803190071C4FD /* RequestUser.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDDE1421C2803190071C4FD /* RequestUser.m */; };
 		BBDDE1461C2809DE0071C4FD /* RequestUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDDE1451C2809DE0071C4FD /* RequestUserModel.m */; };
 		BBDDE14A1C2811F40071C4FD /* Model.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDDE1491C2811F40071C4FD /* Model.m */; };
@@ -245,6 +246,8 @@
 		BBDA2FD41C3B8222002E5972 /* ChildListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildListViewController.m; sourceTree = "<group>"; };
 		BBDA2FD61C3B870A002E5972 /* ChildModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildModel.h; sourceTree = "<group>"; };
 		BBDA2FD71C3B870A002E5972 /* ChildModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildModel.m; sourceTree = "<group>"; };
+		BBDA2FD91C3BC287002E5972 /* ZipSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipSearch.h; sourceTree = "<group>"; };
+		BBDA2FDA1C3BC287002E5972 /* ZipSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipSearch.m; sourceTree = "<group>"; };
 		BBDDE1411C2803190071C4FD /* RequestUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestUser.h; sourceTree = "<group>"; };
 		BBDDE1421C2803190071C4FD /* RequestUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestUser.m; sourceTree = "<group>"; };
 		BBDDE1441C2809DE0071C4FD /* RequestUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestUserModel.h; sourceTree = "<group>"; };
@@ -539,6 +542,8 @@
 				BB0D70251C23C30300E6AE82 /* UIFont+Helper.m */,
 				BBFE4B731C32459800342EBA /* UIImage+Resize.h */,
 				BBFE4B741C32459800342EBA /* UIImage+Resize.m */,
+				BBDA2FD91C3BC287002E5972 /* ZipSearch.h */,
+				BBDA2FDA1C3BC287002E5972 /* ZipSearch.m */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -842,6 +847,7 @@
 				BB0D702C1C23C30300E6AE82 /* Contact.m in Sources */,
 				BBFE4B661C3228F900342EBA /* QBCheckmarkView.m in Sources */,
 				BBB9192E1C325E7800CA18CC /* PFACL+Role.m in Sources */,
+				BBDA2FDB1C3BC287002E5972 /* ZipSearch.m in Sources */,
 				BBDA2FD51C3B8222002E5972 /* ChildListViewController.m in Sources */,
 				BBDDE1431C2803190071C4FD /* RequestUser.m in Sources */,
 				BB0D702B1C23C30300E6AE82 /* SchoolModel.m in Sources */,
