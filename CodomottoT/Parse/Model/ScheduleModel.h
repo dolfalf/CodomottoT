@@ -6,9 +6,9 @@
 //  Copyright © 2015年 Codomotto. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "Model.h"
 
-@interface ScheduleModel : NSObject
+@interface ScheduleModel : Model
 
 - (NSArray *)schduleList:(NSInteger)month;
 @end

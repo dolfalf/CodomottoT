@@ -42,7 +42,7 @@
     }];
 }
 
-- (void)remove:(PFObject *)object block:(errorBlock)block {
+- (void)remove:(id)object block:(errorBlock)block {
     
     [object deleteInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
         

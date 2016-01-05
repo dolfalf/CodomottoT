@@ -31,6 +31,15 @@
 @property (nonatomic, weak) IBOutlet UISegmentedControl *segmentControl;
 @end
 
+@interface CMTCheckBoxCell : UITableViewCell
+
+@property (nonatomic, strong) id obj;
+@property (nonatomic, weak) IBOutlet UILabel *titleLabel;
+@property (nonatomic, assign) BOOL isChecked;
+
+- (void)addTarget:(id)target checkButtonTouched:(SEL)action;
+@end
+
 @interface CMTViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, weak) IBOutlet UITableView *mainTableView;

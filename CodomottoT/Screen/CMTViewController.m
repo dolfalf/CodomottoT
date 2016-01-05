@@ -9,20 +9,57 @@
 #import "CMTViewController.h"
 
 const float kCellDefaultHeight = 60.f;
-
+#pragma mark - CMTTableCell
 @implementation CMTTableCell
 
 @end
 
+#pragma mark CMTInputTextCell
 @implementation CMTInputTextCell
 
 @end
 
+#pragma mark CMTButtonCell
 @implementation CMTButtonCell
 
 @end
 
+#pragma mark CMTSegmentCell
 @implementation CMTSegmentCell
+
+@end
+
+#pragma mark CMTCheckBoxCell
+@interface CMTCheckBoxCell()
+@property (nonatomic, assign) id tar;
+@property (nonatomic, assign) SEL sel;
+
+@property (nonatomic, weak) IBOutlet UIButton *checkButton;
+@end
+
+@implementation CMTCheckBoxCell
+
+- (void)addTarget:(id)target checkButtonTouched:(SEL)action {
+    self.tar = target;
+    self.sel = action;
+}
+
+- (void)setIsChecked:(BOOL)isChecked {
+
+    _checkButton.backgroundColor = isChecked?[UIColor redColor]:[UIColor grayColor];
+    
+    _isChecked = isChecked;
+}
+
+- (IBAction)checkButtonTouched:(UIButton *)sender {
+
+    sender.selected = !sender.selected;
+    self.isChecked = sender.selected;
+    
+    if (_tar != nil && [_tar respondsToSelector:_sel]) {
+        [_tar performSelectorOnMainThread:_sel withObject:self waitUntilDone:NO];
+    }
+}
 
 @end
 

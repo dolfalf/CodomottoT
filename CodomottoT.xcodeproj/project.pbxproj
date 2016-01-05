@@ -72,9 +72,13 @@
 		BBCA874C1C2B96FE006C46C7 /* RequestUserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBCA87491C2B96FE006C46C7 /* RequestUserListViewController.m */; };
 		BBCA874D1C2B96FE006C46C7 /* UserListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBCA874B1C2B96FE006C46C7 /* UserListViewController.m */; };
 		BBCA87501C2B9709006C46C7 /* SignInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBCA874F1C2B9709006C46C7 /* SignInViewController.m */; };
+		BBD3B7311C3A3C8600036910 /* GroupDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD3B7301C3A3C8600036910 /* GroupDetailViewController.m */; };
+		BBD3B7341C3A545C00036910 /* GroupEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD3B7331C3A545C00036910 /* GroupEditViewController.m */; };
 		BBD5A6A51C3366E600B9CA6E /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD5A6A41C3366E600B9CA6E /* SettingViewController.m */; };
 		BBD5A6AB1C336C7500B9CA6E /* TeacherListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD5A6AA1C336C7500B9CA6E /* TeacherListViewController.m */; };
 		BBD5A6AE1C336C8500B9CA6E /* GroupListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBD5A6AD1C336C8500B9CA6E /* GroupListViewController.m */; };
+		BBDA2FD51C3B8222002E5972 /* ChildListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDA2FD41C3B8222002E5972 /* ChildListViewController.m */; };
+		BBDA2FD81C3B870A002E5972 /* ChildModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDA2FD71C3B870A002E5972 /* ChildModel.m */; };
 		BBDDE1431C2803190071C4FD /* RequestUser.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDDE1421C2803190071C4FD /* RequestUser.m */; };
 		BBDDE1461C2809DE0071C4FD /* RequestUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDDE1451C2809DE0071C4FD /* RequestUserModel.m */; };
 		BBDDE14A1C2811F40071C4FD /* Model.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDDE1491C2811F40071C4FD /* Model.m */; };
@@ -201,7 +205,6 @@
 		BB5271571C313C2B005F3C2D /* ContactEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactEditViewController.h; sourceTree = "<group>"; };
 		BB5271581C313C2B005F3C2D /* ContactEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactEditViewController.m; sourceTree = "<group>"; };
 		BB89B0B61C27C75C00065975 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
-		BB89B0B71C27C75C00065975 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		BB89B0B81C27C75C00065975 /* SIAlertView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SIAlertView.bundle; sourceTree = "<group>"; };
 		BB89B0B91C27C75C00065975 /* SIAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIAlertView.h; sourceTree = "<group>"; };
 		BB89B0BA1C27C75C00065975 /* SIAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIAlertView.m; sourceTree = "<group>"; };
@@ -228,12 +231,20 @@
 		BBCA874B1C2B96FE006C46C7 /* UserListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserListViewController.m; sourceTree = "<group>"; };
 		BBCA874E1C2B9709006C46C7 /* SignInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInViewController.h; sourceTree = "<group>"; };
 		BBCA874F1C2B9709006C46C7 /* SignInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInViewController.m; sourceTree = "<group>"; };
+		BBD3B72F1C3A3C8600036910 /* GroupDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupDetailViewController.h; sourceTree = "<group>"; };
+		BBD3B7301C3A3C8600036910 /* GroupDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupDetailViewController.m; sourceTree = "<group>"; };
+		BBD3B7321C3A545C00036910 /* GroupEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupEditViewController.h; sourceTree = "<group>"; };
+		BBD3B7331C3A545C00036910 /* GroupEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupEditViewController.m; sourceTree = "<group>"; };
 		BBD5A6A31C3366E600B9CA6E /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
 		BBD5A6A41C3366E600B9CA6E /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 		BBD5A6A91C336C7500B9CA6E /* TeacherListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TeacherListViewController.h; sourceTree = "<group>"; };
 		BBD5A6AA1C336C7500B9CA6E /* TeacherListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TeacherListViewController.m; sourceTree = "<group>"; };
 		BBD5A6AC1C336C8500B9CA6E /* GroupListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupListViewController.h; sourceTree = "<group>"; };
 		BBD5A6AD1C336C8500B9CA6E /* GroupListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupListViewController.m; sourceTree = "<group>"; };
+		BBDA2FD31C3B8222002E5972 /* ChildListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildListViewController.h; sourceTree = "<group>"; };
+		BBDA2FD41C3B8222002E5972 /* ChildListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildListViewController.m; sourceTree = "<group>"; };
+		BBDA2FD61C3B870A002E5972 /* ChildModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildModel.h; sourceTree = "<group>"; };
+		BBDA2FD71C3B870A002E5972 /* ChildModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildModel.m; sourceTree = "<group>"; };
 		BBDDE1411C2803190071C4FD /* RequestUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestUser.h; sourceTree = "<group>"; };
 		BBDDE1421C2803190071C4FD /* RequestUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestUser.m; sourceTree = "<group>"; };
 		BBDDE1441C2809DE0071C4FD /* RequestUserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestUserModel.h; sourceTree = "<group>"; };
@@ -471,6 +482,8 @@
 				BBDDE1491C2811F40071C4FD /* Model.m */,
 				BB0D70051C23C30300E6AE82 /* SchoolModel.h */,
 				BB0D70061C23C30300E6AE82 /* SchoolModel.m */,
+				BBDA2FD61C3B870A002E5972 /* ChildModel.h */,
+				BBDA2FD71C3B870A002E5972 /* ChildModel.m */,
 				BBDDE1441C2809DE0071C4FD /* RequestUserModel.h */,
 				BBDDE1451C2809DE0071C4FD /* RequestUserModel.m */,
 				BB0D6FFC1C23C30300E6AE82 /* ContactModel.h */,
@@ -556,7 +569,6 @@
 			isa = PBXGroup;
 			children = (
 				BB89B0B61C27C75C00065975 /* LICENSE.md */,
-				BB89B0B71C27C75C00065975 /* README.md */,
 				BB89B0B81C27C75C00065975 /* SIAlertView.bundle */,
 				BB89B0B91C27C75C00065975 /* SIAlertView.h */,
 				BB89B0BA1C27C75C00065975 /* SIAlertView.m */,
@@ -594,6 +606,12 @@
 				BBD5A6A41C3366E600B9CA6E /* SettingViewController.m */,
 				BBD5A6AC1C336C8500B9CA6E /* GroupListViewController.h */,
 				BBD5A6AD1C336C8500B9CA6E /* GroupListViewController.m */,
+				BBD3B7321C3A545C00036910 /* GroupEditViewController.h */,
+				BBD3B7331C3A545C00036910 /* GroupEditViewController.m */,
+				BBD3B72F1C3A3C8600036910 /* GroupDetailViewController.h */,
+				BBD3B7301C3A3C8600036910 /* GroupDetailViewController.m */,
+				BBDA2FD31C3B8222002E5972 /* ChildListViewController.h */,
+				BBDA2FD41C3B8222002E5972 /* ChildListViewController.m */,
 				BBD5A6A91C336C7500B9CA6E /* TeacherListViewController.h */,
 				BBD5A6AA1C336C7500B9CA6E /* TeacherListViewController.m */,
 				BBCA87481C2B96FE006C46C7 /* RequestUserListViewController.h */,
@@ -799,6 +817,7 @@
 			files = (
 				BBCA874C1C2B96FE006C46C7 /* RequestUserListViewController.m in Sources */,
 				BB0D70371C23C30300E6AE82 /* User.m in Sources */,
+				BBD3B7341C3A545C00036910 /* GroupEditViewController.m in Sources */,
 				BB0D6FED1C23BF1B00E6AE82 /* RegistSchoolViewController.m in Sources */,
 				BB0D703C1C23C30E00E6AE82 /* StoryboardUtil.m in Sources */,
 				BBCA87501C2B9709006C46C7 /* SignInViewController.m in Sources */,
@@ -823,6 +842,7 @@
 				BB0D702C1C23C30300E6AE82 /* Contact.m in Sources */,
 				BBFE4B661C3228F900342EBA /* QBCheckmarkView.m in Sources */,
 				BBB9192E1C325E7800CA18CC /* PFACL+Role.m in Sources */,
+				BBDA2FD51C3B8222002E5972 /* ChildListViewController.m in Sources */,
 				BBDDE1431C2803190071C4FD /* RequestUser.m in Sources */,
 				BB0D702B1C23C30300E6AE82 /* SchoolModel.m in Sources */,
 				BBFE4B641C3228F900342EBA /* QBAssetCell.m in Sources */,
@@ -844,6 +864,7 @@
 				BBCA87391C2B80E6006C46C7 /* AllowWaitViewController.m in Sources */,
 				BB0D6FF01C23BF1B00E6AE82 /* SignUpViewController.m in Sources */,
 				BB0D70351C23C30300E6AE82 /* Schedule.m in Sources */,
+				BBDA2FD81C3B870A002E5972 /* ChildModel.m in Sources */,
 				BB0D70321C23C30300E6AE82 /* Role.m in Sources */,
 				BBB919361C3276D700CA18CC /* DCCommentView.m in Sources */,
 				BB0D6FEE1C23BF1B00E6AE82 /* SchoolListViewController.m in Sources */,
@@ -852,6 +873,7 @@
 				BBFE4B621C3228F900342EBA /* QBAlbumCell.m in Sources */,
 				BB0D70261C23C30300E6AE82 /* CMTParseManager.m in Sources */,
 				BB89B0C01C27C75C00065975 /* SIAlertView.m in Sources */,
+				BBD3B7311C3A3C8600036910 /* GroupDetailViewController.m in Sources */,
 				BBFE4B631C3228F900342EBA /* QBAlbumsViewController.m in Sources */,
 				BB0D702E1C23C30300E6AE82 /* ContactPhoto.m in Sources */,
 			);

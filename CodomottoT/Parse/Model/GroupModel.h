@@ -7,7 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Model.h"
+#import "Group.h"
 
-@interface GroupModel : NSObject
+@interface GroupModel : Model
 
 @end

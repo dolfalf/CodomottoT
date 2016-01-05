@@ -7,6 +7,7 @@
 //
 
 #import "SettingViewController.h"
+#import "CMTParseManager.h"
 
 @interface SettingViewController ()
 
@@ -49,10 +50,23 @@
     //title
     self.title = @"設定";
     
-    //menu
-    self.menuItems = @[@{@"title":@"クラス設定",@"segue":@"GroupListSegue"},
-                       @{@"title":@"先生設定",@"segue":@"TeacherListSegue"},
-                       @{@"title":@"リクエストユーザー承認",@"segue":@"RequestUserListSegue"}];
+    CMTParseManager *mgr = [CMTParseManager sharedInstance];
+    
+    if (mgr.userType == UserTypeHeadTeacher) {
+        //head teacher menu
+        
+        self.menuItems = @[@{@"title":@"クラス設定",@"segue":@"GroupListSegue"},
+                           @{@"title":@"先生設定",@"segue":@"TeacherListSegue"},
+                           @{@"title":@"リクエストユーザー承認",@"segue":@"RequestUserListSegue"}];
+        
+    }else if(mgr.userType == UserTypeTeacher) {
+        //teacher menu
+        self.menuItems = nil;
+        
+    }else if(mgr.userType == UserTypeParents) {
+        //parents menu
+        self.menuItems = @[@{@"title":@"お子様編集",@"segue":@"ChildEditListSegue"}];
+    }
     
     //navi button
     UIBarButtonItem *close_button = [[UIBarButtonItem alloc] initWithTitle:@"閉じる"

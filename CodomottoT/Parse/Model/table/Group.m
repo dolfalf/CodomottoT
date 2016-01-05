@@ -9,6 +9,7 @@
 #import "Group.h"
 #import "School.h"
 #import "User.h"
+#import "CMTParseManager.h"
 
 @implementation Group
 
@@ -33,7 +34,7 @@
     Group *model = [[self alloc] init];
     
     model.deleteFlag = NO;
-    model.ACL = [PFACL ACLWithUser:[PFUser currentUser]];
+    model.ACL = [[CMTParseManager sharedInstance] schoolDefaultACL];
     
     return model;
 }

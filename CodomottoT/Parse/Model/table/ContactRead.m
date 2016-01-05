@@ -32,7 +32,7 @@
     ContactRead *model = [[self alloc] init];
     
     model.deleteFlag = NO;
-    model.ACL = [[CMTParseManager sharedInstance] postContactACL];
+    model.ACL = [[CMTParseManager sharedInstance] schoolDefaultACL];
     
     return model;
 }

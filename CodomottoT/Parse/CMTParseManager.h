@@ -100,7 +100,6 @@ extern NSString * const kCMTRoleNameMember;
 #pragma mark - ACL Category
 @interface CMTParseManager (ACL)
 
-- (PFACL *)schoolACL;
-- (PFACL *)postContactACL;
-- (PFACL *)commentContactACL;
+- (PFACL *)registSchoolACL;
+- (PFACL *)schoolDefaultACL;
 @end

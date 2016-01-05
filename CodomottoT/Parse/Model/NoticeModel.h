@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NoticeModel.h"
+#import "Model.h"
 
-@interface NoticeModel : NSObject
+@interface NoticeModel : Model
 
 @end

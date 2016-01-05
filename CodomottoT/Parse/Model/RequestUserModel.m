@@ -31,15 +31,21 @@
         
         PFQuery *query = [PFQuery queryWithClassName:[self parseObjectName]];
         [query whereKey:@"registSchool" equalTo:current_school];
+        [query whereKey:@"approvedFlag" equalTo:@(NO)];
         
-        [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (block) {
-                    block(objects, error);
-                }
-            });
-        }];
+        NSError *error = nil;
+        NSArray *objects = [query findObjects:&error];
+        
+        //参照しているデータがObjectIdしかなかったため、この処理を入れた。
+        for (RequestUser *ruser in objects) {
+            ruser.requestUser = [ruser.requestUser fetchIfNeeded];
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (block) {
+                block(objects, error);
+            }
+        });
     });
 }
 

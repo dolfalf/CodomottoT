@@ -591,7 +591,7 @@ static CMTParseManager *_sharedInstance;
 #pragma mark - ACL Category
 @implementation CMTParseManager (ACL)
 
-- (PFACL *)schoolACL {
+- (PFACL *)registSchoolACL {
     
     PFACL *school_acl = [PFACL publicReadOnlyACL];
     [school_acl addWriteRole:[self roleInfo:kCMTRoleNameHeadTeacher]];
@@ -600,22 +600,13 @@ static CMTParseManager *_sharedInstance;
     return school_acl;
 }
 
-- (PFACL *)postContactACL {
-
-    PFACL *contact_acl = [PFACL userACL];
-    [contact_acl addWriteRole:[self roleInfo:kCMTRoleNameHeadTeacher]];
-    [contact_acl addReadOnlyRole:[self roleInfo:kCMTRoleNameMember]];
+- (PFACL *)schoolDefaultACL {
     
-    return contact_acl;
-}
-
-- (PFACL *)commentContactACL {
+    PFACL *default_acl = [PFACL userACL];
+    [default_acl addWriteRole:[self roleInfo:kCMTRoleNameHeadTeacher]];
+    [default_acl addReadOnlyRole:[self roleInfo:kCMTRoleNameMember]];
     
-    PFACL *contact_acl = [PFACL userACL];
-    [contact_acl addWriteRole:[self roleInfo:kCMTRoleNameHeadTeacher]];
-    [contact_acl addReadOnlyRole:[self roleInfo:kCMTRoleNameMember]];
-    
-    return contact_acl;
+    return default_acl;
 }
 
 @end

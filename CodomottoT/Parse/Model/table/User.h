@@ -34,8 +34,9 @@ typedef NS_ENUM(NSInteger, UserType) {
 @property (nonatomic, strong) NSData *cmtPicImage;
 @property (nonatomic, strong) NSDate *cmtStartDate;
 @property (nonatomic, strong) NSDate *cmtEndDate;
+@property (nonatomic, strong) PFRelation *cmtChilds;
 @property (nonatomic, assign) BOOL cmtDeleteFlag;
-@property (nonatomic, strong) NSNumber *cmtCheckApproval;
+
 @property (nonatomic, strong) PFACL *ACL;
 
 @end

@@ -21,8 +21,8 @@
 @dynamic cmtPicImage;
 @dynamic cmtStartDate;
 @dynamic cmtEndDate;
+@dynamic cmtChilds;
 @dynamic cmtDeleteFlag;
-@dynamic cmtCheckApproval;
 @dynamic ACL;
 
 + (void)load {

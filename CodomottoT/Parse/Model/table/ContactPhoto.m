@@ -26,7 +26,7 @@
     
     ContactPhoto *model = [[self alloc] init];
     
-    model.ACL = [[CMTParseManager sharedInstance] postContactACL];
+    model.ACL = [[CMTParseManager sharedInstance] schoolDefaultACL];
     
     return model;
 }

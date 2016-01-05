@@ -10,6 +10,7 @@
 
 @class School;
 @class Group;
+@class User;
 
 /*!
  * 園児情報クラス
@@ -19,7 +20,7 @@
 
 @property (nonatomic, strong) School *cmtSchool;
 @property (nonatomic, strong) Group *cmtGroup;
-@property (nonatomic, strong) PFRelation *parentsUser;
+@property (nonatomic, strong) User *parentsUser;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, assign) BOOL deleteFlag;
 @property (nonatomic, strong) PFACL *ACL;

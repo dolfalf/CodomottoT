@@ -125,7 +125,7 @@
         contact_comment.postContact = contact;
         
         //role info.
-        contact_comment.ACL = [[CMTParseManager sharedInstance] commentContactACL];
+        contact_comment.ACL = [[CMTParseManager sharedInstance] schoolDefaultACL];
         
         BOOL comment_saved = [contact_comment save];
         

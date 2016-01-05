@@ -50,7 +50,7 @@
         }
         
         //set acl
-        school.ACL = [mgr schoolACL];
+        school.ACL = [mgr registSchoolACL];
         
         //save school
         [school save];
