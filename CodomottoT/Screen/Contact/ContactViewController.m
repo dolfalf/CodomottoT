@@ -59,7 +59,9 @@
     [self initControls];
     
     ZipSearch *zip_search = [ZipSearch new];
-    [zip_search requestAddress:@"1150053"];
+    [zip_search requestAddress:@"1150053" block:^(ZipSearchResult *result) {
+        NSLog(@"%@", result);
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

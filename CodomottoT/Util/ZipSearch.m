@@ -10,9 +10,48 @@
 
 static NSString* const kRequestZipCodeSearchURL = @"http://zipcloud.ibsnet.co.jp/api/search?zipcode=";
 
+@implementation ZipSearchResult
+
+- (id)initWithDictionary:(NSDictionary *)dict {
+
+    self = [super init];
+    
+    if (self) {
+        
+        _address1 = dict[@"address1"];
+        _address2 = dict[@"address2"];
+        _address3 = dict[@"address3"];
+        _kana1 = dict[@"kana1"];
+        _kana2 = dict[@"kana2"];
+        _kana3 = dict[@"kana3"];
+        _prefcode = dict[@"prefcode"];
+        _zipcode = dict[@"zipcode"];
+    }
+    
+    return self;
+}
+
+- (NSString *)description {
+
+    NSMutableString *descString = [NSMutableString new];
+    
+    [descString appendFormat:@"\naddress1 = %@", _address1];
+    [descString appendFormat:@"\naddress2 = %@", _address2];
+    [descString appendFormat:@"\naddress3 = %@", _address3];
+    [descString appendFormat:@"\nkana1 = %@", _kana1];
+    [descString appendFormat:@"\nkana2 = %@", _kana2];
+    [descString appendFormat:@"\nkana3 = %@", _kana3];
+    [descString appendFormat:@"\nprefcode = %ld", (long)[_prefcode integerValue]];
+    [descString appendFormat:@"\nzipcode = %ld", (long)[_zipcode integerValue]];
+    
+    return (NSString *)descString;
+}
+
+@end
+
 @implementation ZipSearch
 
-- (void)requestAddress:(NSString *)zipcode {
+- (void)requestAddress:(NSString *)zipcode block:(void(^)(ZipSearchResult*))block {
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@",kRequestZipCodeSearchURL,zipcode];
 
@@ -25,6 +64,18 @@ static NSString* const kRequestZipCodeSearchURL = @"http://zipcloud.ibsnet.co.jp
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
         NSLog(@"%@",dict);
         
+        if (block==nil) {
+            return;
+        }
+        
+        if (dict == nil
+            || [dict[@"status"] intValue] != 200) {
+            block(nil);
+        }
+        
+        ZipSearchResult *zip_result = [[ZipSearchResult alloc] initWithDictionary:dict[@"results"][0]];
+        block(zip_result);
+
 //        {
 //            message = "<null>";
 //            results =     (
