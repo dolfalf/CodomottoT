@@ -7,25 +7,117 @@
 //
 
 #import "CMTViewController.h"
+#import "const.h"
 
 const float kCellDefaultHeight = 60.f;
+
 #pragma mark - CMTTableCell
+@interface CMTTableCell()
+
+@property (nonatomic,weak) IBOutlet NSLayoutConstraint *descLabelHeightConstraint;
+@property (nonatomic,weak) IBOutlet NSLayoutConstraint *contentLabelBottomConstraint;
+@end
+
 @implementation CMTTableCell
+
+- (void)awakeFromNib {
+    //initControls
+    _contentLabel.font = [UIFont CMTRegularFontSizeM];
+    _contentLabel.textColor = [UIColor blackColor];
+    _descLabel.font = [UIFont CMTRegularFontSizeSS];
+    _descLabel.textColor = [UIColor lightGrayColor];
+    
+    //default style1
+    _descLabelHeightConstraint = 0;
+    _contentLabelBottomConstraint.constant = 4.f;
+    
+    [self layoutIfNeeded];
+}
+
+- (void)setCellStyle:(CMTTableCellStyle)style {
+    
+    switch (style) {
+        case CMTTableCellStyle1:
+            _descLabelHeightConstraint.constant = 0;
+            _contentLabelBottomConstraint.constant = 0.f;
+            break;
+        case CMTTableCellStyle2:
+            _descLabelHeightConstraint.constant = 13.f;
+            _contentLabelBottomConstraint.constant = _descLabelHeightConstraint.constant + 4.f;
+            break;
+    }
+    
+    [self layoutIfNeeded];
+    
+    _cellStyle = style;
+}
 
 @end
 
 #pragma mark CMTInputTextCell
 @implementation CMTInputTextCell
 
+- (void)awakeFromNib {
+    //initControls
+    _titleLabel.font = [UIFont CMTRegularFontSizeM];
+    _inputTextField.font = [UIFont CMTRegularFontSizeS];
+    
+    _titleLabel.textColor = [UIColor blackColor];
+}
+
 @end
 
 #pragma mark CMTButtonCell
+@interface CMTButtonCell()
+@property (nonatomic, assign) id tar;
+@property (nonatomic, assign) SEL sel;
+
+@property (nonatomic, weak) IBOutlet UIButton *OKButton;
+@end
+
 @implementation CMTButtonCell
+
+@dynamic buttonTitle;
+
+- (void)awakeFromNib {
+    //initControls
+    _OKButton.titleLabel.font = [UIFont CMTRegularFontSizeM];
+    _OKButton.backgroundColor = [UIColor CMTButtonGrayColor];
+    [_OKButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    _OKButton.layer.cornerRadius = 5;
+    _OKButton.clipsToBounds = YES;
+}
+
+- (NSString *)buttonTitle {
+    return _OKButton.titleLabel.text;
+}
+
+- (void)setButtonTitle:(NSString *)buttonTitle {
+    
+    [_OKButton setTitle:buttonTitle forState:UIControlStateNormal];
+}
+
+- (void)addTarget:(id)target OKButtonTouched:(SEL)action {
+    self.tar = target;
+    self.sel = action;
+}
+
+- (IBAction)OKButtonTouched:(UIButton *)sender {
+    
+    if (_tar != nil && [_tar respondsToSelector:_sel]) {
+        [_tar performSelectorOnMainThread:_sel withObject:self waitUntilDone:NO];
+    }
+}
 
 @end
 
 #pragma mark CMTSegmentCell
 @implementation CMTSegmentCell
+
+- (void)awakeFromNib {
+    //initControls
+    _segmentControl.tintColor = [UIColor grayColor];
+}
 
 @end
 

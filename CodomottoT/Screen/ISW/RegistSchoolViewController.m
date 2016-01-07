@@ -123,6 +123,12 @@ const float kRegistSchoolCellHeight = 50.f;
 
 
 #pragma mark - Action
+- (void)OKButtonTouched:(id)sender {
+    NSLog(@"%s", __FUNCTION__);
+    
+    //regist school.
+    [self registSchool];
+}
 
 #pragma mark - TableView delegate metodhs
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -144,7 +150,6 @@ const float kRegistSchoolCellHeight = 50.f;
                 _nameCell.inputTextField.delegate = self;
                 _nameCell.inputTextField.placeholder = @"Input name";
                 _nameCell.titleLabel.text = @"Name";
-                _nameCell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
             
             return _nameCell;
@@ -157,7 +162,6 @@ const float kRegistSchoolCellHeight = 50.f;
                 _descriptionCell.inputTextField.delegate = self;
                 _descriptionCell.inputTextField.placeholder = @"Input description";
                 _descriptionCell.titleLabel.text = @"Decription";
-                _descriptionCell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
             
             return _descriptionCell;
@@ -168,8 +172,8 @@ const float kRegistSchoolCellHeight = 50.f;
         {
             if (_okButtonCell == nil) {
                 self.okButtonCell = [tableView dequeueReusableCellWithIdentifier:@"CMTButtonCell" forIndexPath:indexPath];
-                _okButtonCell.buttonLabel.text = @"OK";
-                _okButtonCell.selectionStyle = UITableViewCellSelectionStyleDefault;
+                _okButtonCell.buttonTitle = @"OK";
+                [_okButtonCell addTarget:self OKButtonTouched:@selector(OKButtonTouched:)];
             }
             
             return _okButtonCell;
@@ -183,10 +187,6 @@ const float kRegistSchoolCellHeight = 50.f;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.row == RegistSchoolCellTypeOKButton) {
-        //signIn
-        [self registSchool];
-    }
 }
 
 @end

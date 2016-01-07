@@ -22,7 +22,7 @@ extern NSString * const kCMTRoleNameMember;
 
 @property (nonatomic, assign, readonly) BOOL isLogin;
 @property (nonatomic, assign, readonly) UserType userType;
-@property (nonatomic, strong, readonly) User *currentUser;
+@property (nonatomic, strong, readonly) User *currentCmtUser;
 @property (nonatomic, strong, readonly) School *currentSchool;
 
 + (CMTParseManager *)sharedInstance;

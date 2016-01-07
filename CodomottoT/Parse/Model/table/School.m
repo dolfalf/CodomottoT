@@ -13,7 +13,12 @@
 @dynamic name;
 @dynamic address1;
 @dynamic address2;
-@dynamic zipCode;
+@dynamic address3;
+@dynamic kana1;
+@dynamic kana2;
+@dynamic kana3;
+@dynamic prefcode;
+@dynamic zipcode;
 @dynamic location;
 @dynamic description;
 @dynamic deleteFlag;
@@ -36,16 +41,5 @@
     
     return model;
 }
-
-- (id)init {
-    
-    self = [super init];
-    
-    if (self) {
-        //ここでは初期化をしない。クエリー時エラーの原因となる。
-    }
-    return self;
-}
-
 
 @end

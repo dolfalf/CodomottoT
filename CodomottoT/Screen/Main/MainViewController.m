@@ -138,12 +138,14 @@
 - (void)initControls {
     NSLog(@"%s", __FUNCTION__);
     
-    
+    //REMARK: debug code.
     CGRect frame = [UIScreen mainScreen].bounds;
-    UILabel *status_label = [[UILabel alloc] initWithFrame:CGRectMake(0, 22.f, frame.size.width, 13.f)];
+    UILabel *status_label = [[UILabel alloc] initWithFrame:
+                             CGRectMake(0, frame.size.height-13.f, frame.size.width, 13.f)];
     status_label.tag = 998;
     status_label.backgroundColor = [UIColor lightGrayColor];
     status_label.font = [UIFont systemFontOfSize:9.f];
+    status_label.textColor = [UIColor whiteColor];
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     [appDelegate.window addSubview:status_label];
     
@@ -156,7 +158,7 @@
     CMTParseManager *mgr = [CMTParseManager sharedInstance];
     
     //REMARK: 画面遷移処理
-    if (mgr.currentUser == nil) {
+    if (mgr.currentCmtUser == nil) {
         //ログインしてない場合はログイン画面へ
         [StoryboardUtil openSignInViewController:self animated:NO completion:nil];
     }else {
@@ -199,8 +201,7 @@
     //ステータス表示
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     UILabel *status_label = [appDelegate.window viewWithTag:998];
-    
-    status_label.text = [mgr currentStatusDescription];
+    status_label.text = [NSString stringWithFormat:@"  %@", [mgr currentStatusDescription]];
 }
 
 @end

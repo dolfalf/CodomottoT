@@ -69,6 +69,7 @@ const float kSignupCellHeight = 50.f;
 }
 
 - (void)signup {
+    
     NSLog(@"%s, userId[%@], password[%@], userType[%ld]" , __FUNCTION__,
           _userIdCell.inputTextField.text,
           _passwordCell.inputTextField.text,
@@ -106,8 +107,19 @@ const float kSignupCellHeight = 50.f;
     NSLog(@"%s", __FUNCTION__);
 }
 
+- (void)OKButtonTouched:(id)sender {
+    NSLog(@"%s", __FUNCTION__);
+    //signIn
+    [self signup];
+}
+
 #pragma mark - TableView delegate metodhs
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    if (indexPath.row == SignupCellTypeUserType) {
+        return 70.f;
+    }
+    
     return kSignupCellHeight;
 }
 
@@ -123,9 +135,11 @@ const float kSignupCellHeight = 50.f;
         {
             if (_userTypeCell == nil) {
                 self.userTypeCell = [tableView dequeueReusableCellWithIdentifier:@"CMTSegmentCell" forIndexPath:indexPath];
-                [_userTypeCell.segmentControl setTitle:@"Parents" forSegmentAtIndex:UserTypeParents];
-                [_userTypeCell.segmentControl setTitle:@"Head Teacher" forSegmentAtIndex:UserTypeHeadTeacher];
-                [_userTypeCell.segmentControl setTitle:@"Teacher" forSegmentAtIndex:UserTypeTeacher];
+                
+                _userTypeCell.descLabel.text = @"登録するユーザータイプを選択します。";
+                [_userTypeCell.segmentControl setTitle:@"保護者" forSegmentAtIndex:UserTypeParents];
+                [_userTypeCell.segmentControl setTitle:@"園長" forSegmentAtIndex:UserTypeHeadTeacher];
+                [_userTypeCell.segmentControl setTitle:@"先生" forSegmentAtIndex:UserTypeTeacher];
                 _userTypeCell.segmentControl.selectedSegmentIndex = UserTypeParents;
                 
                 [_userTypeCell.segmentControl addTarget:self
@@ -141,9 +155,8 @@ const float kSignupCellHeight = 50.f;
             if (_userIdCell == nil) {
                 self.userIdCell = [tableView dequeueReusableCellWithIdentifier:@"CMTInputTextCell" forIndexPath:indexPath];
                 _userIdCell.inputTextField.delegate = self;
-                _userIdCell.inputTextField.placeholder = @"Input UserId";
-                _userIdCell.titleLabel.text = @"UserId";
-                _userIdCell.selectionStyle = UITableViewCellSelectionStyleNone;
+                _userIdCell.inputTextField.placeholder = @"メールアドレスを入力";
+                _userIdCell.titleLabel.text = @"ユーザーID";
             }
             
             return _userIdCell;
@@ -155,10 +168,9 @@ const float kSignupCellHeight = 50.f;
             if (_passwordCell == nil) {
                 self.passwordCell = [tableView dequeueReusableCellWithIdentifier:@"CMTInputTextCell" forIndexPath:indexPath];
                 _passwordCell.inputTextField.delegate = self;
-                _passwordCell.inputTextField.placeholder = @"Input Password";
+                _passwordCell.inputTextField.placeholder = @"";
                 _passwordCell.inputTextField.secureTextEntry = YES;
-                _passwordCell.titleLabel.text = @"Password";
-                _passwordCell.selectionStyle = UITableViewCellSelectionStyleNone;
+                _passwordCell.titleLabel.text = @"パスワード";
             }
             
             return _passwordCell;
@@ -168,8 +180,8 @@ const float kSignupCellHeight = 50.f;
         {
             if (_okButtonCell == nil) {
                 self.okButtonCell = [tableView dequeueReusableCellWithIdentifier:@"CMTButtonCell" forIndexPath:indexPath];
-                _okButtonCell.buttonLabel.text = @"OK";
-                _okButtonCell.selectionStyle = UITableViewCellSelectionStyleDefault;
+                _okButtonCell.buttonTitle = @"登録";
+                [_okButtonCell addTarget:self OKButtonTouched:@selector(OKButtonTouched:)];
             }
             
             return _okButtonCell;
@@ -183,10 +195,6 @@ const float kSignupCellHeight = 50.f;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    if (indexPath.row == SignupCellTypeOKButton) {
-        //signIn
-        [self signup];
-    }
 }
 
 

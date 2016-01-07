@@ -10,9 +10,17 @@
 #import <Parse/Parse.h>
 #import "StoryboardUtil.h"
 
+typedef NS_ENUM(NSInteger, CMTTableCellStyle ) {
+    CMTTableCellStyle1, //title
+    CMTTableCellStyle2, //title, desc
+};
+
 @interface CMTTableCell : UITableViewCell
 
 @property (nonatomic, weak) IBOutlet UILabel *contentLabel;
+@property (nonatomic, weak) IBOutlet UILabel *descLabel;
+
+@property (nonatomic, assign) CMTTableCellStyle cellStyle;  //default style1
 @end
 
 @interface CMTInputTextCell : UITableViewCell
@@ -23,11 +31,13 @@
 
 @interface CMTButtonCell : UITableViewCell
 
-@property (nonatomic, weak) IBOutlet UILabel *buttonLabel;
+@property (nonatomic, strong) NSString *buttonTitle;
+
+- (void)addTarget:(id)target OKButtonTouched:(SEL)action;
 @end
 
 @interface CMTSegmentCell : UITableViewCell
-
+@property (nonatomic, weak) IBOutlet UILabel *descLabel;
 @property (nonatomic, weak) IBOutlet UISegmentedControl *segmentControl;
 @end
 

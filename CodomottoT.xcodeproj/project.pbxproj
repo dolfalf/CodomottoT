@@ -57,6 +57,7 @@
 		BB0D703F1C23C3A000E6AE82 /* NSError+Parse.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0D703E1C23C3A000E6AE82 /* NSError+Parse.m */; };
 		BB5271551C313B90005F3C2D /* UITextView+Placeholder.m in Sources */ = {isa = PBXBuildFile; fileRef = BB5271541C313B90005F3C2D /* UITextView+Placeholder.m */; };
 		BB5271591C313C2B005F3C2D /* ContactEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB5271581C313C2B005F3C2D /* ContactEditViewController.m */; };
+		BB7E28DE1C3E2F5400348451 /* CALayer+UIColor.m in Sources */ = {isa = PBXBuildFile; fileRef = BB7E28DD1C3E2F5400348451 /* CALayer+UIColor.m */; };
 		BB89B0BF1C27C75C00065975 /* SIAlertView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BB89B0B81C27C75C00065975 /* SIAlertView.bundle */; };
 		BB89B0C01C27C75C00065975 /* SIAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB89B0BA1C27C75C00065975 /* SIAlertView.m */; };
 		BB89B0C11C27C75C00065975 /* UIWindow+SIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BB89B0BC1C27C75C00065975 /* UIWindow+SIUtils.m */; };
@@ -205,6 +206,8 @@
 		BB5271561C313BAB005F3C2D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		BB5271571C313C2B005F3C2D /* ContactEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactEditViewController.h; sourceTree = "<group>"; };
 		BB5271581C313C2B005F3C2D /* ContactEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactEditViewController.m; sourceTree = "<group>"; };
+		BB7E28DC1C3E2F5400348451 /* CALayer+UIColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+UIColor.h"; sourceTree = "<group>"; };
+		BB7E28DD1C3E2F5400348451 /* CALayer+UIColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+UIColor.m"; sourceTree = "<group>"; };
 		BB89B0B61C27C75C00065975 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 		BB89B0B81C27C75C00065975 /* SIAlertView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SIAlertView.bundle; sourceTree = "<group>"; };
 		BB89B0B91C27C75C00065975 /* SIAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SIAlertView.h; sourceTree = "<group>"; };
@@ -544,6 +547,8 @@
 				BBFE4B741C32459800342EBA /* UIImage+Resize.m */,
 				BBDA2FD91C3BC287002E5972 /* ZipSearch.h */,
 				BBDA2FDA1C3BC287002E5972 /* ZipSearch.m */,
+				BB7E28DC1C3E2F5400348451 /* CALayer+UIColor.h */,
+				BB7E28DD1C3E2F5400348451 /* CALayer+UIColor.m */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -840,6 +845,7 @@
 				BBD5A6AB1C336C7500B9CA6E /* TeacherListViewController.m in Sources */,
 				BB0D6FE01C23BF1100E6AE82 /* CMTViewController.m in Sources */,
 				BB0D70281C23C30300E6AE82 /* GroupModel.m in Sources */,
+				BB7E28DE1C3E2F5400348451 /* CALayer+UIColor.m in Sources */,
 				BB0D70391C23C30300E6AE82 /* UIFont+Helper.m in Sources */,
 				BBB919311C326D4000CA18CC /* Child.m in Sources */,
 				BB89B0C11C27C75C00065975 /* UIWindow+SIUtils.m in Sources */,

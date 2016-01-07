@@ -13,7 +13,12 @@
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *address1;
 @property (nonatomic, strong) NSString *address2;
-@property (nonatomic, strong) NSString *zipCode;
+@property (nonatomic, strong) NSString *address3;
+@property (nonatomic, strong) NSString *kana1;
+@property (nonatomic, strong) NSString *kana2;
+@property (nonatomic, strong) NSString *kana3;
+@property (nonatomic, strong) NSString *prefcode;
+@property (nonatomic, strong) NSString *zipcode;
 @property (nonatomic, strong) PFGeoPoint *location;
 @property (nonatomic, strong) NSString *description;
 @property (nonatomic, assign) BOOL deleteFlag;

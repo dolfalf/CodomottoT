@@ -11,6 +11,8 @@
 #import "SchoolModel.h"
 #import "RequestUserModel.h"
 
+const float kSchoolListCellHeight = 60.f;
+
 @interface SchoolListViewController ()
 
 @property (nonatomic, assign) BOOL hasSchoolData;
@@ -66,7 +68,7 @@
 - (void)initControls {
     
     //title
-    self.title = @"園リスト";
+    self.title = @"園選択";
     
     //navibar.
     [self.navigationItem setHidesBackButton:YES animated:NO];
@@ -97,6 +99,12 @@
 #pragma mark - Action
 
 #pragma mark - TableView delegate metodhs
+#pragma mark - TableView delegate metodhs
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return kSchoolListCellHeight;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     return _schools.count;
@@ -106,10 +114,14 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     CMTTableCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CMTTableCell" forIndexPath:indexPath];
+    cell.cellStyle = CMTTableCellStyle1;//CMTTableCellStyle2;
     
     School *school = _schools[indexPath.row];
     
     cell.contentLabel.text = [NSString stringWithFormat:@"%@", school.name];
+    cell.descLabel.text = @"";
+    //TODO:
+    cell.descLabel.text = @"東京都千代田区";
     return cell;
 }
 
@@ -127,7 +139,7 @@
     //Request Userへ登録しておく
     RequestUserModel *model = [RequestUserModel new];
     RequestUser *req_user = [RequestUser createModel];
-    req_user.requestUser = mgr.currentUser;
+    req_user.requestUser = mgr.currentCmtUser;
     req_user.registSchool = school;
     
     [model save:req_user block:^(NSError *error) {

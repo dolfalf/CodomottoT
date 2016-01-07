@@ -24,7 +24,7 @@ NSString * const kCMTRoleNameMember         = @"Member";
 
 @dynamic isLogin;
 @dynamic userType;
-@dynamic currentUser;
+@dynamic currentCmtUser;
 
 static CMTParseManager *_sharedInstance;
 
@@ -74,7 +74,7 @@ static CMTParseManager *_sharedInstance;
 - (NSString *)currentStatusDescription {
     
     return [NSString stringWithFormat:@"userType[%ld] user[%@] school[%@]",
-            (long)self.userType, self.currentUser.username, self.currentSchool.name];
+            (long)self.userType, self.currentCmtUser.username, self.currentSchool.name];
 }
 
 #pragma mark getter
@@ -92,8 +92,14 @@ static CMTParseManager *_sharedInstance;
     return (UserType)[[User currentUser].cmtUserType integerValue];
 }
 
-- (User *)currentUser {
-    return [User currentUser];
+- (User *)currentCmtUser {
+    
+    User *cmt_user = (User *)[User currentUser];
+    
+    NSError *error = nil;
+    cmt_user = [cmt_user fetchIfNeeded:&error];
+    
+    return cmt_user;
 }
 
 @end
@@ -103,8 +109,14 @@ static CMTParseManager *_sharedInstance;
 
 - (void)loadCurrentSchool {
     
+    User *cmt_user = [self currentCmtUser];
+    if(cmt_user.cmtWorkSchool == nil) {
+        //まだ未登録
+        return;
+    }
+    
     PFQuery *school_query = [PFQuery queryWithClassName:[School parseClassName]];
-    [school_query whereKey:@"objectId" equalTo:[User currentUser].cmtWorkSchool.objectId];
+    [school_query whereKey:@"objectId" equalTo:cmt_user.cmtWorkSchool.objectId];
     
     NSError *school_error = nil;
     NSArray *schools = [school_query findObjects:&school_error];
@@ -340,7 +352,7 @@ static CMTParseManager *_sharedInstance;
         NSArray *school_users = [[s_role.users query] findObjects];
         
         for (User *s_user in school_users) {
-            if ([s_user isEqual:self.currentUser]) {
+            if ([s_user isEqual:self.currentCmtUser]) {
                 //Allowed
                 return YES;
             }

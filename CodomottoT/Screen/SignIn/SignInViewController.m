@@ -16,9 +16,11 @@ NSString* const kSignInViewControllerNotificationSignInFail     = @"signInViewCo
 
 @interface SignInViewController () <UITextFieldDelegate>
 
-@property (nonatomic, weak) IBOutlet UILabel *statusLabel;
+@property (nonatomic, weak) IBOutlet UILabel *loginTitleLabel;
+@property (nonatomic, weak) IBOutlet UILabel *passwordTitleLabel;
 @property (nonatomic, weak) IBOutlet UITextField *inputLoginId;
 @property (nonatomic, weak) IBOutlet UITextField *inputPassword;
+@property (nonatomic, weak) IBOutlet UIButton *loginButton;
 
 
 @end
@@ -42,7 +44,6 @@ NSString* const kSignInViewControllerNotificationSignInFail     = @"signInViewCo
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    [self updateStatusLabel];
 }
 
 /*
@@ -58,6 +59,26 @@ NSString* const kSignInViewControllerNotificationSignInFail     = @"signInViewCo
 #pragma mark - private method
 - (void)initControls {
     
+    //control initailze.
+    _loginTitleLabel.font
+    = _passwordTitleLabel.font
+    = _loginButton.titleLabel.font
+    = [UIFont CMTRegularFontSizeM];
+    
+    _inputLoginId.font
+    = _inputPassword.font
+    = [UIFont CMTRegularFontSizeS];
+    
+    //content label
+    _loginTitleLabel.text = @"ユーザーID";
+    _passwordTitleLabel.text = @"パスワード";
+    _inputLoginId.placeholder = @"メールアドレスを入力";
+    _inputPassword.placeholder = @"";
+    
+    [_loginButton setTitle:@"サインイン" forState:UIControlStateNormal];
+    [_loginButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    _loginButton.backgroundColor = [UIColor CMTButtonGrayColor];
+    
     //title
     self.title = @"サインイン";
     
@@ -70,20 +91,6 @@ NSString* const kSignInViewControllerNotificationSignInFail     = @"signInViewCo
 }
 
 #pragma mark - private methods
-
-- (void)updateStatusLabel {
-    
-    CMTParseManager *manager = [CMTParseManager sharedInstance];
-    NSLog(@"%s, loginUser[%@]", __FUNCTION__, manager.currentUser);
-    
-    if (manager.isLogin) {
-        _statusLabel.text = [NSString stringWithFormat:@"login User[%@]", manager.currentUser.username];
-    }else {
-        _statusLabel.text = @"Not logined.";
-    }
-    
-}
-
 - (void)showAlertMessage:(NSString *)message {
     
     SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"" andMessage:message];
@@ -129,7 +136,7 @@ NSString* const kSignInViewControllerNotificationSignInFail     = @"signInViewCo
     
     CMTParseManager *manager = [CMTParseManager sharedInstance];
     //login状態をチェック
-    if (manager.currentUser != nil) {
+    if (manager.currentCmtUser != nil) {
         //logoutしてから利用可能
         return;
         
