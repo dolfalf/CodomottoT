@@ -8,6 +8,7 @@
 
 #import "SignUpViewController.h"
 #import "CMTParseManager.h"
+#import "UIViewController+Alert.h"
 
 NSString* const kSignUpViewControllerNotificationSignUpSuccess = @"signUpViewControllerNotificationSignUpSuccess";
 NSString* const kSignUpViewControllerNotificationSignUpFail = @"signUpViewControllerNotificationSignUpFail";
@@ -91,6 +92,8 @@ const float kSignupCellHeight = 50.f;
                                           }else {
                                               [[NSNotificationCenter defaultCenter] postNotificationName:kSignUpViewControllerNotificationSignUpFail
                                                                                                   object:nil];
+                                              
+                                              [self showConfirmAlertView:@"アカウント生成に失敗しました。" block:nil];
                                           }
                                        }];
     

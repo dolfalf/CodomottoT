@@ -8,7 +8,7 @@
 
 #import "SignInViewController.h"
 #import "CMTParseManager.h"
-#import "SIAlertView.h"
+#import "UIViewController+Alert.h"
 #import "StoryboardUtil.h"
 
 NSString* const kSignInViewControllerNotificationSignInSuccess  = @"signInViewControllerNotificationSignInSuccess";
@@ -91,44 +91,6 @@ NSString* const kSignInViewControllerNotificationSignInFail     = @"signInViewCo
 }
 
 #pragma mark - private methods
-- (void)showAlertMessage:(NSString *)message {
-    
-    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"" andMessage:message];
-    
-    [alertView addButtonWithTitle:@"OK"
-                             type:SIAlertViewButtonTypeDefault
-                          handler:^(SIAlertView *alert) {
-                              NSLog(@"Button1 Clicked");
-                          }];
-/*
-    [alertView addButtonWithTitle:@"Button2"
-                             type:SIAlertViewButtonTypeDestructive
-                          handler:^(SIAlertView *alert) {
-                              NSLog(@"Button2 Clicked");
-                          }];
-    [alertView addButtonWithTitle:@"Button3"
-                             type:SIAlertViewButtonTypeCancel
-                          handler:^(SIAlertView *alert) {
-                              NSLog(@"Button3 Clicked");
-                          }];
-*/
-    alertView.willShowHandler = ^(SIAlertView *alertView) {
-        NSLog(@"%@, willShowHandler", alertView);
-    };
-    alertView.didShowHandler = ^(SIAlertView *alertView) {
-        NSLog(@"%@, didShowHandler", alertView);
-    };
-    alertView.willDismissHandler = ^(SIAlertView *alertView) {
-        NSLog(@"%@, willDismissHandler", alertView);
-    };
-    alertView.didDismissHandler = ^(SIAlertView *alertView) {
-        NSLog(@"%@, didDismissHandler", alertView);
-    };
-    
-    alertView.transitionStyle = SIAlertViewTransitionStyleFade;
-    
-    [alertView show];
-}
 
 #pragma mark - Action
 - (void)signUpButtonTouched:(id)sender {
@@ -164,7 +126,8 @@ NSString* const kSignInViewControllerNotificationSignInFail     = @"signInViewCo
             
         }else {
             NSLog(@"login failed.");
-            [self showAlertMessage:@"login failed."];
+            [self showConfirmAlertView:@"ログインを失敗しました。" block:nil];
+            
             [[NSNotificationCenter defaultCenter] postNotificationName:kSignInViewControllerNotificationSignInFail object:nil];
         }
     }];

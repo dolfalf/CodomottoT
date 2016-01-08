@@ -9,6 +9,7 @@
 #import "CMTParseManager.h"
 #import "Role.h"
 #import "User.h"
+#import "RequestUser.h"
 
 NSString * const kCMTRoleNameHeadTeacher    = @"HeadTeacher";
 NSString * const kCMTRoleNameTeacher        = @"Teacher";
@@ -130,17 +131,81 @@ static CMTParseManager *_sharedInstance;
     _currentSchool = [schools lastObject];
 }
 
-- (void)registUserSchool:(School *)school {
+- (void)registUserSchool:(School *)school error:(NSError **)error {
+    
+    NSError *err = nil;
+    self.currentCmtUser.cmtWorkSchool = school;
+    [self.currentCmtUser save:&err];
+    
+    if (err == nil) {
+        _currentSchool = school;
+    }
+    
+    *error = err;
+}
+
+- (void)registRequestUser:(School *)school block:(errorBlock)block {
     NSLog(@"%s", __FUNCTION__);
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSError *err = nil;
-        [User currentUser].cmtWorkSchool = school;
-        [[User currentUser] save:&err];
         
-        _currentSchool = school;
+        //User更新
+        NSError *error = nil;
+        [self registUserSchool:school error:&error];
+        
+        if (error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (block) {
+                    block(error);
+                }
+            });
+            
+            return;
+        }
+        
+        //Request登録
+        RequestUser *req_user = [RequestUser createModel];
+        req_user.requestUser = self.currentCmtUser;
+        req_user.registSchool = school;
+        
+        
+        //権限設定
+        PFQuery *role_query = [PFRole query];
+        [role_query whereKey:@"cmtSchool" equalTo:_currentSchool];
+        
+        NSArray *school_roles = [role_query findObjects];
+        
+        if (school_roles == nil || school_roles.count == 0) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (block) {
+                    block([NSError errorWithCodomottoErrorCode:CMTErrorCodeNoData localizedDescription:@"No exist school role."]);
+                }
+            });
+            
+            return;
+        }
+        
+        for (PFRole *s_role in school_roles) {
+            if ([s_role.name hasPrefix:kCMTRoleNameHeadTeacher]) {
+                PFACL *work_acl = [PFACL ACL];
+                [work_acl setReadAccess:YES forRole:s_role];
+                [work_acl setWriteAccess:YES forRole:s_role];
+                
+                req_user.ACL = work_acl;
+                break;
+            }
+        }
+        
+        //保存
+        [req_user save:&error];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (block) {
+                block(error);
+            }
+        });
+        
     });
-    
 }
 
 - (void)fetchUsers:(UserType)userType block:(void(^)(NSArray* users, NSError* error))block {
@@ -224,9 +289,12 @@ static CMTParseManager *_sharedInstance;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [User logOut];
         
-        if (block) {
-            block();
-        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (block) {
+                block();
+            }
+        });
+        
     });
 }
 

@@ -51,7 +51,7 @@ static NSString* const kRequestZipCodeSearchURL = @"http://zipcloud.ibsnet.co.jp
 
 @implementation ZipSearch
 
-- (void)requestAddress:(NSString *)zipcode block:(void(^)(ZipSearchResult*))block {
+- (void)requestAddress:(NSString *)zipcode block:(void(^)(NSArray*))block {
     
     NSString *urlString = [NSString stringWithFormat:@"%@%@",kRequestZipCodeSearchURL,zipcode];
 
@@ -70,11 +70,20 @@ static NSString* const kRequestZipCodeSearchURL = @"http://zipcloud.ibsnet.co.jp
         
         if (dict == nil
             || [dict[@"status"] intValue] != 200) {
-            block(nil);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                block(nil);
+            });
         }
         
-        ZipSearchResult *zip_result = [[ZipSearchResult alloc] initWithDictionary:dict[@"results"][0]];
-        block(zip_result);
+        NSMutableArray *address_results = [NSMutableArray new];
+        for (NSDictionary *address_dict in dict[@"results"]) {
+            ZipSearchResult *address = [[ZipSearchResult alloc] initWithDictionary:address_dict];
+            [address_results addObject:address];
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            block(address_results);
+        });
 
 //        {
 //            message = "<null>";

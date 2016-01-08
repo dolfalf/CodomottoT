@@ -136,21 +136,16 @@ const float kSchoolListCellHeight = 60.f;
         return;
     }
     
-    //Request Userへ登録しておく
-    RequestUserModel *model = [RequestUserModel new];
-    RequestUser *req_user = [RequestUser createModel];
-    req_user.requestUser = mgr.currentCmtUser;
-    req_user.registSchool = school;
     
-    [model save:req_user block:^(NSError *error) {
+    //User園選択情報保存、Request Userへ登録
+    [mgr registRequestUser:school block:^(NSError *error) {
         
-        //園選択情報保存
-        [mgr registUserSchool:school];
-        
-        //許可待ち画面へ遷移
-        [StoryboardUtil pushAllowWaitViewController:self animated:YES completion:nil];
-        
+        if (error == nil) {
+            //許可待ち画面へ遷移
+            [StoryboardUtil pushAllowWaitViewController:self animated:YES completion:nil];
+        }
     }];
+    
 }
 
 @end

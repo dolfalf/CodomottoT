@@ -24,5 +24,5 @@
 
 @interface ZipSearch : NSObject
 
-- (void)requestAddress:(NSString *)zipcode block:(void(^)(ZipSearchResult*))block;
+- (void)requestAddress:(NSString *)zipcode block:(void(^)(NSArray*))block;
 @end

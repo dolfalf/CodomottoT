@@ -15,15 +15,16 @@
                         <viewControllerLayoutGuide type="bottom" id="QpB-Sf-gPR"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="hks-zE-mfG">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="300"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="236"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="574-Cd-nFH">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="300"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="236"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="CMTInputTextCell" rowHeight="50" id="6cX-f9-Mu9" customClass="CMTInputTextCell">
-                                        <rect key="frame" x="0.0" y="92" width="320" height="50"/>
+                                        <rect key="frame" x="0.0" y="28" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6cX-f9-Mu9" id="10K-9w-0nq">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
@@ -68,7 +69,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CMTButtonCell" rowHeight="50" id="lZF-Lf-7xC" customClass="CMTButtonCell">
-                                        <rect key="frame" x="0.0" y="142" width="320" height="50"/>
+                                        <rect key="frame" x="0.0" y="78" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lZF-Lf-7xC" id="M1X-zg-31M">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
@@ -94,6 +95,46 @@
                                             <outlet property="OKButton" destination="AOW-Ho-0jZ" id="Fzh-Lr-SSx"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CMTZipCodeCell" rowHeight="90" id="Ce4-BH-KME" customClass="CMTZipCodeCell">
+                                        <rect key="frame" x="0.0" y="128" width="320" height="90"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ce4-BH-KME" id="MGH-GG-e6s">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="89"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jUl-FX-hqz">
+                                                    <rect key="frame" x="166" y="8" width="146" height="30"/>
+                                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <state key="normal" title="Button"/>
+                                                </button>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="数字のみ入力(’-’なし)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KMn-KX-qHD">
+                                                    <rect key="frame" x="8" y="7" width="150" height="30"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <textInputTraits key="textInputTraits" spellCheckingType="no" keyboardType="numberPad"/>
+                                                </textField>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fvc-b4-EmJ">
+                                                    <rect key="frame" x="8" y="45" width="304" height="17"/>
+                                                    <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MvZ-ej-qQa">
+                                                    <rect key="frame" x="8" y="64" width="304" height="17"/>
+                                                    <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="addressLabel" destination="fvc-b4-EmJ" id="3ne-xt-muz"/>
+                                            <outlet property="inputZipcode" destination="KMn-KX-qHD" id="m83-y2-mND"/>
+                                            <outlet property="kanaLabel" destination="MvZ-ej-qQa" id="im3-H3-rOS"/>
+                                            <outlet property="zipSearchButton" destination="jUl-FX-hqz" id="Bye-fE-BR9"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="HGj-b9-hyB" id="uPX-gF-P68"/>
@@ -103,12 +144,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="574-Cd-nFH" secondAttribute="trailing" id="2ol-Y6-16A"/>
-                            <constraint firstItem="574-Cd-nFH" firstAttribute="top" secondItem="bTt-ws-AP8" secondAttribute="bottom" constant="-64" id="Zfi-D4-STf"/>
-                            <constraint firstItem="QpB-Sf-gPR" firstAttribute="top" secondItem="574-Cd-nFH" secondAttribute="bottom" id="kjv-sa-Vx4"/>
-                            <constraint firstItem="574-Cd-nFH" firstAttribute="leading" secondItem="hks-zE-mfG" secondAttribute="leading" id="zGk-Hd-M6j"/>
+                            <constraint firstAttribute="trailing" secondItem="574-Cd-nFH" secondAttribute="trailing" id="Hed-3H-LYt"/>
+                            <constraint firstItem="QpB-Sf-gPR" firstAttribute="top" secondItem="574-Cd-nFH" secondAttribute="bottom" id="JMD-kE-fU8"/>
+                            <constraint firstItem="574-Cd-nFH" firstAttribute="top" secondItem="bTt-ws-AP8" secondAttribute="bottom" id="LOX-vj-i70"/>
+                            <constraint firstItem="574-Cd-nFH" firstAttribute="leading" secondItem="hks-zE-mfG" secondAttribute="leading" id="f8J-dz-vf1"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="a5Q-s6-SZv"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="300"/>
@@ -250,7 +292,7 @@
                                 </constraints>
                                 <state key="normal" title="MainScreen"/>
                                 <connections>
-                                    <action selector="gotoMainButtonTouched:" destination="hEC-0p-2Lp" eventType="touchUpInside" id="njk-Ql-Xbb"/>
+                                    <action selector="gotoMainButtonTouched:" destination="hEC-0p-2Lp" eventType="touchUpInside" id="i4N-CE-9lg"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -270,7 +312,8 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="300"/>
                     <connections>
-                        <outlet property="gotoButton" destination="9jr-nS-00a" id="HoE-vS-2ve"/>
+                        <outlet property="descriptionLabel" destination="gEi-5v-AAc" id="cWS-oU-stc"/>
+                        <outlet property="gotoButton" destination="9jr-nS-00a" id="aSc-8G-cHF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2jd-Dn-NQB" userLabel="First Responder" sceneMemberID="firstResponder"/>

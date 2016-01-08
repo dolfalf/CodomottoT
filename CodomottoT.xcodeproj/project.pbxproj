@@ -57,6 +57,13 @@
 		BB0D703F1C23C3A000E6AE82 /* NSError+Parse.m in Sources */ = {isa = PBXBuildFile; fileRef = BB0D703E1C23C3A000E6AE82 /* NSError+Parse.m */; };
 		BB5271551C313B90005F3C2D /* UITextView+Placeholder.m in Sources */ = {isa = PBXBuildFile; fileRef = BB5271541C313B90005F3C2D /* UITextView+Placeholder.m */; };
 		BB5271591C313C2B005F3C2D /* ContactEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB5271581C313C2B005F3C2D /* ContactEditViewController.m */; };
+		BB54831B1C3F4F0E009A27A1 /* UIViewController+Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = BB54831A1C3F4F0E009A27A1 /* UIViewController+Alert.m */; };
+		BB5483261C3F7499009A27A1 /* checkMark.png in Resources */ = {isa = PBXBuildFile; fileRef = BB54831E1C3F7499009A27A1 /* checkMark.png */; };
+		BB5483271C3F7499009A27A1 /* checkMark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BB54831F1C3F7499009A27A1 /* checkMark@2x.png */; };
+		BB5483281C3F7499009A27A1 /* closeButton.png in Resources */ = {isa = PBXBuildFile; fileRef = BB5483201C3F7499009A27A1 /* closeButton.png */; };
+		BB5483291C3F7499009A27A1 /* closeButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BB5483211C3F7499009A27A1 /* closeButton@2x.png */; };
+		BB54832A1C3F7499009A27A1 /* LPPopupListView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB5483231C3F7499009A27A1 /* LPPopupListView.m */; };
+		BB54832B1C3F7499009A27A1 /* LPPopupListViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BB5483251C3F7499009A27A1 /* LPPopupListViewCell.m */; };
 		BB7E28DE1C3E2F5400348451 /* CALayer+UIColor.m in Sources */ = {isa = PBXBuildFile; fileRef = BB7E28DD1C3E2F5400348451 /* CALayer+UIColor.m */; };
 		BB89B0BF1C27C75C00065975 /* SIAlertView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BB89B0B81C27C75C00065975 /* SIAlertView.bundle */; };
 		BB89B0C01C27C75C00065975 /* SIAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB89B0BA1C27C75C00065975 /* SIAlertView.m */; };
@@ -206,6 +213,17 @@
 		BB5271561C313BAB005F3C2D /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		BB5271571C313C2B005F3C2D /* ContactEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactEditViewController.h; sourceTree = "<group>"; };
 		BB5271581C313C2B005F3C2D /* ContactEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactEditViewController.m; sourceTree = "<group>"; };
+		BB5483191C3F4F0E009A27A1 /* UIViewController+Alert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Alert.h"; sourceTree = "<group>"; };
+		BB54831A1C3F4F0E009A27A1 /* UIViewController+Alert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Alert.m"; sourceTree = "<group>"; };
+		BB54831E1C3F7499009A27A1 /* checkMark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkMark.png; sourceTree = "<group>"; };
+		BB54831F1C3F7499009A27A1 /* checkMark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "checkMark@2x.png"; sourceTree = "<group>"; };
+		BB5483201C3F7499009A27A1 /* closeButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = closeButton.png; sourceTree = "<group>"; };
+		BB5483211C3F7499009A27A1 /* closeButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "closeButton@2x.png"; sourceTree = "<group>"; };
+		BB5483221C3F7499009A27A1 /* LPPopupListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LPPopupListView.h; sourceTree = "<group>"; };
+		BB5483231C3F7499009A27A1 /* LPPopupListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LPPopupListView.m; sourceTree = "<group>"; };
+		BB5483241C3F7499009A27A1 /* LPPopupListViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LPPopupListViewCell.h; sourceTree = "<group>"; };
+		BB5483251C3F7499009A27A1 /* LPPopupListViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LPPopupListViewCell.m; sourceTree = "<group>"; };
+		BB54832C1C3F74AB009A27A1 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		BB7E28DC1C3E2F5400348451 /* CALayer+UIColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+UIColor.h"; sourceTree = "<group>"; };
 		BB7E28DD1C3E2F5400348451 /* CALayer+UIColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+UIColor.m"; sourceTree = "<group>"; };
 		BB89B0B61C27C75C00065975 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
@@ -549,6 +567,8 @@
 				BBDA2FDA1C3BC287002E5972 /* ZipSearch.m */,
 				BB7E28DC1C3E2F5400348451 /* CALayer+UIColor.h */,
 				BB7E28DD1C3E2F5400348451 /* CALayer+UIColor.m */,
+				BB5483191C3F4F0E009A27A1 /* UIViewController+Alert.h */,
+				BB54831A1C3F4F0E009A27A1 /* UIViewController+Alert.m */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -563,9 +583,34 @@
 			path = "UITextView+Placeholder";
 			sourceTree = "<group>";
 		};
+		BB54831C1C3F7499009A27A1 /* LPPopupListView */ = {
+			isa = PBXGroup;
+			children = (
+				BB54831D1C3F7499009A27A1 /* Images */,
+				BB5483221C3F7499009A27A1 /* LPPopupListView.h */,
+				BB5483231C3F7499009A27A1 /* LPPopupListView.m */,
+				BB5483241C3F7499009A27A1 /* LPPopupListViewCell.h */,
+				BB5483251C3F7499009A27A1 /* LPPopupListViewCell.m */,
+				BB54832C1C3F74AB009A27A1 /* LICENSE */,
+			);
+			path = LPPopupListView;
+			sourceTree = "<group>";
+		};
+		BB54831D1C3F7499009A27A1 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				BB54831E1C3F7499009A27A1 /* checkMark.png */,
+				BB54831F1C3F7499009A27A1 /* checkMark@2x.png */,
+				BB5483201C3F7499009A27A1 /* closeButton.png */,
+				BB5483211C3F7499009A27A1 /* closeButton@2x.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
 		BB89B0B41C27C75C00065975 /* Lib */ = {
 			isa = PBXGroup;
 			children = (
+				BB54831C1C3F7499009A27A1 /* LPPopupListView */,
 				BBB919321C3276D700CA18CC /* DCCommentView */,
 				BBFE4B6C1C322A0000342EBA /* RFKeyboardToolbar */,
 				BBFE4B431C3228F900342EBA /* QBImagePicker */,
@@ -796,9 +841,13 @@
 				BBCA873F1C2B94EF006C46C7 /* Setting.storyboard in Resources */,
 				BBCA87471C2B9679006C46C7 /* Main.storyboard in Resources */,
 				BB0D6FF61C23BF3400E6AE82 /* Contact.storyboard in Resources */,
+				BB5483271C3F7499009A27A1 /* checkMark@2x.png in Resources */,
 				BBFE4B601C3228F900342EBA /* QBImagePicker.strings in Resources */,
+				BB5483281C3F7499009A27A1 /* closeButton.png in Resources */,
 				BB0D6F801C23A12500E6AE82 /* LaunchScreen.storyboard in Resources */,
 				BBCA873C1C2B941C006C46C7 /* SignIn.storyboard in Resources */,
+				BB5483291C3F7499009A27A1 /* closeButton@2x.png in Resources */,
+				BB5483261C3F7499009A27A1 /* checkMark.png in Resources */,
 				BBFE4B611C3228F900342EBA /* Info.plist in Resources */,
 				BB0D6F7D1C23A12500E6AE82 /* Assets.xcassets in Resources */,
 			);
@@ -826,6 +875,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BBCA874C1C2B96FE006C46C7 /* RequestUserListViewController.m in Sources */,
+				BB54832B1C3F7499009A27A1 /* LPPopupListViewCell.m in Sources */,
 				BB0D70371C23C30300E6AE82 /* User.m in Sources */,
 				BBD3B7341C3A545C00036910 /* GroupEditViewController.m in Sources */,
 				BB0D6FED1C23BF1B00E6AE82 /* RegistSchoolViewController.m in Sources */,
@@ -836,6 +886,7 @@
 				BB0D70381C23C30300E6AE82 /* UIColor+Helper.m in Sources */,
 				BB0D6F751C23A12500E6AE82 /* AppDelegate.m in Sources */,
 				BBD5A6A51C3366E600B9CA6E /* SettingViewController.m in Sources */,
+				BB54832A1C3F7499009A27A1 /* LPPopupListView.m in Sources */,
 				BB0D70301C23C30300E6AE82 /* Group.m in Sources */,
 				BB0D6F721C23A12500E6AE82 /* main.m in Sources */,
 				BBFE4B681C3228F900342EBA /* QBImagePickerController.m in Sources */,
@@ -876,6 +927,7 @@
 				BBCA87391C2B80E6006C46C7 /* AllowWaitViewController.m in Sources */,
 				BB0D6FF01C23BF1B00E6AE82 /* SignUpViewController.m in Sources */,
 				BB0D70351C23C30300E6AE82 /* Schedule.m in Sources */,
+				BB54831B1C3F4F0E009A27A1 /* UIViewController+Alert.m in Sources */,
 				BBDA2FD81C3B870A002E5972 /* ChildModel.m in Sources */,
 				BB0D70321C23C30300E6AE82 /* Role.m in Sources */,
 				BBB919361C3276D700CA18CC /* DCCommentView.m in Sources */,

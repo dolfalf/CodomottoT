@@ -14,8 +14,6 @@
 
 #import "ContactEditViewController.h"
 
-#import "ZipSearch.h"
-
 @implementation ContactMainCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -57,11 +55,6 @@
     // Do any additional setup after loading the view.
     
     [self initControls];
-    
-    ZipSearch *zip_search = [ZipSearch new];
-    [zip_search requestAddress:@"1150053" block:^(ZipSearchResult *result) {
-        NSLog(@"%@", result);
-    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

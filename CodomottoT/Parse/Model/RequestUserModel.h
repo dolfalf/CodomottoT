@@ -12,6 +12,5 @@
 @interface RequestUserModel : Model
 
 - (void)fetchByCurrentSchool:(void(^)(NSArray *requestUsers, NSError* err))block;
-- (void)save:(RequestUser *)object block:(errorBlock)block;
 - (void)approvedInBackground:(RequestUser *)object;
 @end

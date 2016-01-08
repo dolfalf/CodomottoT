@@ -7,6 +7,13 @@
 //
 
 #import "CMTViewController.h"
+@interface CMTZipCodeCell : UITableViewCell
+
+@property (nonatomic, weak) IBOutlet UITextField *inputZipcode;
+@property (nonatomic, weak) IBOutlet UIButton *zipSearchButton;
+@property (nonatomic, weak) IBOutlet UILabel *addressLabel;
+@property (nonatomic, weak) IBOutlet UILabel *kanaLabel;
+@end
 
 @interface RegistSchoolViewController : CMTViewController
 

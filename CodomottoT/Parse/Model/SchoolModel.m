@@ -55,9 +55,19 @@
         //save school
         [school save];
         
-        //ユーザーに登録
-        [mgr registUserSchool:school];
+        //ユーザーに園を登録
+        NSError *user_error = nil;
+        [mgr registUserSchool:school error:&user_error];
         
+        if (user_error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (block) {
+                    block(user_error);
+                }
+            });
+        }
+        
+        //成功
         dispatch_async(dispatch_get_main_queue(), ^{
             if (block) {
                 block(nil);

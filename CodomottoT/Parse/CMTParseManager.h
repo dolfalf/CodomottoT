@@ -38,11 +38,15 @@ extern NSString * const kCMTRoleNameMember;
  */
 - (void)loadCurrentSchool;
 
+/*!
+ @abstract 現在ユーザーに園を登録
+ */
+- (void)registUserSchool:(School *)school error:(NSError **)error;
 
 /*!
- @abstract 層属している園を登録
+ @abstract リクエストユーザーを登録
  */
-- (void)registUserSchool:(School *)school;
+- (void)registRequestUser:(School *)school block:(errorBlock)block;
 
 - (void)fetchUsers:(UserType)userType block:(void(^)(NSArray* users, NSError* error))block;
 

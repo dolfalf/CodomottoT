@@ -9,10 +9,11 @@
 #import "AllowWaitViewController.h"
 #import "StoryboardUtil.h"
 #import "CMTParseManager.h"
-#import "SIAlertView.h"
+#import "UIViewController+Alert.h"
 
 @interface AllowWaitViewController ()
 
+@property (nonatomic, weak) IBOutlet UILabel *descriptionLabel;
 @property (nonatomic, weak) IBOutlet UIButton *gotoButton;
 @property (nonatomic) NSTimer *timer;
 @end
@@ -24,8 +25,6 @@
     // Do any additional setup after loading the view.
     
     [self initControls];
-    
-    
     
 }
 
@@ -64,19 +63,28 @@
 - (void)initControls {
     
     self.title = @"承認待ち";
-    
     [self.navigationItem setHidesBackButton:YES animated:NO];
-    
     _gotoButton.enabled = NO;
+    _gotoButton.layer.cornerRadius = 5;
+    _gotoButton.clipsToBounds = YES;
+    
+    //initialize controls
+    _descriptionLabel.font
+    = _gotoButton.titleLabel.font
+    = [UIFont CMTRegularFontSizeM];
+    
+    //content label
+    _descriptionLabel.text = @"園長が承認すると利用できるようになります。";
+    [_gotoButton setTitle:@"参加する" forState:UIControlStateNormal];
+    [_gotoButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    _gotoButton.backgroundColor = [UIColor CMTButtonGrayColor];
     
     //toolbar.
-    UIBarButtonItem *logout_button = [[UIBarButtonItem alloc] initWithTitle:@"Logout"
+    UIBarButtonItem *logout_button = [[UIBarButtonItem alloc] initWithTitle:@"ログアウト"
                                                                       style:UIBarButtonItemStyleDone target:self
                                                                      action:@selector(logoutButtonTouched:)];
     
     self.toolbarItems = @[logout_button];
-    
-    
     
 }
 
@@ -87,19 +95,6 @@
     });
 }
 
-- (void)showAlertMessage:(NSString *)message {
-    
-    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"" andMessage:message];
-    
-    [alertView addButtonWithTitle:@"OK"
-                             type:SIAlertViewButtonTypeDefault
-                          handler:^(SIAlertView *alert) {
-                              NSLog(@"Button1 Clicked");
-                              
-                              [self.navigationController popToRootViewControllerAnimated:YES];
-                          }];
-    
-}
 #pragma mark - Action
 - (void)logoutButtonTouched:(id)sender {
 
@@ -109,11 +104,13 @@
     CMTParseManager *mgr = [CMTParseManager sharedInstance];
     
     [mgr signOut:^{
-        if (mgr.isLogin == NO) {
-            [self showAlertMessage:@"Logout success"];
-        }else {
-            [self showAlertMessage:@"Logout failed"];
-        }
+        
+        NSString *message = mgr.isLogin?@"ログアウトを失敗しました。":@"ログアウトしました。";
+        [self showConfirmAlertView:message
+                             block:^{
+                                 [self.navigationController popToRootViewControllerAnimated:YES];
+        }];
+        
     }];
     
     
