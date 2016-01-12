@@ -78,9 +78,12 @@ static BOOL isShown = false;
         //Content View
         contentView = [[UIView alloc] initWithFrame:contentFrame];
         
+        contentView.backgroundColor = [UIColor whiteColor];
+        self.cellHighlightColor = [UIColor lightGrayColor];
+#if 0
         contentView.backgroundColor = [UIColor colorWithRed:(0.0/255.0) green:(108.0/255.0) blue:(192.0/255.0) alpha:0.7];
-        
         self.cellHighlightColor = [UIColor colorWithRed:(0.0/255.0) green:(60.0/255.0) blue:(127.0/255.0) alpha:0.5f];
+#endif
         
         self.navigationBarTitle = title;
         self.arrayList = [NSArray arrayWithArray:list];
@@ -88,30 +91,39 @@ static BOOL isShown = false;
         self.isMultipleSelection = multipleSelection;
 
         self.navigationBarView = [[UIView alloc] init];
+#if 0
         self.navigationBarView.backgroundColor = [UIColor colorWithRed:(0.0/255.0) green:(108.0/255.0) blue:(192.0/255.0) alpha:0.7];
+#endif
         [contentView addSubview:self.navigationBarView];
 
         self.separatorLineView = [[UIView alloc] init];
+#if 0
         self.separatorLineView.backgroundColor = [UIColor whiteColor];
+#endif
         [contentView addSubview:self.separatorLineView];
         
         self.titleLabel = [[UILabel alloc] init];
         self.titleLabel.backgroundColor = [UIColor clearColor];
         self.titleLabel.text = self.navigationBarTitle;
         self.titleLabel.font = [UIFont boldSystemFontOfSize:18.0f];
-        self.titleLabel.textColor = [UIColor whiteColor];
+        self.titleLabel.textColor = [UIColor blackColor];
         [self.navigationBarView addSubview:self.titleLabel];
         
+#if 0
+        //閉じるボタン
         self.closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [self.closeButton setImage:[UIImage imageNamed:@"closeButton"] forState:UIControlStateNormal];
         [self.closeButton addTarget:self action:@selector(closeButtonClicked:) forControlEvents: UIControlEventTouchUpInside];
         [self.navigationBarView addSubview:self.closeButton];
+#endif
         
         self.tableView = [[UITableView alloc] init];
         self.tableView.dataSource = self;
         self.tableView.delegate = self;
+#if 0
         self.tableView.separatorColor = [UIColor colorWithWhite:1.0f alpha:0.2f];
         self.tableView.backgroundColor = [UIColor clearColor];
+#endif
         [contentView addSubview:self.tableView];
         
         [self addSubview:contentView];
@@ -122,7 +134,8 @@ static BOOL isShown = false;
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    
+
+    //影効果
     UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:contentView.bounds];
     contentView.layer.masksToBounds = NO;
     contentView.layer.shadowColor = [UIColor blackColor].CGColor;

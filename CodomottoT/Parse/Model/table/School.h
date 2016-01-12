@@ -17,8 +17,8 @@
 @property (nonatomic, strong) NSString *kana1;
 @property (nonatomic, strong) NSString *kana2;
 @property (nonatomic, strong) NSString *kana3;
-@property (nonatomic, strong) NSString *prefcode;
-@property (nonatomic, strong) NSString *zipcode;
+@property (nonatomic, strong) NSNumber *prefcode;
+@property (nonatomic, strong) NSNumber *zipcode;
 @property (nonatomic, strong) PFGeoPoint *location;
 @property (nonatomic, strong) NSString *description;
 @property (nonatomic, assign) BOOL deleteFlag;

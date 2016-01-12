@@ -12,8 +12,9 @@
 #import "UIViewController+Alert.h"
 #import "LPPopupListView.h"
 #import "ZipSearch.h"
+#import "UIViewController+HUD.h"
 
-const float kRegistSchoolCellZipcodeHeight = 90.f;
+const float kRegistSchoolCellZipcodeHeight = 120.f;
 
 @interface CMTZipCodeCell()
 
@@ -26,16 +27,22 @@ const float kRegistSchoolCellZipcodeHeight = 90.f;
     _inputZipcode.font
     = _addressLabel.font
     = _kanaLabel.font
+    = _inputExtraAddress.font
     = [UIFont CMTRegularFontSizeS];
+    
+    _addressLabel.text
+    = _kanaLabel.text
+    = @"";
     
     _zipSearchButton.titleLabel.font = [UIFont CMTRegularFontSizeM];
     
     _inputZipcode.placeholder = @"数字のみ入力（'-'なし）";
     [_zipSearchButton setTitle:@"住所検索" forState:UIControlStateNormal];
-    
+    [_zipSearchButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     _zipSearchButton.layer.cornerRadius = 5;
     _zipSearchButton.clipsToBounds = YES;
     
+    _inputExtraAddress.placeholder = @"その他住所、建物名など";
 }
 
 @end
@@ -59,6 +66,7 @@ const float kRegistSchoolCellHeight = 50.f;
 @property (nonatomic, strong) CMTButtonCell *okButtonCell;
 
 @property (nonatomic, strong) NSArray *zipcodeResults;
+@property (nonatomic, assign) NSInteger selectedZipcodeResultIndex;
 @end
 
 @implementation RegistSchoolViewController
@@ -104,16 +112,37 @@ const float kRegistSchoolCellHeight = 50.f;
         return;
     }
     
-    //TODO: いろいろ設定する項目はあるが、とりあえず最小限の情報のみセット
+    if (_zipcodeResults[_selectedZipcodeResultIndex] == nil) {
+        return;
+    }
+    
     SchoolModel *school_model = [SchoolModel new];
     School *school = [School createModel];
     
     school.name = _nameCell.inputTextField.text;
+    
+    ZipSearchResult *zip_search_address = _zipcodeResults[_selectedZipcodeResultIndex];
+    
+    school.zipcode = zip_search_address.zipcode;
+    school.address1 = zip_search_address.address1;
+    school.address2 = zip_search_address.address2;
+    school.address3 = zip_search_address.address3;
+    school.kana1 = zip_search_address.kana1;
+    school.kana2 = zip_search_address.kana2;
+    school.kana3 = zip_search_address.kana3;
+    school.prefcode = zip_search_address.prefcode;
+    
     school.description = _descriptionCell.inputTextField.text;
+    
+    //HUD
+    [self showIndicator];
     
     [school_model registSchool:school block:^(NSError *error) {
         
         dispatch_async(dispatch_get_main_queue(), ^{
+            
+            //HUD
+            [self hideIndicator];
             
             NSString *message = (error==nil)?@"園を登録しました。":error.description;
             
@@ -143,12 +172,29 @@ const float kRegistSchoolCellHeight = 50.f;
     
     
     //ZipCode取得
+    if ([_zipcodeCell.inputZipcode.text isEqualToString:@""]
+        || _zipcodeCell.inputZipcode.text.length != 7) {
+        //入力チェック
+        return;
+    }
+    
     __weak typeof(self) weafSelf = self;
     ZipSearch *zip_search = [ZipSearch new];
-    [zip_search requestAddress:@"1150053" block:^(NSArray *results) {
+    [zip_search requestAddress:_zipcodeCell.inputZipcode.text block:^(NSArray *results) {
 //        NSLog(@"%@", results);
         
         weafSelf.zipcodeResults = results;
+        
+        if (results == nil || results.count == 0) {
+            //No data.
+            return;
+        }
+        
+//        if (results.count == 1) {
+//            //１つの場合はPopupはいらない
+//            return;
+//        }
+        
         NSMutableArray *address_name = [NSMutableArray new];
         
         for (ZipSearchResult *z_result in _zipcodeResults) {
@@ -164,7 +210,7 @@ const float kRegistSchoolCellHeight = 50.f;
                                                            selectedIndexes:nil
                                                                      point:point
                                                                       size:size
-                                                         multipleSelection:YES
+                                                         multipleSelection:NO
                                               disableBackgroundInteraction:YES];
         
         listView.multipleTouchEnabled = NO;
@@ -259,22 +305,16 @@ const float kRegistSchoolCellHeight = 50.f;
 - (void)popupListView:(LPPopupListView *)popUpListView didSelectIndex:(NSInteger)index
 {
     NSLog(@"popUpListView - didSelectIndex: %d", index);
+    
+    self.selectedZipcodeResultIndex = index;
+    ZipSearchResult *zip_search_address = _zipcodeResults[_selectedZipcodeResultIndex];
+    _zipcodeCell.addressLabel.text = [zip_search_address addressString];
+    _zipcodeCell.kanaLabel.text = [zip_search_address kanaString];
 }
 
 - (void)popupListViewDidHide:(LPPopupListView *)popUpListView selectedIndexes:(NSIndexSet *)selectedIndexes
 {
     NSLog(@"popupListViewDidHide - selectedIndexes: %@", selectedIndexes.description);
-    
-    
-    NSMutableIndexSet *aaa = [[NSMutableIndexSet alloc] initWithIndexSet:selectedIndexes];
-    
-//    self.textView.text = @"";
-    
-    [selectedIndexes enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-//        self.textView.text = [self.textView.text stringByAppendingFormat:@"%@\n", [[self list] objectAtIndex:idx]];
-        
-    }];
-    
 }
     
 @end

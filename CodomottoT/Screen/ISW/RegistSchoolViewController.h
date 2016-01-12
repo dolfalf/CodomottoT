@@ -13,6 +13,7 @@
 @property (nonatomic, weak) IBOutlet UIButton *zipSearchButton;
 @property (nonatomic, weak) IBOutlet UILabel *addressLabel;
 @property (nonatomic, weak) IBOutlet UILabel *kanaLabel;
+@property (nonatomic, weak) IBOutlet UITextField *inputExtraAddress;
 @end
 
 @interface RegistSchoolViewController : CMTViewController

@@ -20,6 +20,9 @@
 @property (nonatomic,strong) NSNumber *zipcode;
 
 - (id)initWithDictionary:(NSDictionary *)dict;
+
+- (NSString *)addressString;
+- (NSString *)kanaString;
 @end
 
 @interface ZipSearch : NSObject

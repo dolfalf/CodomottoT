@@ -68,6 +68,7 @@
 		BB89B0BF1C27C75C00065975 /* SIAlertView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BB89B0B81C27C75C00065975 /* SIAlertView.bundle */; };
 		BB89B0C01C27C75C00065975 /* SIAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = BB89B0BA1C27C75C00065975 /* SIAlertView.m */; };
 		BB89B0C11C27C75C00065975 /* UIWindow+SIUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BB89B0BC1C27C75C00065975 /* UIWindow+SIUtils.m */; };
+		BB9E609A1C44DA7F00832426 /* UIViewController+HUD.m in Sources */ = {isa = PBXBuildFile; fileRef = BB9E60991C44DA7F00832426 /* UIViewController+HUD.m */; };
 		BBB9192E1C325E7800CA18CC /* PFACL+Role.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB9192D1C325E7800CA18CC /* PFACL+Role.m */; };
 		BBB919311C326D4000CA18CC /* Child.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB919301C326D4000CA18CC /* Child.m */; };
 		BBB919361C3276D700CA18CC /* DCCommentView.m in Sources */ = {isa = PBXBuildFile; fileRef = BBB919341C3276D700CA18CC /* DCCommentView.m */; };
@@ -91,6 +92,7 @@
 		BBDDE1431C2803190071C4FD /* RequestUser.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDDE1421C2803190071C4FD /* RequestUser.m */; };
 		BBDDE1461C2809DE0071C4FD /* RequestUserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDDE1451C2809DE0071C4FD /* RequestUserModel.m */; };
 		BBDDE14A1C2811F40071C4FD /* Model.m in Sources */ = {isa = PBXBuildFile; fileRef = BBDDE1491C2811F40071C4FD /* Model.m */; };
+		BBEC896A1C44D796000AA194 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = BBEC89681C44D796000AA194 /* MBProgressHUD.m */; };
 		BBFE4B601C3228F900342EBA /* QBImagePicker.strings in Resources */ = {isa = PBXBuildFile; fileRef = BBFE4B441C3228F900342EBA /* QBImagePicker.strings */; };
 		BBFE4B611C3228F900342EBA /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BBFE4B481C3228F900342EBA /* Info.plist */; };
 		BBFE4B621C3228F900342EBA /* QBAlbumCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BBFE4B4C1C3228F900342EBA /* QBAlbumCell.m */; };
@@ -232,6 +234,8 @@
 		BB89B0BA1C27C75C00065975 /* SIAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SIAlertView.m; sourceTree = "<group>"; };
 		BB89B0BB1C27C75C00065975 /* UIWindow+SIUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWindow+SIUtils.h"; sourceTree = "<group>"; };
 		BB89B0BC1C27C75C00065975 /* UIWindow+SIUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWindow+SIUtils.m"; sourceTree = "<group>"; };
+		BB9E60981C44DA7F00832426 /* UIViewController+HUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+HUD.h"; sourceTree = "<group>"; };
+		BB9E60991C44DA7F00832426 /* UIViewController+HUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+HUD.m"; sourceTree = "<group>"; };
 		BBB9192C1C325E7800CA18CC /* PFACL+Role.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PFACL+Role.h"; sourceTree = "<group>"; };
 		BBB9192D1C325E7800CA18CC /* PFACL+Role.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PFACL+Role.m"; sourceTree = "<group>"; };
 		BBB9192F1C326D4000CA18CC /* Child.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Child.h; sourceTree = "<group>"; };
@@ -275,6 +279,9 @@
 		BBDDE1451C2809DE0071C4FD /* RequestUserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestUserModel.m; sourceTree = "<group>"; };
 		BBDDE1481C2811F40071C4FD /* Model.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Model.h; sourceTree = "<group>"; };
 		BBDDE1491C2811F40071C4FD /* Model.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Model.m; sourceTree = "<group>"; };
+		BBEC89661C44D796000AA194 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		BBEC89671C44D796000AA194 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		BBEC89681C44D796000AA194 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		BBFE4B451C3228F900342EBA /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/QBImagePicker.strings; sourceTree = "<group>"; };
 		BBFE4B461C3228F900342EBA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/QBImagePicker.strings; sourceTree = "<group>"; };
 		BBFE4B471C3228F900342EBA /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/QBImagePicker.strings; sourceTree = "<group>"; };
@@ -569,6 +576,8 @@
 				BB7E28DD1C3E2F5400348451 /* CALayer+UIColor.m */,
 				BB5483191C3F4F0E009A27A1 /* UIViewController+Alert.h */,
 				BB54831A1C3F4F0E009A27A1 /* UIViewController+Alert.m */,
+				BB9E60981C44DA7F00832426 /* UIViewController+HUD.h */,
+				BB9E60991C44DA7F00832426 /* UIViewController+HUD.m */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -610,6 +619,7 @@
 		BB89B0B41C27C75C00065975 /* Lib */ = {
 			isa = PBXGroup;
 			children = (
+				BBEC89651C44D796000AA194 /* MBProgressHUD */,
 				BB54831C1C3F7499009A27A1 /* LPPopupListView */,
 				BBB919321C3276D700CA18CC /* DCCommentView */,
 				BBFE4B6C1C322A0000342EBA /* RFKeyboardToolbar */,
@@ -685,6 +695,16 @@
 				BBCA87421C2B964E006C46C7 /* MainViewController.m */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		BBEC89651C44D796000AA194 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				BBEC89661C44D796000AA194 /* LICENSE */,
+				BBEC89671C44D796000AA194 /* MBProgressHUD.h */,
+				BBEC89681C44D796000AA194 /* MBProgressHUD.m */,
+			);
+			path = MBProgressHUD;
 			sourceTree = "<group>";
 		};
 		BBFE4B431C3228F900342EBA /* QBImagePicker */ = {
@@ -886,6 +906,7 @@
 				BB0D70381C23C30300E6AE82 /* UIColor+Helper.m in Sources */,
 				BB0D6F751C23A12500E6AE82 /* AppDelegate.m in Sources */,
 				BBD5A6A51C3366E600B9CA6E /* SettingViewController.m in Sources */,
+				BBEC896A1C44D796000AA194 /* MBProgressHUD.m in Sources */,
 				BB54832A1C3F7499009A27A1 /* LPPopupListView.m in Sources */,
 				BB0D70301C23C30300E6AE82 /* Group.m in Sources */,
 				BB0D6F721C23A12500E6AE82 /* main.m in Sources */,
@@ -907,6 +928,7 @@
 				BBDA2FDB1C3BC287002E5972 /* ZipSearch.m in Sources */,
 				BBDA2FD51C3B8222002E5972 /* ChildListViewController.m in Sources */,
 				BBDDE1431C2803190071C4FD /* RequestUser.m in Sources */,
+				BB9E609A1C44DA7F00832426 /* UIViewController+HUD.m in Sources */,
 				BB0D702B1C23C30300E6AE82 /* SchoolModel.m in Sources */,
 				BBFE4B641C3228F900342EBA /* QBAssetCell.m in Sources */,
 				BBCA874D1C2B96FE006C46C7 /* UserListViewController.m in Sources */,
