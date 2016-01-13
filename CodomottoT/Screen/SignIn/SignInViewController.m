@@ -10,6 +10,7 @@
 #import "CMTParseManager.h"
 #import "UIViewController+Alert.h"
 #import "StoryboardUtil.h"
+#import "UIViewController+HUD.h"
 
 NSString* const kSignInViewControllerNotificationSignInSuccess  = @"signInViewControllerNotificationSignInSuccess";
 NSString* const kSignInViewControllerNotificationSignInFail     = @"signInViewControllerNotificationSignInFail";
@@ -112,9 +113,14 @@ NSString* const kSignInViewControllerNotificationSignInFail     = @"signInViewCo
 - (IBAction)loginButtonTouched:(id)sender {
     NSLog(@"%s", __FUNCTION__);
     
-    CMTParseManager *mgr = [CMTParseManager sharedInstance];
+    [self showIndicator];
     
+    CMTParseManager *mgr = [CMTParseManager sharedInstance];
     [mgr signIn:_inputLoginId.text password:_inputPassword.text block:^(NSError *error) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self hideIndicator];
+        });
         
         if (error==nil) {
             NSLog(@"login success");

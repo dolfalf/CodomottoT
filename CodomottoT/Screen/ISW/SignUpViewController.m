@@ -9,6 +9,7 @@
 #import "SignUpViewController.h"
 #import "CMTParseManager.h"
 #import "UIViewController+Alert.h"
+#import "UIViewController+HUD.h"
 
 NSString* const kSignUpViewControllerNotificationSignUpSuccess = @"signUpViewControllerNotificationSignUpSuccess";
 NSString* const kSignUpViewControllerNotificationSignUpFail = @"signUpViewControllerNotificationSignUpFail";
@@ -76,13 +77,19 @@ const float kSignupCellHeight = 50.f;
           _passwordCell.inputTextField.text,
           (long)_userTypeCell.segmentControl.selectedSegmentIndex);
     
-    //TODO: いろいろ設定する項目はあるが、とりあえず最小限の情報のみセット
+    [self showIndicator];
+    
     [[CMTParseManager sharedInstance] signUp:_userIdCell.inputTextField.text
                                     password:_passwordCell.inputTextField.text
                                     userType:_userTypeCell.segmentControl.selectedSegmentIndex
                                        block:^(NSError *error) {
                                                           
                                            NSLog(@"success[%@]", error==nil?@"YES":@"NO");
+                                           
+                                           dispatch_async(dispatch_get_main_queue(), ^{
+                                               [self hideIndicator];
+                                           });
+                                           
                                           if (error==nil) {
                                               [[NSNotificationCenter defaultCenter] postNotificationName:kSignUpViewControllerNotificationSignUpSuccess
                                                                                                   object:nil];

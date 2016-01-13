@@ -108,7 +108,8 @@
         NSString *message = mgr.isLogin?@"ログアウトを失敗しました。":@"ログアウトしました。";
         [self showConfirmAlertView:message
                              block:^{
-                                 [self.navigationController popToRootViewControllerAnimated:YES];
+                                 [self.navigationController popToRootViewControllerAnimated:NO];
+                                 [StoryboardUtil openSignInViewController:self animated:NO completion:nil];
         }];
         
     }];

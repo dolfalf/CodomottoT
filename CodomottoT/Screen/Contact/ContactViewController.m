@@ -129,21 +129,11 @@
                                                                      style:UIBarButtonItemStyleDone target:self
                                                                     action:@selector(settingButtonTouched:)];
     
-    CMTParseManager *mgr = [CMTParseManager sharedInstance];
+    UIBarButtonItem *post_button = [[UIBarButtonItem alloc] initWithTitle:@"投稿"
+                                                                    style:UIBarButtonItemStyleDone target:self
+                                                                   action:@selector(postButtonTouched:)];
     
-    
-    
-    if (mgr.userType == UserTypeHeadTeacher) {
-        //園長の場合、リクエストユーザー見る画面へ
-        self.toolbarItems = @[setup_button,spacer,logout_button];
-    }else {
-        UIBarButtonItem *post_button = [[UIBarButtonItem alloc] initWithTitle:@"投稿"
-                                                                        style:UIBarButtonItemStyleDone target:self
-                                                                       action:@selector(postButtonTouched:)];
-        
-        self.toolbarItems = @[post_button,spacer,setup_button, logout_button];
-    }
-    
+    self.toolbarItems = @[post_button,spacer,setup_button, logout_button];
 }
 
 #pragma mark - Action

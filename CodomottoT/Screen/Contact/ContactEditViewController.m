@@ -11,10 +11,12 @@
 #import "RFKeyboardToolbar.h"
 #import "QBImagePickerController.h"
 #import "UIImage+Resize.h"
-#import "SIAlertView.h"
 #import "DCCommentView.h"
 
 #import "ContactModel.h"
+
+#import "UIViewController+Alert.h"
+#import "UIViewController+HUD.h"
 
 @interface ContactEditViewController () <UITextViewDelegate, QBImagePickerControllerDelegate, DCCommentViewDelegate>
 
@@ -140,20 +142,6 @@
                                                  name:UIKeyboardWillHideNotification object:nil];
 }
 
-- (void)showAlertMessage:(NSString *)message {
-    
-    SIAlertView *alertView = [[SIAlertView alloc] initWithTitle:@"" andMessage:message];
-    
-    [alertView addButtonWithTitle:@"OK"
-                             type:SIAlertViewButtonTypeDefault
-                          handler:^(SIAlertView *alert) {
-                              NSLog(@"Button1 Clicked");
-                              
-                              [self.navigationController popToRootViewControllerAnimated:YES];
-                          }];
-    
-}
-
 #pragma mark - Keyboard notification callback
 - (void)keyboardWillShow:(NSNotification *)notification {
 
@@ -194,12 +182,20 @@
         return;
     }
     
+    [self showIndicator];
+    
     ContactModel *contact_model = [ContactModel new];
     
     [contact_model postContact:_postTextView.text photoItems:_postImages block:^(BOOL success) {
         
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self hideIndicator];
+        });
+        
         if (success) {
-            [self showAlertMessage:@"Contact Posted!"];
+            [self showConfirmAlertView:@"投稿しました。" block:^{
+                [self.navigationController popToRootViewControllerAnimated:YES];
+            }];
         }
         
     }];
@@ -243,7 +239,8 @@
     
     int image_count = 0;
     
-    __weak ContactEditViewController *weakSelf = self;
+    __weak typeof(self) weakSelf = self;
+    
     [_postImages removeAllObjects];
     
     _photoScrollView.contentSize = CGSizeMake(photo_frame_size * assets.count, _photoScrollView.frame.size.height);

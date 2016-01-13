@@ -56,7 +56,6 @@
         //head teacher menu
         
         self.menuItems = @[@{@"title":@"クラス設定",@"segue":@"GroupListSegue"},
-                           @{@"title":@"先生設定",@"segue":@"TeacherListSegue"},
                            @{@"title":@"リクエストユーザー承認",@"segue":@"RequestUserListSegue"}];
         
     }else if(mgr.userType == UserTypeTeacher) {

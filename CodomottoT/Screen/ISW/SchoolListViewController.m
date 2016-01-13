@@ -10,6 +10,7 @@
 #import "CMTParseManager.h"
 #import "SchoolModel.h"
 #import "RequestUserModel.h"
+#import "UIViewController+HUD.h"
 
 const float kSchoolListCellHeight = 60.f;
 
@@ -136,9 +137,14 @@ const float kSchoolListCellHeight = 60.f;
         return;
     }
     
+    [self showIndicator];
     
     //User園選択情報保存、Request Userへ登録
     [mgr registRequestUser:school block:^(NSError *error) {
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self hideIndicator];
+        });
         
         if (error == nil) {
             //許可待ち画面へ遷移
